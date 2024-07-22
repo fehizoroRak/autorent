@@ -4,11 +4,10 @@
 DB_NAME := autorent
 
 # Commandes
-DROP_DB := symfony console doctrine:database:drop --force
+DROP_DB := symfony console doctrine:database:drop -f
 CREATE_DB := symfony console doctrine:database:create
-MAKE_MIGRATION := symfony console make:migration
-MIGRATE := symfony console doctrine:migrations:migrate
-LOAD_FIXTURES := symfony console doctrine:fixtures:load
+SCHEMA_UPDATE := symfony console doctrine:schema:update -f
+LOAD_FIXTURES := symfony console doctrine:fixtures:load -n
 
 # Cibles
 
@@ -20,28 +19,23 @@ create:
 	@echo "Creating database $(DB_NAME)..."
 	$(CREATE_DB)
 
-make-migration:
-	@echo "Generating new migration file..."
-	$(MAKE_MIGRATION)
-
-migrate:
-	@echo "Applying migrations..."
-	$(MIGRATE)
+schema-update:
+	@echo "Updating schema..."
+	$(SCHEMA_UPDATE)
 
 fixtures:
 	@echo "Loading fixtures..."
 	$(LOAD_FIXTURES)
 
 # Cible pour tout faire
-full: drop create make-migration migrate fixtures
+full: drop create schema-update fixtures
 
 # Cible pour afficher les commandes disponibles
 help:
 	@echo "Usage:"
 	@echo "  make drop             - Drop the database"
 	@echo "  make create           - Create the database"
-	@echo "  make make-migration   - Generate a new migration file"
-	@echo "  make migrate          - Apply migrations"
+	@echo "  make schema-update    - Update the schema"
 	@echo "  make fixtures         - Load all fixtures"
-	@echo "  make full             - Drop, create, generate migration, apply migrations, and load all fixtures"
+	@echo "  make full             - Drop, create, update schema, and load all fixtures"
 	@echo "  make help             - Show this help message"
