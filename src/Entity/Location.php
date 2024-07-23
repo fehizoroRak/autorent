@@ -39,6 +39,12 @@ class Location
     #[ORM\OneToMany(targetEntity: Payment::class, mappedBy: 'location')]
     private Collection $payments;
 
+    #[ORM\Column(length: 255)]
+    private ?string $pickupLocation = null;
+
+    #[ORM\Column(length: 255)]
+    private ?string $dropoffLocation = null;
+
     public function __construct()
     {
         $this->payments = new ArrayCollection();
@@ -135,6 +141,30 @@ class Location
                 $payment->setLocation(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getPickupLocation(): ?string
+    {
+        return $this->pickupLocation;
+    }
+
+    public function setPickupLocation(string $pickupLocation): static
+    {
+        $this->pickupLocation = $pickupLocation;
+
+        return $this;
+    }
+
+    public function getDropoffLocation(): ?string
+    {
+        return $this->dropoffLocation;
+    }
+
+    public function setDropoffLocation(string $dropoffLocation): static
+    {
+        $this->dropoffLocation = $dropoffLocation;
 
         return $this;
     }

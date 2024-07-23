@@ -18,7 +18,8 @@ class CarFixtures extends Fixture
                 'year' => 2020,
                 'color' => 'Red',
                 'registration' => 'ABC123',
-                'dayprice' => 50.0
+                'dayprice' => 50.0,
+                'availability' => true // Set availability
             ],
             [
                 'brand' => 'Honda',
@@ -26,7 +27,8 @@ class CarFixtures extends Fixture
                 'year' => 2019,
                 'color' => 'Blue',
                 'registration' => 'DEF456',
-                'dayprice' => 45.0
+                'dayprice' => 45.0,
+                'availability' => true // Set availability
             ],
             [
                 'brand' => 'Ford',
@@ -34,7 +36,8 @@ class CarFixtures extends Fixture
                 'year' => 2018,
                 'color' => 'Black',
                 'registration' => 'GHI789',
-                'dayprice' => 40.0
+                'dayprice' => 40.0,
+                'availability' => false // Set availability
             ],
             [
                 'brand' => 'BMW',
@@ -42,7 +45,8 @@ class CarFixtures extends Fixture
                 'year' => 2021,
                 'color' => 'White',
                 'registration' => 'JKL012',
-                'dayprice' => 60.0
+                'dayprice' => 60.0,
+                'availability' => true // Set availability
             ],
             [
                 'brand' => 'Mercedes',
@@ -50,7 +54,8 @@ class CarFixtures extends Fixture
                 'year' => 2022,
                 'color' => 'Silver',
                 'registration' => 'MNO345',
-                'dayprice' => 70.0
+                'dayprice' => 70.0,
+                'availability' => true // Set availability
             ],
             [
                 'brand' => 'Audi',
@@ -58,7 +63,8 @@ class CarFixtures extends Fixture
                 'year' => 2017,
                 'color' => 'Gray',
                 'registration' => 'PQR678',
-                'dayprice' => 55.0
+                'dayprice' => 55.0,
+                'availability' => false // Set availability
             ],
             [
                 'brand' => 'Volkswagen',
@@ -66,7 +72,8 @@ class CarFixtures extends Fixture
                 'year' => 2016,
                 'color' => 'Green',
                 'registration' => 'STU901',
-                'dayprice' => 35.0
+                'dayprice' => 35.0,
+                'availability' => true // Set availability
             ],
             [
                 'brand' => 'Chevrolet',
@@ -74,7 +81,8 @@ class CarFixtures extends Fixture
                 'year' => 2015,
                 'color' => 'Brown',
                 'registration' => 'VWX234',
-                'dayprice' => 30.0
+                'dayprice' => 30.0,
+                'availability' => true // Set availability
             ],
             [
                 'brand' => 'Nissan',
@@ -82,7 +90,8 @@ class CarFixtures extends Fixture
                 'year' => 2014,
                 'color' => 'Yellow',
                 'registration' => 'YZA567',
-                'dayprice' => 25.0
+                'dayprice' => 25.0,
+                'availability' => false // Set availability
             ],
             [
                 'brand' => 'Kia',
@@ -90,7 +99,8 @@ class CarFixtures extends Fixture
                 'year' => 2013,
                 'color' => 'Purple',
                 'registration' => 'BCD890',
-                'dayprice' => 20.0
+                'dayprice' => 20.0,
+                'availability' => true // Set availability
             ],
         ];
 
@@ -103,6 +113,7 @@ class CarFixtures extends Fixture
             $car->setColor($carData['color']);
             $car->setRegistration($carData['registration']);
             $car->setDayprice($carData['dayprice']);
+            $car->setAvailability($carData['availability']); // Set availability
             
             $manager->persist($car);
         }

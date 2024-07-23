@@ -22,6 +22,9 @@ class LocationFixtures extends Fixture implements DependentFixtureInterface
             throw new \Exception('Not enough users or cars to create 10 locations.');
         }
 
+        // Define possible pickup and dropoff locations
+        $locations = ['Paris', 'Lyon', 'Marseille', 'Toulouse', 'Nice', 'Nantes', 'Montpellier', 'Strasbourg', 'Bordeaux', 'Lille'];
+
         // Create 10 locations with random data
         for ($i = 0; $i < 10; $i++) {
             $location = new Location();
@@ -34,6 +37,10 @@ class LocationFixtures extends Fixture implements DependentFixtureInterface
             $location->setTotalamount($totalAmount);
             $location->setUser($users[array_rand($users)]);
             $location->setCar($cars[array_rand($cars)]);
+
+            // Set random pickup and dropoff locations
+            $location->setPickupLocation($locations[array_rand($locations)]);
+            $location->setDropoffLocation($locations[array_rand($locations)]);
 
             $manager->persist($location);
         }
