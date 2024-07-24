@@ -1,0 +1,290 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Welcome to Car Rental{% endblock %}
+
+{% block body %}
+
+
+
+  <header>
+    <nav>
+      <div class="nav__header">
+        <div class="nav__logo">
+          <a href="#">AutoRent</a>
+        </div>
+        <div class="nav__menu__btn" id="menu-btn">
+          <i class="ri-menu-line"></i>
+        </div>
+      </div>
+      <ul class="nav__links" id="nav-links">
+        <li><a href="#home">Accueil</a></li>
+        <li><a href="#rent">Louer</a></li>
+        <li><a href="#service">Services</a></li>
+        <li><a href="#ride">Conduite</a></li>
+        <li><a href="#contact">Contact</a></li>
+        <li class="nav__links__btn">
+          <button class="btn">Inscription</button>
+        </li>
+        <li class="nav__links__btn">
+          <button class="btn">Connexion</button>
+        </li>
+      </ul>
+      <div class="nav__btns">
+        <button class="btn btn__primary">Inscription</button>
+        <button class="btn btn__secondary">Connexion</button>
+      </div>
+    </nav>
+    <div class="section__container header__container" id="home">
+      <div class="header__image">
+       <img src="{{ asset('images/header.png') }}" alt="header" />
+      </div>
+      <div class="header__content">
+        <h1>Louez en toute tranquillité !</h1>
+     
+        <!-- Form START -->
+<form class="car-form" method="get" action="{{ path('app_cars_available') }}">
+    <div class="form-group">
+        {# <label for="pickupLocation">Lieu de prise en charge:</label> #}
+        <div class="input-icon">
+            <i class="ri-map-pin-fill"></i>
+            <input type="text" id="pickupLocation" name="pickupLocation" class="form-control" placeholder="Lieu de départ" required />
+        </div>
+    </div>
+    <div class="form-group">
+        {# <label for="dropoffLocation">Lieu de retour:</label> #}
+        <div class="input-icon">
+            <i class="ri-map-pin-line"></i>
+            <input type="text" id="dropoffLocation" name="dropoffLocation" class="form-control" placeholder="Lieu de retour" required />
+        </div>
+    </div>
+    <div class="form-group">
+        {# <label for="startDate"></label> #}
+        <div class="input-icon">
+            <span>Date de début:</span>
+            <input type="date" id="startDate" name="startDate" class="form-control-date " required />
+        </div>
+    </div>
+    <div class="form-group">
+        {# <label for="endDate">Date de fin:</label> #}
+        <div class="input-icon">
+            <span>Date de fin:</span>
+            <input type="date" id="endDate" name="endDate" class="form-control-date" required />
+        </div>
+    </div>
+    <button type="submit" class="btn-submit">Voir les véhicules</button>
+</form>
+
+
+
+ <!-- Form END -->
+
+
+
+      </div>
+    </div>
+  </header>
+
+
+
+
+   <section class="section__container steps__container" id="rent">
+  <p class="section__subheader">COMMENT ÇA MARCHE ?</p>
+  <h2 class="section__header">Louez en 3 étapes simples !</h2>
+  <div class="steps__grid">
+    <div class="steps__card">
+      <span><i class="ri-map-pin-fill"></i></span>
+      <h4>Choisissez un lieu</h4>
+      <p>
+        Sélectionnez le lieu de location souhaité parmi notre vaste réseau de points de location de voitures.
+      </p>
+    </div>
+    <div class="steps__card">
+      <span><i class="ri-calendar-check-fill"></i></span>
+      <h4>Date de prise en charge</h4>
+      <p>
+        Indiquez la date et l'heure à laquelle vous souhaitez récupérer votre voiture avec des options de planification flexibles.
+      </p>
+    </div>
+    <div class="steps__card">
+      <span><i class="ri-bookmark-3-fill"></i></span>
+      <h4>Réservez votre voiture</h4>
+      <p>
+        Parcourez notre large gamme de véhicules et choisissez celui qui convient le mieux à vos besoins.
+      </p>
+    </div>
+  </div>
+  </section>
+
+
+
+
+
+      <section class="section__container service__container" id="service">
+  <div class="service__image">
+    <img src="{{ asset('images/service.png') }}" alt="service" /> 
+  </div>
+  <div class="service__content">
+    <p class="section__subheader">MEILLEURS SERVICES</p>
+    <h2 class="section__header">
+      Vivez la meilleure expérience avec nos offres de location
+    </h2>
+    <ul class="service__list">
+      <li>
+        <span><i class="ri-price-tag-3-fill"></i></span>
+        <div>
+          <h4>Offres pour tous les budgets</h4>
+          <p>
+            Des voitures économiques aux véhicules de luxe, nous avons quelque chose pour tout le monde, garantissant le meilleur rapport qualité-prix.
+          </p>
+        </div>
+      </li>
+      <li>
+        <span><i class="ri-wallet-fill"></i></span>
+        <div>
+          <h4>Meilleur prix garanti</h4>
+          <p>
+            Nous vous garantissons des tarifs compétitifs sur le marché, afin que vous puissiez réserver en toute confiance.
+          </p>
+        </div>
+      </li>
+      <li>
+        <span><i class="ri-customer-service-fill"></i></span>
+        <div>
+          <h4>Support 24/7</h4>
+          <p>
+            Notre équipe est disponible 24/7 pour toutes questions ou remarques. 
+          </p>
+        </div>
+      </li>
+    </ul>
+  </div>
+</section>
+
+
+
+
+   <section class="section__container experience__container" id="ride">
+  <p class="section__subheader">EXPÉRIENCES CLIENTS</p>
+  <h2 class="section__header">
+    Nous assurons la meilleure expérience client
+  </h2>
+  <div class="experience__content">
+    <div class="experience__card">
+      <span><i class="ri-price-tag-3-fill"></i></span>
+      <h4>Prix compétitifs</h4>
+    </div>
+    <div class="experience__card">
+      <span><i class="ri-money-rupee-circle-fill"></i></span>
+      <h4>Location facile selon votre budget</h4>
+    </div>
+    <div class="experience__card">
+      <span><i class="ri-bank-card-fill"></i></span>
+      <h4>Plans de paiement flexibles</h4>
+    </div>
+    <div class="experience__card">
+      <span><i class="ri-award-fill"></i></span>
+      <h4>Les meilleures garanties </h4>
+    </div>
+    <div class="experience__card">
+      <span><i class="ri-customer-service-2-fill"></i></span>
+      <h4>Assistance routière 24/7</h4>
+    </div>
+    <div class="experience__card">
+      <span><i class="ri-car-fill"></i></span>
+      <h4>Possibilité de choisir un garage</h4>
+    </div>
+    <img src="{{ asset('images/experience.png') }}" alt="experience" /> 
+  </div>
+</section>
+
+
+
+
+    <section class="section__container download__container" id="contact">
+  <div class="download__grid">
+    <div class="download__content">
+      <h2 class="section__header">Téléchargez l'application AutoRent gratuite</h2>
+      <p>
+        Téléchargez l'application AutoRent pour gérer vos réservations, trouver des offres exclusives et accéder à un support 24/7, directement depuis votre appareil mobile.
+      </p>
+      <div class="download__links">
+        <a href="#">
+          <img src="{{ asset('images/store.jpg') }}" alt="app store" /> 
+        </a>
+        <a href="#">
+          <img src="{{ asset('images/play.png') }}" alt="play" /> 
+        </a>
+      </div>
+    </div>
+    <div class="download__image">
+      <img src="{{ asset('images/download.png') }}" alt="download" /> 
+    </div>
+  </div>
+</section>
+
+
+
+
+    <footer>
+  <div class="section__container footer__container">
+    <div class="footer__col">
+      <h4>Nos Produits</h4>
+      <ul class="footer__links">
+        <li><a href="#">Carrière</a></li>
+        <li><a href="#">Hôtels</a></li>
+        <li><a href="#">Voitures</a></li>
+        <li><a href="#">Forfaits</a></li>
+        <li><a href="#">Fonctionnalités</a></li>
+        <li><a href="#">Priceline</a></li>
+      </ul>
+    </div>
+    <div class="footer__col">
+      <h4>À propos d'AutoRent</h4>
+      <ul class="footer__links">
+        <li><a href="#">Pourquoi AutoRent</a></li>
+        <li><a href="#">Notre Histoire</a></li>
+        <li><a href="#">Investisseurs</a></li>
+        <li><a href="#">Centres de Presse</a></li>
+        <li><a href="#">Publicité</a></li>
+      </ul>
+    </div>
+    <div class="footer__col">
+      <h4>Ressources</h4>
+      <ul class="footer__links">
+        <li><a href="#">Télécharger</a></li>
+        <li><a href="#">Centres d'aide</a></li>
+        <li><a href="#">Guides</a></li>
+        <li><a href="#">Réseau de Partenaires</a></li>
+        <li><a href="#">Mécaniciens</a></li>
+        <li><a href="#">Développeur</a></li>
+      </ul>
+    </div>
+    <div class="footer__col">
+      <h4>Extras</h4>
+      <ul class="footer__links">
+        <li><a href="#">Offre de Location</a></li>
+        <li><a href="#">Atelier de Réparation</a></li>
+        <li><a href="#">Voir Réservation</a></li>
+        <li><a href="#">Entreprises de Location</a></li>
+        <li><a href="#">Nouvelles Offres</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="section__container footer__bar">
+    <h4>AutoRent</h4>
+    <p>Copyright © 2024 - Tous droits réservés.</p>
+    <ul class="footer__socials">
+      <li>
+        <a href="#"><i class="ri-facebook-fill"></i></a>
+      </li>
+      <li>
+        <a href="#"><i class="ri-twitter-fill"></i></a>
+      </li>
+      <li>
+        <a href="#"><i class="ri-google-fill"></i></a>
+      </li>
+    </ul>
+  </div>
+</footer>
+
+{% endblock %}

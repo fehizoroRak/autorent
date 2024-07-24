@@ -19,7 +19,8 @@ class CarFixtures extends Fixture
                 'color' => 'Red',
                 'registration' => 'ABC123',
                 'dayprice' => 50.0,
-                'availability' => true // Set availability
+                'availability' => true,
+                'image' => 'toyota_corolla.jpg'
             ],
             [
                 'brand' => 'Honda',
@@ -28,7 +29,8 @@ class CarFixtures extends Fixture
                 'color' => 'Blue',
                 'registration' => 'DEF456',
                 'dayprice' => 45.0,
-                'availability' => true // Set availability
+                'availability' => true,
+                'image' => 'honda_civic.jpg'
             ],
             [
                 'brand' => 'Ford',
@@ -37,7 +39,8 @@ class CarFixtures extends Fixture
                 'color' => 'Black',
                 'registration' => 'GHI789',
                 'dayprice' => 40.0,
-                'availability' => false // Set availability
+                'availability' => false,
+                'image' => 'ford_focus.jpg'
             ],
             [
                 'brand' => 'BMW',
@@ -46,7 +49,8 @@ class CarFixtures extends Fixture
                 'color' => 'White',
                 'registration' => 'JKL012',
                 'dayprice' => 60.0,
-                'availability' => true // Set availability
+                'availability' => true,
+                'image' => 'bmw_3_series.jpg'
             ],
             [
                 'brand' => 'Mercedes',
@@ -55,7 +59,8 @@ class CarFixtures extends Fixture
                 'color' => 'Silver',
                 'registration' => 'MNO345',
                 'dayprice' => 70.0,
-                'availability' => true // Set availability
+                'availability' => true,
+                'image' => 'mercedes_c_class.jpg'
             ],
             [
                 'brand' => 'Audi',
@@ -64,7 +69,8 @@ class CarFixtures extends Fixture
                 'color' => 'Gray',
                 'registration' => 'PQR678',
                 'dayprice' => 55.0,
-                'availability' => false // Set availability
+                'availability' => false,
+                'image' => 'audi_a4.jpg'
             ],
             [
                 'brand' => 'Volkswagen',
@@ -73,7 +79,8 @@ class CarFixtures extends Fixture
                 'color' => 'Green',
                 'registration' => 'STU901',
                 'dayprice' => 35.0,
-                'availability' => true // Set availability
+                'availability' => true,
+                'image' => 'volkswagen_golf.jpg'
             ],
             [
                 'brand' => 'Chevrolet',
@@ -82,7 +89,8 @@ class CarFixtures extends Fixture
                 'color' => 'Brown',
                 'registration' => 'VWX234',
                 'dayprice' => 30.0,
-                'availability' => true // Set availability
+                'availability' => true,
+                'image' => 'chevrolet_malibu.jpg'
             ],
             [
                 'brand' => 'Nissan',
@@ -91,7 +99,8 @@ class CarFixtures extends Fixture
                 'color' => 'Yellow',
                 'registration' => 'YZA567',
                 'dayprice' => 25.0,
-                'availability' => false // Set availability
+                'availability' => false,
+                'image' => 'nissan_altima.jpg'
             ],
             [
                 'brand' => 'Kia',
@@ -100,7 +109,8 @@ class CarFixtures extends Fixture
                 'color' => 'Purple',
                 'registration' => 'BCD890',
                 'dayprice' => 20.0,
-                'availability' => true // Set availability
+                'availability' => true,
+                'image' => 'kia_optima.jpg'
             ],
         ];
 
@@ -113,7 +123,8 @@ class CarFixtures extends Fixture
             $car->setColor($carData['color']);
             $car->setRegistration($carData['registration']);
             $car->setDayprice($carData['dayprice']);
-            $car->setAvailability($carData['availability']); // Set availability
+            $car->setAvailability($carData['availability']);
+            $car->setImage($carData['image']); // Set image
             
             $manager->persist($car);
         }

@@ -33,6 +33,9 @@ class Car
     #[ORM\Column(nullable: true)]
     private ?float $dayprice = null;
 
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $image = null; // Nouvelle propriété image
+
     /**
      * @var Collection<int, Location>
      */
@@ -120,6 +123,18 @@ class Car
     public function setDayprice(?float $dayprice): static
     {
         $this->dayprice = $dayprice;
+
+        return $this;
+    }
+
+    public function getImage(): ?string
+    {
+        return $this->image;
+    }
+
+    public function setImage(?string $image): static
+    {
+        $this->image = $image;
 
         return $this;
     }

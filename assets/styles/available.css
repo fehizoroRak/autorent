@@ -1,0 +1,160 @@
+.availability-text {
+    position: relative;
+    padding-top: 30px;
+    padding-bottom: 20px;
+    z-index: -100; /* Ajustez selon votre préférence */
+}
+
+.availability-text::after {
+    content: "";
+    display: block;
+    width: 100%; /* Le trait couvrira toute la largeur du parent */
+    height: 0.2px; /* Ajustez l'épaisseur du trait selon votre préférence */
+    background-color: #c7c7c7; /* Utilisez la couleur primaire ou une autre couleur de votre choix */
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    z-index: -100;
+}
+
+/* Styles pour le bouton Sélectionner */
+.select-btn {
+    padding: 0.85rem 1.8rem;
+    border: none;
+    font-size: 1rem;
+    color: var(--white);
+    background-color: var(--primary-color);
+    border-radius: 4px;
+    transition: background-color 0.3s, transform 0.3s;
+    cursor: pointer;
+    margin-top: 1rem; /* Ajout d'un peu d'espace au-dessus du bouton */
+}
+
+.select-btn:hover {
+    background-color: #3c4286; /* Couleur plus sombre au survol */
+    transform: scale(1.05); /* Légère augmentation de la taille au survol */
+}
+
+
+.small-text{
+    font-size: 0.8rem;
+    color: #919191;
+    margin-bottom: 10px;
+}
+
+.price-text{
+    font-size: 1.7rem;
+    color: #4b4b4b;
+}
+
+@media (max-width: 768px) {
+    .cars__item {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .cars__details {
+        margin-left: 0;
+        margin-top: 1rem;
+    }
+
+    .cars__price {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-end;
+        margin-top: 1rem;
+        width: 100%;
+    }
+
+    .cars__list {
+        margin:  0;
+    }
+
+    .cars__item {
+  
+        padding: 0;
+        margin-bottom: 0;
+     
+    }
+
+    .select-btn {
+        width: 100%;
+        text-align: center;
+    }
+}
+
+
+/* Styles pour la barre de navigation fixe */
+
+
+.available-cars-page  #header::before {
+    content: "";
+    top: 0;
+    left: 0;
+  }
+
+/* Styles pour la liste des voitures */
+.cars__list {
+    list-style: none;
+    padding: 0;
+    margin: 2rem 0;
+}
+
+.cars__item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1rem;
+    margin-bottom: 1rem;
+    border-bottom: 0.2px solid #c7c7c7;
+}
+
+.cars__image img {
+    width: 180px;
+    border-radius: 8px;
+}
+
+.cars__details {
+    flex: 1;
+    margin-left: 1rem;
+}
+
+.cars__details h2 {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: var(--text-dark);
+    margin-bottom: 0.5rem;
+}
+
+.cars__details p {
+    color: var(--text-light);
+    margin: 0;
+}
+
+.cars__price {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: var(--primary-color);
+}
+
+/* Media query pour ajuster la mise en page sur les écrans plus petits */
+@media (max-width: 768px) {
+    .cars__item {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .cars__details {
+        margin-left: 0;
+        margin-top: 1rem;
+    }
+
+    .cars__price {
+        margin-top: 1rem;
+    }
+
+    .cars__image img {
+        width: 250px;
+        border-radius: 8px;
+    }
+}
