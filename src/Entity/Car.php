@@ -45,6 +45,27 @@ class Car
     #[ORM\Column]
     private ?bool $availability = null;
 
+    #[ORM\Column]
+    private ?int $nbofcardoors = null;
+
+    #[ORM\Column]
+    private ?int $nbofpersons = null;
+
+    #[ORM\Column]
+    private ?bool $isAirconditionner = null;
+
+    #[ORM\Column(length: 255)]
+    private ?string $gearbox = null;
+
+    #[ORM\Column]
+    private ?int $horsepower = null;
+
+    #[ORM\Column]
+    private ?int $co2emissions = null;
+
+    #[ORM\Column]
+    private ?bool $isElectric = null;
+
     public function __construct()
     {
         $this->locations = new ArrayCollection();
@@ -177,6 +198,90 @@ class Car
     public function setAvailability(bool $availability): static
     {
         $this->availability = $availability;
+
+        return $this;
+    }
+
+    public function getNbofcardoors(): ?int
+    {
+        return $this->nbofcardoors;
+    }
+
+    public function setNbofcardoors(int $nbofcardoors): static
+    {
+        $this->nbofcardoors = $nbofcardoors;
+
+        return $this;
+    }
+
+    public function getNbofpersons(): ?int
+    {
+        return $this->nbofpersons;
+    }
+
+    public function setNbofpersons(int $nbofpersons): static
+    {
+        $this->nbofpersons = $nbofpersons;
+
+        return $this;
+    }
+
+    public function isAirconditionner(): ?bool
+    {
+        return $this->isAirconditionner;
+    }
+
+    public function setAirconditionner(bool $isAirconditionner): static
+    {
+        $this->isAirconditionner = $isAirconditionner;
+
+        return $this;
+    }
+
+    public function getGearbox(): ?string
+    {
+        return $this->gearbox;
+    }
+
+    public function setGearbox(string $gearbox): static
+    {
+        $this->gearbox = $gearbox;
+
+        return $this;
+    }
+
+    public function getHorsepower(): ?int
+    {
+        return $this->horsepower;
+    }
+
+    public function setHorsepower(int $horsepower): static
+    {
+        $this->horsepower = $horsepower;
+
+        return $this;
+    }
+
+    public function getCo2emissions(): ?int
+    {
+        return $this->co2emissions;
+    }
+
+    public function setCo2emissions(int $co2emissions): static
+    {
+        $this->co2emissions = $co2emissions;
+
+        return $this;
+    }
+
+    public function isElectric(): ?bool
+    {
+        return $this->isElectric;
+    }
+
+    public function setElectric(bool $isElectric): static
+    {
+        $this->isElectric = $isElectric;
 
         return $this;
     }
