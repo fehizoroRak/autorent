@@ -28,6 +28,7 @@ class CarFixtures extends Fixture
                 'horsepower' => 132,
                 'co2emissions' => 120,
                 'isElectric' => false,
+                'isRecommended' => true,
             ],
             [
                 'brand' => 'Honda',
@@ -45,6 +46,7 @@ class CarFixtures extends Fixture
                 'horsepower' => 158,
                 'co2emissions' => 125,
                 'isElectric' => true,
+                'isRecommended' => true,
             ],
             [
                 'brand' => 'Ford',
@@ -62,6 +64,7 @@ class CarFixtures extends Fixture
                 'horsepower' => 160,
                 'co2emissions' => 130,
                 'isElectric' => false,
+                'isRecommended' => true,
             ],
             [
                 'brand' => 'BMW',
@@ -79,6 +82,7 @@ class CarFixtures extends Fixture
                 'horsepower' => 255,
                 'co2emissions' => 140,
                 'isElectric' => true,
+                'isRecommended' => true,
             ],
             [
                 'brand' => 'Mercedes',
@@ -96,6 +100,7 @@ class CarFixtures extends Fixture
                 'horsepower' => 255,
                 'co2emissions' => 135,
                 'isElectric' => false,
+                'isRecommended' => false,
             ],
             [
                 'brand' => 'Audi',
@@ -113,6 +118,7 @@ class CarFixtures extends Fixture
                 'horsepower' => 188,
                 'co2emissions' => 150,
                 'isElectric' => true,
+                'isRecommended' => false,
             ],
             [
                 'brand' => 'Volkswagen',
@@ -130,6 +136,7 @@ class CarFixtures extends Fixture
                 'horsepower' => 147,
                 'co2emissions' => 120,
                 'isElectric' => false,
+                'isRecommended' => true,
             ],
             [
                 'brand' => 'Chevrolet',
@@ -147,6 +154,7 @@ class CarFixtures extends Fixture
                 'horsepower' => 160,
                 'co2emissions' => 140,
                 'isElectric' => true,
+                'isRecommended' => true,
             ],
             [
                 'brand' => 'Nissan',
@@ -164,6 +172,7 @@ class CarFixtures extends Fixture
                 'horsepower' => 182,
                 'co2emissions' => 135,
                 'isElectric' => false,
+                'isRecommended' => true,
             ],
             [
                 'brand' => 'Kia',
@@ -181,6 +190,7 @@ class CarFixtures extends Fixture
                 'horsepower' => 185,
                 'co2emissions' => 145,
                 'isElectric' => true,
+                'isRecommended' => true,
             ],
         ];
 
@@ -202,6 +212,7 @@ class CarFixtures extends Fixture
             $car->setHorsepower($carData['horsepower']);
             $car->setCo2emissions($carData['co2emissions']);
             $car->setElectric($carData['isElectric']);
+            $car->setRecommended($carData['isRecommended']);
 
             $manager->persist($car);
         }

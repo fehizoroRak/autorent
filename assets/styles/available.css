@@ -128,7 +128,7 @@
 
 .cars__details p {
     color: var(--text-light);
-    margin: 0;
+    margin-right: 20px;
 }
 
 .cars__price {
@@ -136,6 +136,15 @@
     font-weight: 700;
     color: var(--primary-color);
 }
+
+.cars__details p.isElec {
+    background-color: #3c4286;
+    border-radius: 15px;
+    color: white;
+    padding: 0.5rem;
+    display: inline-block;
+}
+
 
 /* Media query pour ajuster la mise en page sur les écrans plus petits */
 @media (max-width: 768px) {
@@ -157,4 +166,480 @@
         width: 250px;
         border-radius: 8px;
     }
+}
+
+
+/* cars recommandées */
+
+/* Styles pour les voitures recommandées */
+.recommended-cars {
+
+    margin-top: 2rem ;
+    /* background-color: #f0f0f0;
+    padding: 1rem;
+    position: relative; */
+}
+
+.carousel {
+    position: relative;
+    overflow: hidden;
+    width: 100%;
+}
+
+.carousel-container {
+    display: flex;
+    transition: transform 0.5s ease-in-out;
+}
+
+.carousel-item {
+    width: 33.33%;
+    box-sizing: border-box;
+    flex: 1 0 33.33%; /* Change this value to adjust number of visible items */
+}
+
+.carousel-prev, .carousel-next {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background-color: #ffd8d1;
+    border: none;
+    color: white;
+    padding: 1rem;
+    cursor: pointer;
+    z-index: 10;
+}
+
+.carousel-prev {
+    left: 0;
+}
+
+.carousel-next {
+    right: 0;
+}
+
+.card {
+    background-color: #f7f7f7;
+    padding: 1rem;
+    border-radius: 5px;
+    border: 3px solid #eee;
+    margin: 0 0.5rem;
+}
+
+.card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-weight: bold;
+    margin-bottom: 1rem;
+}
+
+.card-header i {
+   font-size: 2rem;
+   color:#7c7c7c; ;
+}
+
+.card-body {
+    display: flex;
+}
+
+.card-body__left img {
+    width: 100%;
+    border-radius: 5px;
+}
+
+.card-body__right {
+    padding-left: 1rem;
+}
+
+.card-body__right .price-text {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #333;
+}
+
+.card-body__right .select-btn {
+    margin-top: 1rem;
+}
+
+.info-icon {
+    cursor: pointer;
+}
+
+/* Styles pour le modal */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgb(0, 0, 0);
+    background-color: rgba(0, 0, 0, 0.4);
+    padding-top: 60px;
+}
+
+.modal-content {
+    background-color: #fefefe;
+    margin: 5% auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%;
+    max-width: 600px;
+    border-radius: 10px;
+}
+
+.close {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.modal-body {
+    padding: 0.5rem;
+}
+
+/* Responsive styles */
+@media (max-width: 970px) {
+    .carousel-item {
+        flex: 1 0 50%;
+    }
+}
+@media (max-width: 600px) {
+    .carousel-item {
+        flex: 1 0 100%;
+    }
+}
+
+
+/* MODAL BODY */
+
+/* Styles pour l'image du modal */
+.modal-body img {
+    width: 40%;
+    border-radius: 5px;
+    margin-bottom: 1rem;
+}
+
+/* Styles pour les boîtes rectangulaires */
+.modal-body .rect-box {
+    background-color: #f0f0f0;
+    padding: 1rem;
+    margin-bottom: 1rem;
+    border-radius: 5px;
+}
+
+.info {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 50px;
+    margin-bottom: 0.5rem;
+}
+
+.rect-box .details {
+    display: flex;
+    justify-content: space-between;
+}
+
+.rect-box .details p {
+    flex: 1;
+    text-align: center;
+    border-right: 1px solid #ccc;
+    padding: 0 0.5rem;
+}
+
+.rect-box .details p:last-child {
+    border-right: none;
+}
+
+.rect-box .inclus {
+    margin-bottom: 1rem;
+}
+
+.rect-box .inclus p {
+    margin: 0.25rem 0;
+}
+
+.prices {
+  margin-top: 2.5rem;
+  margin-bottom: 1rem;
+}
+
+.prices p:first-child {
+    text-align: center;
+    font-size: 1rem;
+    font-weight: bold;
+    color: #333;
+}
+.prices p:last-child {
+    text-align: center;
+    font-size: 2rem;
+    font-weight: bold;
+    color: #fe5b3e;
+}
+
+
+/* Responsive styles */
+@media (max-width: 768px) {
+    .rect-box .details {
+        flex-direction: column;
+    }
+
+    .rect-box .details p {
+        border-right: none;
+    }
+
+    .rect-box .details p:last-child {
+        border-bottom: none;
+    }
+}
+
+/* MODAL SELECT */
+
+.info-similaire{
+    border: 1px solid grey;
+    padding: 3px;
+    border-radius: 20px;
+}
+
+.info-similaire .tooltip {
+    visibility: hidden;
+    width: 280px;
+    background-color: rgb(244, 244, 244);
+    color: black;
+    text-align: center;
+    border-radius: 6px;
+    padding: 5px 10px;
+    position: absolute;
+    z-index: 199999;
+    bottom: 100%;
+    left: 95%;
+    margin-left: -140px; /* Use half of the width set above to align it */
+    opacity: 0;
+    transition: opacity 0.3s;
+}
+
+.info-similaire .info-icon:hover + .tooltip {
+    visibility: visible;
+    opacity: 1;
+}
+.info-similaire {
+    position: relative;
+}
+
+.info-similaire .tooltip::after {
+    content: "";
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    margin-left: -5px;
+    border-width: 5px;
+    border-style: solid;
+    border-color: rgb(244, 244, 244) transparent transparent transparent;
+}
+
+.info-similaire .info-icon:hover + .tooltip {
+    visibility: visible;
+    opacity: 1;
+    transition-delay: 0.5s; /* Delay the appearance of the tooltip */
+}
+
+.close-selectionner {
+    cursor: pointer;
+    position: absolute;
+    top: 3px;
+    right: 14px;
+    font-size: 30px;
+    font-weight: bold;
+    color: #333; /* Or any color that fits the modal's design */
+}
+
+/* Optional: Change color on hover for better user interaction */
+.close-selectionner:hover {
+    color: red;
+}
+
+.modal-select {
+    display: none; /* Hidden by default */
+    position: fixed; /* Stay in place */
+    z-index: 9999999; /* Sit on top */
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+    background-color: rgb(0,0,0); /* Fallback color */
+    background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+}
+
+.modal-select .content {
+    background-color: #fefefe;
+    margin: 11% auto; /* 15% from the top and centered */
+    padding: 40px;
+    border: 1px solid #888;
+    width: 80%; /* Could be more or less, depending on screen size */
+    position: relative;
+    border-radius: 10px;
+}
+.content {
+    display: flex;
+    padding: 30px;
+}
+
+.car-details {
+    flex: 1;
+    display: flex;
+
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+ 
+}
+
+/* Responsive styles */
+@media (max-width: 1140px) {
+    .content {
+    flex-direction: column;
+    }
+    .car-details {
+        flex: 1;
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+        text-align: start;
+     
+    }
+    
+}
+
+@media (max-width: 795px) {
+    .options {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        gap: 30px;
+      
+    }
+    
+}
+@media (max-width: 695px) {
+
+    .car-details {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+     
+    }
+}
+
+
+.car-details h1 {
+ font-size: 2rem;
+}
+
+.car-details img {
+    width: 100%;
+    max-width: 200px;
+}
+.car-details p:first-child {
+color: red;
+}
+
+.options {
+    flex: 2;
+    display: flex;
+    gap: 30px;
+  
+}
+
+.option {
+    padding: 20px;
+    border: 1px solid #ccc;
+    flex: 1;
+    border-radius: 10px;
+}
+.option p {
+color: #858585;
+font-size: 0.9rem;
+}
+
+
+.option.online {
+    border-radius: 10px;
+background-color: #f7f7f7;
+    border-color: #ccc;
+}
+
+.option h3 {
+    color: #333;
+}
+
+.option span {
+    border: 1px solid red;
+    color: red;
+    padding: 2px 5px;
+    font-size: 14px;
+    padding: 0.3rem;
+    border-radius: 20px;
+    font-weight: 600;
+}
+
+.price {
+    font-size: 25px;
+    color: #555;
+    margin: 10px 0;
+    font-weight: 600;
+}
+
+.total {
+    font-size: 18px;
+    color: #555;
+    margin: 10px 0;
+}
+
+.options .option:last-child button {
+    width: 100%;
+    margin-top: 25px;
+    padding: 10px 20px;
+    border-radius: 10px;
+    background-color: #fe5b3e;
+    color: white;
+    font-size: 1.2rem;
+    height: 45px;
+    border: none;
+    cursor: pointer;
+}
+.options .option:last-child button:hover {
+    background-color: #474fa0;
+}
+.options .option:first-child button {
+    width: 100%;
+    margin-top: 25px;
+    padding: 10px 20px;
+    border-radius: 10px;
+    background-color: #fff;
+    color: #474fa0;
+    font-size: 1.2rem;
+    height: 45px;
+    border: none;
+    cursor: pointer;
+    border:1px solid #474fa0;
+}
+.options .option:first-child button:hover {
+    border:2px solid #474fa0;
 }

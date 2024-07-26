@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Connexion Compte Personnel</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="login-container">
+        <div class="login-form">
+            <h1>Connexion compte personnel</h1>
+            <form action="/login" method="POST">
+                <label for="email">Votre e-mail ou votre identifiant conducteur (Driver ID)</label>
+                <input type="text" id="email" name="email" placeholder="Email or Driver ID">
+
+                <label for="password">Mot de passe</label>
+                <input type="password" id="password" name="password" placeholder="Password">
+
+                <a href="#" class="forgot-password">Mot de passe oublié ?</a>
+                <button type="submit">S'identifier</button>
+                <button type="button" class="create-account">Créez votre compte</button>
+            </form>
+        </div>
+    </div>
+</body>
+</html>
+<style>
+    body, html {
+    height: 100%;
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+}
+
+.login-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+}
+
+.login-form {
+    background: white;
+    padding: 40px;
+    width: 300px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    text-align: center;
+}
+
+.login-form h1 {
+    margin-bottom: 20px;
+}
+
+input[type="text"], input[type="password"] {
+    width: 100%;
+    padding: 10px;
+    margin: 10px 0;
+    display: inline-block;
+    border: 1px solid #ccc;
+    box-sizing: border-box;
+    border-radius: 4px;
+}
+
+button {
+    background-color: #4CAF50;
+    color: white;
+    padding: 14px 20px;
+    margin: 10px 0;
+    border: none;
+    cursor: pointer;
+    width: 100%;
+    border-radius: 4px;
+}
+
+button:hover {
+    opacity: 0.8;
+}
+
+.forgot-password {
+    color: #0095ff;
+    text-decoration: none;
+    display: block;
+    margin: 10px 0;
+}
+
+.create-account {
+    background-color: #f8f8f8;
+    color: black;
+}
+
+.create-account:hover {
+    background-color: #e7e7e7;
+}
+
+</style>

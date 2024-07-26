@@ -66,6 +66,9 @@ class Car
     #[ORM\Column]
     private ?bool $isElectric = null;
 
+    #[ORM\Column(nullable: true)]
+    private ?bool $isRecommended = null;
+
     public function __construct()
     {
         $this->locations = new ArrayCollection();
@@ -282,6 +285,18 @@ class Car
     public function setElectric(bool $isElectric): static
     {
         $this->isElectric = $isElectric;
+
+        return $this;
+    }
+
+    public function isRecommended(): ?bool
+    {
+        return $this->isRecommended;
+    }
+
+    public function setRecommended(?bool $isRecommended): static
+    {
+        $this->isRecommended = $isRecommended;
 
         return $this;
     }

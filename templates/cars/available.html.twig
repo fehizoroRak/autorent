@@ -1,133 +1,191 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Voitures Disponibles{% endblock %}
+{% block title %}Voitures Disponibles
+{% endblock %}
 
-{% block body_class %}available-cars-page{% endblock %}
+{% block body_class %}available-cars-page
+{% endblock %}
 
 {% block body %}
 
-  <div id="header" style="position:fixed;background: linear-gradient(to bottom, #fafafa,#e8e8e8); width:100%;">
-    <nav>
-      <div class="nav__header">
-        <div class="nav__logo">
-          <a href="#">AutoRent</a>
-        </div>
-        <div class="nav__menu__btn" id="menu-btn">
-          <i class="ri-menu-line"></i>
-        </div>
-      </div>
-      <ul class="nav__links" id="nav-links">
-        <li><a href="#home">Accueil</a></li>
-        <li><a href="#rent">Louer</a></li>
-        <li><a href="#service">Services</a></li>
-        <li><a href="#ride">Conduite</a></li>
-        <li><a href="#contact">Contact</a></li>
-        <li class="nav__links__btn">
-          <button class="btn">Inscription</button>
-        </li>
-        <li class="nav__links__btn">
-          <button class="btn">Connexion</button>
-        </li>
-      </ul>
-      <div class="nav__btns">
-        <button class="btn btn__primary">Inscription</button>
-        <button class="btn btn__secondary">Connexion</button>
-      </div>
-    </nav>
-  </div>
+	{% include '_partials/header.html.twig' %}
 
-<div class="section__container" id="available-cars">
-    <h1 style="margin-top:80px;">Choisissez votre véhicule</h1>
+	<div
+		class="section__container" id="available-cars">
+		{# CARS RECOMMANDEES #}
+		<h2 style="margin-top: 5rem;">Véhicules recommandés</h2>
 
-    {% if cars is empty %}
-        <p>Aucune voiture disponible pour les dates sélectionnées.</p>
-    {% else %}
-        
-       <p class="availability-text">1 disponible(s)</p>
+		<div class="recommended-cars">
+			<div class="carousel">
+				<button class="carousel-prev">&#10094;</button>
+				<div class="carousel-container">
+					{% for car in recommendedCars %}
+						<div class="carousel-item" data-brand="{{ car.brand }}" data-model="{{ car.model }}" data-year="{{ car.year }}" data-image="{{ car.image }}" data-color="{{ car.color }}" data-registration="{{ car.registration }}" data-nbofcardoors="{{ car.nbofcardoors }}" data-nbofpersons="{{ car.nbofpersons }}" data-airconditionner="{{ car.isAirconditionner }}" data-gearbox="{{ car.gearbox }}" data-horsepower="{{ car.horsepower }}" data-co2emissions="{{ car.co2emissions }}" data-electric="{{ car.isElectric }}" data-dayprice="{{ car.dayprice }}">
+							<div class="card">
+								<div class="card-header">
+									<span>{{ car.brand }}
+										{{ car.model }}</span>
+									<i class="ri-information-line info-icon" data-car="{{ car.id }}"></i>
+								</div>
+								<div class="card-body">
+									<div class="card-body__left">
+										<img src="{{ asset('images/' ~ car.image) }}" alt="{{ car.brand }} {{ car.model }}">
+									</div>
+									<div class="card-body__right">
+										<p>À PARTIR DE</p>
+										<p class="price-text">{{ car.dayprice }}
+											€ / jour</p>
+										<button class="select-btn">Sélectionner</button>
+									</div>
+								</div>
+							</div>
+						</div>
+					{% endfor %}
+				</div>
+				<button class="carousel-next">&#10095;</button>
+			</div>
+		</div>
 
-        <ul class="cars__list">
-        {% for car in cars %}
-            <li class="cars__item">
-                <div class="cars__image">
-                    <img src="{{ asset('images/' ~ car.image) }}" alt="{{ car.brand }} {{ car.model }}">
-                </div>
-                <div class="cars__details">
-                    <h2>{{ car.brand }} {{ car.model }}</h2>
-                    <p>Année: {{ car.year }}</p>
-                     <p>Couleur: {{ car.color }}</p>
-                      <p>Immat.: {{ car.registration }}</p>
-                   
-                </div>
-                <div class="cars__price">
-                    <p class="small-text">À PARTIR DE</p>
-                    <p class="price-text"> {{ car.dayprice }} €  / jour</p>
-                    <button class="select-btn"> Selectionner</button>
-                </div>
-            </li>
-        {% endfor %}
-        </ul>
-    {% endif %}
-</div>
+		<!-- Modal -->
+		<div id="carModal" class="modal">
+			<div class="modal-content">
+				<span class="close">&times;</span>
+				<div
+					class="modal-body"><!-- Les informations du car seront insérées ici via JavaScript -->
+				</div>
+			</div>
+		</div>
 
-<footer>
-    <div class="section__container footer__container">
-        <div class="footer__col">
-            <h4>Nos Produits</h4>
-            <ul class="footer__links">
-                <li><a href="#">Carrière</a></li>
-                <li><a href="#">Hôtels</a></li>
-                <li><a href="#">Voitures</a></li>
-                <li><a href="#">Forfaits</a></li>
-                <li><a href="#">Fonctionnalités</a></li>
-                <li><a href="#">Priceline</a></li>
-            </ul>
-        </div>
-        <div class="footer__col">
-            <h4>À propos d'AutoRent</h4>
-            <ul class="footer__links">
-                <li><a href="#">Pourquoi AutoRent</a></li>
-                <li><a href="#">Notre Histoire</a></li>
-                <li><a href="#">Investisseurs</a></li>
-                <li><a href="#">Centres de Presse</a></li>
-                <li><a href="#">Publicité</a></li>
-            </ul>
-        </div>
-        <div class="footer__col">
-            <h4>Ressources</h4>
-            <ul class="footer__links">
-                <li><a href="#">Télécharger</a></li>
-                <li><a href="#">Centres d'aide</a></li>
-                <li><a href="#">Guides</a></li>
-                <li><a href="#">Réseau de Partenaires</a></li>
-                <li><a href="#">Mécaniciens</a></li>
-                <li><a href="#">Développeur</a></li>
-            </ul>
-        </div>
-        <div class="footer__col">
-            <h4>Extras</h4>
-            <ul class="footer__links">
-                <li><a href="#">Offre de Location</a></li>
-                <li><a href="#">Atelier de Réparation</a></li>
-                <li><a href="#">Voir Réservation</a></li>
-                <li><a href="#">Entreprises de Location</a></li>
-                <li><a href="#">Nouvelles Offres</a></li>
-            </ul>
-        </div>
-    </div>
-    <div class="section__container footer__bar">
-        <h4>AutoRent</h4>
-        <p>Copyright © 2024 - Tous droits réservés.</p>
-        <ul class="footer__socials">
-            <li>
-                <a href="#"><i class="ri-facebook-fill"></i></a>
-            </li>
-            <li>
-                <a href="#"><i class="ri-twitter-fill"></i></a>
-            </li>
-            <li>
-                <a href="#"><i class="ri-google-fill"></i></a>
-            </li>
-        </ul>
-    </div>
-</footer>
+
+		{# LISTE DES CARS DISPONIBLES #}
+
+
+		<h1 style="margin-top:80px;">Choisissez votre véhicule</h1>
+
+		{% if cars is empty %}
+			<p>Aucune voiture disponible pour les dates sélectionnées.</p>
+		{% else %}
+
+			<p class="availability-text">1 disponible(s)</p>
+
+			<ul class="cars__list">
+				{% for car in cars %}
+					<li class="cars__item">
+						<div class="cars__image">
+							<img src="{{ asset('images/' ~ car.image) }}" alt="{{ car.brand }} {{ car.model }}">
+						</div>
+						<div class="cars__details">
+							<h1 style="    margin-bottom: 25px;">{{ car.brand }}
+								{{ car.model }}</h1>
+
+							<div class="cars__details1">
+								<p>
+									<i class="ri-calendar-line"></i>
+									{{ car.year }}</p>
+								<p>
+									<i class="ri-palette-line"></i>
+									{{ car.color }}</p>
+								<p>
+									<i class="ri-car-line"></i>
+									{{ car.registration }}</p>
+
+								<p style="display:flex; justify-content: start; align-items:center; ">
+									<img src="{{ asset('images/car.png') }}" alt="moteur" style="width: 0.9em; height: 0.9em; margin-right: 10px;">
+									{{ car.nbofcardoors }}
+									portes
+								</p>
+								<p>
+									<i class="ri-user-line"></i>
+									{{ car.nbofpersons }}
+									personnes</p>
+							</div>
+							<div class="cars__details1">
+								{% if car.isAirconditionner %}
+									<p>
+										<i class="fa-solid fa-snowflake"></i>
+										Climatisation</p>
+								{% endif %}
+
+
+								<p style="display:flex; justify-content: start; align-items:center; "><img src="{{ asset('images/gear.png') }}" alt="moteur" style="width: 1em; height: 1em; margin-right: 10px;
+										">
+									{{ car.gearbox }}</p>
+
+								<p style="display:flex; justify-content: start; align-items:center; "><img src="{{ asset('images/engine.png') }}" alt="moteur" style="width: 1.3em; height: 1.3em; margin-right: 10px;
+										">
+									{{ car.horsepower }}
+									CV</p>
+
+								<p>
+									<i class="ri-cloud-line"></i>
+									CO2:
+									{{ car.co2emissions }}
+									g/km</p>
+
+								{% if car.isElectric %}
+									<p class="isElec">
+										<i style="color:#fff;" class="ri-flashlight-line"></i>
+										Électrique</p>
+								{% endif %}
+
+							</div>
+
+						</div>
+
+						<div class="cars__price">
+							<p class="small-text">À PARTIR DE</p>
+							<p class="price-text">{{ car.dayprice }}
+								€ / jour</p>
+							<button class="select-btn">Sélectionner</button>
+						</div>
+					</li>
+
+					<!-- Hidden Modal -->
+					<div class="modal-select" style="display: none;">
+						<div class="content">
+							<span class="close-selectionner">&times;</span>
+							<div class="car-details">
+								<div>
+									<h1>Choisissez le tarif qui vous convient</h1>
+									<h2><br>
+									</h2>
+									<span class="info-similaire">
+										ou similaire économique
+										<i class="ri-information-line info-icon"></i>
+										<span class="tooltip">Selon la disponibilité dans notre agence, un autre modèle de la même catégorie pourra vous être proposé.</span>
+									</span>
+								</div>
+
+								<img src="public/images/bmw_3_series.jpg" alt="Mg4 Electric">
+							</div>
+
+							<div class="options">
+								<div class="option">
+									<h2 style="margin-top: 43px;">Payer en agence</h2>
+									<p style="margin-top: 20px;">Vous paierez au comptoir le jour de la prise en charge.</p>
+									<p>L'annulation est gratuite 48h avant la date de prise en charge.</p>
+									<div class="price">95,53 €/jour</div>
+									<div class="total">TOTAL 286,60 €</div>
+									<button>Sélectionner</button>
+								</div>
+								<div class="option online">
+									<span>Économisez 9 %</span>
+									<h2 style="margin-top: 25px;">Payer en ligne</h2>
+									<p style="margin-top: 20px;">Votre carte de crédit sera débitée une fois la réservation terminée.</p>
+									<p>L'annulation est gratuite 48h avant la date de prise en charge.</p>
+									<div class="price">86,90 €/jour</div>
+									<div class="total">TOTAL 260,71 €</div>
+									<button>Sélectionner</button>
+								</div>
+							</div>
+						</div>
+					</div>
+				{% endfor %}
+			</ul>
+		{% endif %}
+	</div>
+
+	{% include '_partials/footer.html.twig' %}
+
 {% endblock %}
+

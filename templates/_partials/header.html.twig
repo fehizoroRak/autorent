@@ -1,0 +1,58 @@
+
+
+<div id="header" style="position:fixed;background-color:#f7f7f7;z-index: 99999; width:100%;">
+	<nav>
+		<div class="nav__header">
+			<div class="nav__logo">
+				<a href="#">AutoRent</a>
+			</div>
+			<div class="nav__menu__btn" id="menu-btn">
+				<i class="ri-menu-line"></i>
+			</div>
+		</div>
+		<ul class="nav__links" id="nav-links">
+			<li class="nav__links__btn">
+				<button class="btn">
+					<i class="ri-login-box-line"></i>
+					Identifiez-vous</button>
+			</li>
+			<li class="nav__links__btn">
+				<button class="btn">Aide</button>
+			</li>
+			<li class="nav__links__btn">
+				<button class="btn">Contacts</button>
+			</li>
+		</ul>
+		<div class="nav__btns">
+
+			<a style="margin-right:20px;" class="" href="{{ path('app_login') }}">
+				<i class="ri-login-box-line"></i>
+				Identifiez-vous</a>
+			<a class="" href="">
+				<i class="ri-question-line"></i>
+				Aide</a>
+
+			{# <button class="btn btn__primary">Inscription</button>
+			        <button class="btn btn__secondary">Connexion</button> #}
+		</div>
+	</nav>
+</div>
+
+<style>
+	.nav__btns i {
+		margin-right: 3px;
+		font-size: 1.3rem;
+		font-weight: bold;
+	}
+	.nav__btns a {
+		color: #000;
+		font-size: 1rem;
+		font-weight: bold;
+		padding-bottom: 5px;
+	}
+	.nav__btns a:hover {
+		font-size: 1rem;
+		font-weight: bold;
+		border-bottom: 2px solid #000;
+	}
+</style>

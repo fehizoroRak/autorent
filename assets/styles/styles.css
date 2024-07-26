@@ -729,6 +729,18 @@ nav {
     background-color: #3c4286;
     transform: scale(1.05);
 }
+.cars__details i {
+  margin-right: 0.2rem;
+  font-weight: 700;
+  color: #c9c9c9; /* Changez la couleur selon votre thème */
+}
+.cars__details1 {
+display: flex;
+margin-bottom: 20px;
+justify-content: flex-start;
+align-items: center;
+flex-wrap: wrap;
+}
 
 /* Responsive styles */
 @media (max-width: 768px) {
@@ -746,3 +758,11 @@ nav {
         font-size: 0.9rem;
     }
 }
+
+@media (max-width: 1070px) {
+
+    .cars__details1 p {
+      margin-bottom: 1.5rem; /* Ajustez cette valeur selon vos besoins */
+  }
+}
+
