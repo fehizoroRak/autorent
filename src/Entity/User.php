@@ -3,16 +3,18 @@
 namespace App\Entity;
 
 use App\Repository\UserRepository;
+use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
-use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
-class User
+class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
-    #[ORM\Column]
+    #[ORM\Column(type: 'integer')]
     private ?int $id = null;
 
     #[ORM\Column(length: 255, nullable: true)]
@@ -30,10 +32,13 @@ class User
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $address = null;
 
-    /**
-     * @var Collection<int, Location>
-     */
-    #[ORM\OneToMany(targetEntity: Location::class, mappedBy: 'user')]
+    #[ORM\Column(length: 255)]
+    private ?string $password = null;
+
+    #[ORM\Column(type: 'json')]
+    private array $roles = [];
+
+    #[ORM\OneToMany(mappedBy: 'user', targetEntity: Location::class)]
     private Collection $locations;
 
     public function __construct()
@@ -41,6 +46,50 @@ class User
         $this->locations = new ArrayCollection();
     }
 
+    // UserInterface methods
+    public function getRoles(): array
+    {
+        return $this->roles;
+    }
+
+    public function setRoles(array $roles): self
+    {
+        $this->roles = $roles;
+        return $this;
+    }
+
+    public function getPassword(): string
+    {
+        return $this->password;
+    }
+
+    public function setPassword(string $password): self
+    {
+        $this->password = $password;
+        return $this;
+    }
+
+    public function getSalt(): ?string
+    {
+        // Not needed if you use a modern algorithm like bcrypt or Argon2 in your security.yaml
+        return null;
+    }
+
+    public function getUsername(): string
+    {
+        return $this->email;
+    }
+
+    public function getUserIdentifier(): string
+    {
+        return $this->email;
+    }
+
+    public function eraseCredentials(): void
+    {
+     
+    }
+    // Auto-generated getter and setter methods
     public function getId(): ?int
     {
         return $this->id;
@@ -51,10 +100,9 @@ class User
         return $this->name;
     }
 
-    public function setName(?string $name): static
+    public function setName(?string $name): self
     {
         $this->name = $name;
-
         return $this;
     }
 
@@ -63,10 +111,9 @@ class User
         return $this->firstname;
     }
 
-    public function setFirstname(?string $firstname): static
+    public function setFirstname(?string $firstname): self
     {
         $this->firstname = $firstname;
-
         return $this;
     }
 
@@ -75,10 +122,9 @@ class User
         return $this->email;
     }
 
-    public function setEmail(?string $email): static
+    public function setEmail(?string $email): self
     {
         $this->email = $email;
-
         return $this;
     }
 
@@ -87,10 +133,9 @@ class User
         return $this->phonenumber;
     }
 
-    public function setPhonenumber(?string $phonenumber): static
+    public function setPhonenumber(?string $phonenumber): self
     {
         $this->phonenumber = $phonenumber;
-
         return $this;
     }
 
@@ -99,40 +144,33 @@ class User
         return $this->address;
     }
 
-    public function setAddress(?string $address): static
+    public function setAddress(?string $address): self
     {
         $this->address = $address;
-
         return $this;
     }
 
-    /**
-     * @return Collection<int, Location>
-     */
     public function getLocations(): Collection
     {
         return $this->locations;
     }
 
-    public function addLocation(Location $location): static
+    public function addLocation(Location $location): self
     {
         if (!$this->locations->contains($location)) {
             $this->locations->add($location);
             $location->setUser($this);
         }
-
         return $this;
     }
 
-    public function removeLocation(Location $location): static
+    public function removeLocation(Location $location): self
     {
         if ($this->locations->removeElement($location)) {
-            // set the owning side to null (unless already changed)
             if ($location->getUser() === $this) {
                 $location->setUser(null);
             }
         }
-
         return $this;
     }
 }

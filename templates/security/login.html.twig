@@ -1,119 +1,128 @@
-{# templates/security/login.html.twig #}
-
 {% extends 'base.html.twig' %}
 
-{% block title %}Connexion compte personnel{% endblock %}
+{% block title %}Connexion compte personnel
+{% endblock %}
 
 {% block body %}
 
-{% include '_partials/header.html.twig' %}
+	{% include '_partials/header.html.twig' %}
 
 
-   <div class="login-container">
-        <div class="login-form">
-            <h1>Connexion compte personnel</h1>
-            <form action="/login" method="POST">
-                <label for="email">Votre e-mail </label>
-                <input type="text" id="email" name="email" >
+	<div class="login-container">
+		<div class="login-form">
+			<h1>Connexion compte personnel</h1>
+			{% if error %}
+				<div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+			{% endif %}
 
-                <label for="password">Mot de passe</label>
-                <input type="password" id="password" name="password" >
+			<form action="{{ path('app_login') }}" method="POST">
+				<label for="username">Email</label>
+				<input type="text" id="username" name="_username" value="{{ last_username }}" required autofocus>
 
-                <a href="#" class="forgot-password">Mot de passe oublié ?</a>
-                <button type="submit">S'identifier</button>
-             
-                      <a style="color: #fe5b3e;" href="{{ path('app_register') }}" >
-   <div class="create-account">
-                      Créez votre compte
-                          </div>
-                      </a>
-            
-          
-                {# <button type="button" class="create-account">Créez votre compte</button> #}
-            </form>
-        </div>
-    </div>
+				<label for="password">Password</label>
+				<input
+				type="password" id="password" name="_password" required>
+
+				{# If you want to control the URL the user is redirected to on success#}
+				<input type="hidden" name="_target_path" value="{{ path('app_pack') }}">
+
+				<a href="#" class="forgot-password">Mot de passe oublié ?</a>
+				<button type="submit">S'identifier</button>
+
+				<a style="color: #fe5b3e;" href="{{ path('app_register') }}">
+					<div class="create-account">
+						Créez votre compte
+					</div>
+				</a>
 
 
-    <style>
+				{# <button type="button" class="create-account">Créez votre compte</button> #}
+			</form>
+		</div>
+	</div>
 
-.login-container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100%;
-}
 
-.login-form {
-    background: #fbfbfb;
-    padding: 40px;
-    width: 40%;
-    border:2px solid #f7f7f7;
-    border-radius: 8px;
-    text-align: start;
-     margin-top:60px;
-}
+	<style>
 
-.login-form h1 {
-    margin-bottom: 20px;
-}
+		.login-container {
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			height: 100%;
+		}
 
-input[type="text"], input[type="password"] {
-    width: 100%;
-    height: 48px;
-    padding: 10px;
-    margin: 10px 0;
-    display: inline-block;
-    border: 1px solid #ccc;
-    box-sizing: border-box;
-    border-radius: 8px;
-}
+		.login-form {
+			background: #fbfbfb;
+			padding: 40px;
+			width: 40%;
+			border: 2px solid #f7f7f7;
+			border-radius: 8px;
+			text-align: start;
+			margin-top: 60px;
+		}
 
-button {
-    background-color: #fe5b3e;
-    color: white;
-    padding: 14px 20px;
-    margin: 10px 0;
-    border: none;
-    cursor: pointer;
-    width: 100%;
-    border-radius: 8px;
-    font-size: 1.1rem;
-}
+		.login-form h1 {
+			margin-bottom: 20px;
+		}
 
-button:hover {
-    opacity: 0.9;
-     font-weight: bold;
-}
+		input[type="text"],
+		input[type="password"] {
+			width: 100%;
+			height: 48px;
+			padding: 10px;
+			margin: 10px 0;
+			display: inline-block;
+			border: 1px solid #ccc;
+			box-sizing: border-box;
+			border-radius: 8px;
+		}
 
-.forgot-password {
-    color: #fe5b3e;
-    text-decoration: none;
-    display: block;
-    margin: 10px 0;
-}
+		button {
+			background-color: #fe5b3e;
+			color: white;
+			padding: 14px 20px;
+			margin: 10px 0;
+			border: none;
+			cursor: pointer;
+			width: 100%;
+			border-radius: 8px;
+			font-size: 1.1rem;
+		}
 
-.create-account {
-    margin-top: 20px;
-    width: 100%;
-    background-color: white;
-    border: 1px solid #fe5b3e;
-    font-size: 1.1rem;
-    border-radius: 8px;
-    height: 48px;
-    display:flex;
-    justify-content:center;
-    align-items: center;
-    cursor:pointer;
-}
+		button:hover {
+			opacity: 0.9;
+			font-weight: bold;
+		}
 
-.create-account:hover {
-   border: 2px solid #fe5b3e;
-   font-weight: bold;
-  
-}
-    </style>
+		.forgot-password {
+			color: #fe5b3e;
+			text-decoration: none;
+			display: block;
+			margin: 10px 0;
+		}
 
-{% include '_partials/footer.html.twig' %}
+		.create-account {
+			margin-top: 20px;
+			width: 100%;
+			background-color: white;
+			border: 1px solid #fe5b3e;
+			font-size: 1.1rem;
+			border-radius: 8px;
+			height: 48px;
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			cursor: pointer;
+		}
+
+		.create-account:hover {
+			border: 2px solid #fe5b3e;
+			font-weight: bold;
+
+		}
+	</style>
+
+	{% include '_partials/footer.html.twig' %}
 
 {% endblock %}
+

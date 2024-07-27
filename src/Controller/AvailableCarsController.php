@@ -26,7 +26,7 @@ class AvailableCarsController extends AbstractController
         // Récupérer les voitures recommandées
         $recommendedCars = $carRepository->findRecommendedCars();
 
-        return $this->render('cars/available.html.twig', [
+        return $this->render('availablecars/availablecars.html.twig', [
             'cars' => $cars,
             'recommendedCars' => $recommendedCars,
         ]);

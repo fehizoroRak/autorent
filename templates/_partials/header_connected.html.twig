@@ -21,21 +21,27 @@
 				<button class="btn"><i class="ri-contacts-line"></i> Contacts</button>
 			</li>
 		</ul>
-		<div class="nav__btns">
+	<div class="nav__btns">
+    {% if app.user %}
+        <a style="margin-right:20px;" class="" href="{{ path('app_login') }}">
+            <i class="ri-user-line"></i>
+            Bonjour,  {{ app.user.name }} {{ app.user.firstname }}
+        </a>
+   
+    {% endif %}
 
-			{# <a style="margin-right:20px;" class="" href="{{ path('app_login') }}">
-				<i class="ri-login-box-line"></i>
-				Identifiez-vous
-			</a> #}
+    <a class="" href="">
+        <i class="ri-question-line"></i>
+        Aide
+    </a>
 
-			<a class="" href="">
-				<i class="ri-question-line"></i>
-				Aide
-			</a>
+    {% if app.user %}
+        <a style="margin-left:20px;" class="" href="{{ path('app_logout') }}">
+            <i class="ri-logout-box-r-line"></i>
+        </a>
+    {% endif %}
+</div>
 
-			{# <button class="btn btn__primary">Inscription</button>
-			<button class="btn btn__secondary">Connexion</button> #}
-		</div>
 	</nav>
 </div>
 

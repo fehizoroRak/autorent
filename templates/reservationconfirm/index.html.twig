@@ -1,12 +1,15 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Reservation Confirmation</title>
-<link rel="stylesheet" href="styles.css">
-</head>
-<body>
+{% extends 'base.html.twig' %}
+
+{% block title %}Connexion compte personnel{% endblock %}
+
+{% block body %}
+
+{% include '_partials/header_connected.html.twig' %}
+
+<div class="section__container" id="available-cars">
+
+<h1 style="margin-top:80px;">Confirmez votre réservation</h1>
+
 <div class="reservation-form">
     <section class="summary">
         <h1>Résumé</h1>
@@ -16,7 +19,7 @@
         </div>
 
         <div style="display: flex; justify-content:flex-start; align-items: center; gap: 25px; ">
-            <img style="width: 25%;" src="public/images/audi_a4.jpg" alt="Car Image">
+            <img style="width: 25%;" src="{{asset('images/bmw_3_series.jpg')}}" alt="Car Image">
             <h2>PEUGEOT 208
                 <br>
                 OU SIMILAIRE ECONOMIQUE
@@ -69,20 +72,18 @@
         <p>Adresse:</p>
     </aside>
 </div>
-</body>
-</html>
 
-<style>
+</div>
 
+
+    <style>
 
 .reservation-form {
     display: grid;
     grid-template-columns: 65% 35%; /* Allocates 65% for information and 35% for summary */
     gap: 20px; /* Space between the two columns */
-    width: 80%;
     margin: 40px auto; /* Center the form on the page with some margin at the top */
     background: white;
-
 
 }
 
@@ -125,5 +126,8 @@ p {
     margin-top: 10px;
     line-height: 1.6;
 }
+    </style>
 
-</style>
+{% include '_partials/footer.html.twig' %}
+
+{% endblock %}
