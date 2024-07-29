@@ -1,190 +1,158 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Voitures Disponibles
-{% endblock %}
+{% block title %}Voitures Disponibles{% endblock %}
 
-{% block body_class %}available-cars-page
-{% endblock %}
+{% block body_class %}available-cars-page{% endblock %}
 
 {% block body %}
 
-	{% include '_partials/header.html.twig' %}
+    {% include '_partials/header_steps.html.twig' %}
 
-	<div class="section__container" id="available-cars">
-		{# CARS RECOMMANDEES #}
-		<h2 style="margin-top: 5rem;">Véhicules recommandés</h2>
+    <div class="section__container" id="available-cars">
+        {# CARS RECOMMENDED #}
+        <h2 style="margin-top: 8rem;">Véhicules recommandés</h2>
 
-		<div class="recommended-cars">
-			<div class="carousel">
-				<button class="carousel-prev">&#10094;</button>
-				<div class="carousel-container">
-					{% for car in recommendedCars %}
-						<div class="carousel-item" data-brand="{{ car.brand }}" data-model="{{ car.model }}" data-year="{{ car.year }}" data-image="{{ car.image }}" data-color="{{ car.color }}" data-registration="{{ car.registration }}" data-nbofcardoors="{{ car.nbofcardoors }}" data-nbofpersons="{{ car.nbofpersons }}" data-airconditionner="{{ car.isAirconditionner }}" data-gearbox="{{ car.gearbox }}" data-horsepower="{{ car.horsepower }}" data-co2emissions="{{ car.co2emissions }}" data-electric="{{ car.isElectric }}" data-dayprice="{{ car.dayprice }}">
-							<div class="card">
-								<div class="card-header">
-									<span>{{ car.brand }}
-										{{ car.model }}</span>
-									<i class="ri-information-line info-icon" data-car="{{ car.id }}"></i>
-								</div>
-								<div class="card-body">
-									<div class="card-body__left">
-										<img src="{{ asset('images/' ~ car.image) }}" alt="{{ car.brand }} {{ car.model }}">
-									</div>
-									<div class="card-body__right">
-										<p>À PARTIR DE</p>
-										<p class="price-text">{{ car.dayprice }}
-											€ / jour</p>
-										<button class="select-btn">Sélectionner</button>
-									</div>
-								</div>
-							</div>
-						</div>
-					{% endfor %}
-				</div>
-				<button class="carousel-next">&#10095;</button>
-			</div>
-		</div>
+        <div class="recommended-cars">
+            <div class="carousel">
+                <button class="carousel-prev">&#10094;</button>
+                <div class="carousel-container">
+                    {% for car in recommendedCars %}
+                        {% set TotalPerDay = car.dayprice * days %}
+                        <div class="carousel-item" data-brand="{{ car.brand }}" data-model="{{ car.model }}" data-year="{{ car.year }}" data-image="{{ car.image }}" data-color="{{ car.color }}" data-registration="{{ car.registration }}" data-nbofcardoors="{{ car.nbofcardoors }}" data-nbofpersons="{{ car.nbofpersons }}" data-airconditionner="{{ car.isAirconditionner }}" data-gearbox="{{ car.gearbox }}" data-horsepower="{{ car.horsepower }}" data-co2emissions="{{ car.co2emissions }}" data-electric="{{ car.isElectric }}" data-dayprice="{{ car.dayprice }}" data-days="{{ days }}" data-totalperday="{{ TotalPerDay }}">
+                            <div class="card">
+                                <div class="card-header">
+                                    <span>{{ car.brand }} {{ car.model }}</span>
+                                    <i class="ri-information-line info-icon" data-car="{{ car.id }}"></i>
+                                </div>
+                                <div class="card-body">
+                                    <div class="card-body__left">
+                                        <img src="{{ asset('images/' ~ car.image) }}" alt="{{ car.brand }} {{ car.model }}">
+                                    </div>
+                                    <div class="card-body__right">
+                                        <p>À PARTIR DE</p>
+                                        <p class="price-text">{{ car.dayprice }} € / jour</p>
+                                        <h4 style="color: #919191;">
+                                            TOTAL <span style="color: #fe5c3c;">{{ TotalPerDay }} €</span>
+                                        </h4>
+                                        <button class="select-btn">Sélectionner</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+                <button class="carousel-next">&#10095;</button>
+            </div>
+        </div>
 
-		<!-- Modal -->
-		<div id="carModal" class="modal">
-			<div class="modal-content">
-				<span class="close">&times;</span>
-				<div
-					class="modal-body"><!-- Les informations du car seront insérées ici via JavaScript -->
-				</div>
-			</div>
-		</div>
+        <!-- Modal -->
+        <div id="carModal" class="modal">
+            <div class="modal-content">
+                <span class="close">&times;</span>
+                <div class="modal-body">
+                    <!-- Les informations du car seront insérées ici via JavaScript -->
+                </div>
+            </div>
+        </div>
 
+        {# LISTE DES CARS DISPONIBLES #}
 
-		{# LISTE DES CARS DISPONIBLES #}
+        <h1 style="margin-top:80px;">Choisissez votre véhicule</h1>
 
+        {% if cars is empty %}
+            <p>Aucune voiture disponible pour les dates sélectionnées.</p>
+        {% else %}
+            <p class="availability-text">{{ cars|length }} disponible(s)</p>
 
-		<h1 style="margin-top:80px;">Choisissez votre véhicule</h1>
+            <ul class="cars__list">
+                {% for car in cars %}
+                    {% set TotalPerDay = car.dayprice * days %}
 
-		{% if cars is empty %}
-			<p>Aucune voiture disponible pour les dates sélectionnées.</p>
-		{% else %}
+					<li class="cars__item" data-brand="{{ car.brand }}" data-model="{{ car.model }}" data-year="{{ car.year }}" data-image="{{ car.image }}" data-color="{{ car.color }}" data-registration="{{ car.registration }}" data-nbofcardoors="{{ car.nbofcardoors }}" data-nbofpersons="{{ car.nbofpersons }}" data-airconditionner="{{ car.isAirconditionner }}" data-gearbox="{{ car.gearbox }}" data-horsepower="{{ car.horsepower }}" data-co2emissions="{{ car.co2emissions }}" data-electric="{{ car.isElectric }}" data-dayprice="{{ car.dayprice }}" data-days="{{ days }}" data-totalperday="{{ TotalPerDay }}">
+             
+                        <div class="cars__image">
+                            <img src="{{ asset('images/' ~ car.image) }}" alt="{{ car.brand }} {{ car.model }}">
+                        </div>
+                        <div class="cars__details">
+                            <h1 style="margin-bottom: 25px;">{{ car.brand }} {{ car.model }}</h1>
+                            <div class="cars__details1">
+                                <p><i class="ri-calendar-line"></i> {{ car.year }}</p>
+                                <p><i class="ri-palette-line"></i> {{ car.color }}</p>
+                                <p><i class="ri-car-line"></i> {{ car.registration }}</p>
+                                <p style="display:flex; justify-content: start; align-items:center;">
+                                    <img src="{{ asset('images/car.png') }}" alt="moteur" style="width: 0.9em; height: 0.9em; margin-right: 10px;">
+                                    {{ car.nbofcardoors }} portes
+                                </p>
+                                <p><i class="ri-user-line"></i> {{ car.nbofpersons }} personnes</p>
+                            </div>
+                            <div class="cars__details1">
+                                {% if car.isAirconditionner %}
+                                    <p><i class="fa-solid fa-snowflake"></i> Climatisation</p>
+                                {% endif %}
+                                <p style="display:flex; justify-content: start; align-items:center;">
+                                    <img src="{{ asset('images/gear.png') }}" alt="moteur" style="width: 1em; height: 1em; margin-right: 10px;">
+                                    {{ car.gearbox }}
+                                </p>
+                                <p style="display:flex; justify-content: start; align-items:center;">
+                                    <img src="{{ asset('images/engine.png') }}" alt="moteur" style="width: 1.3em; height: 1.3em; margin-right: 10px;">
+                                    {{ car.horsepower }} CV
+                                </p>
+                                <p><i class="ri-cloud-line"></i> CO2: {{ car.co2emissions }} g/km</p>
+                                {% if car.isElectric %}
+                                    <p class="isElec"><i style="color:#fff;" class="ri-flashlight-line"></i> Électrique</p>
+                                {% endif %}
+                            </div>
+                        </div>
+                        <div class="cars__price">
+                            <p class="small-text">À PARTIR DE</p>
+                            <p class="price-text">{{ car.dayprice }} € / jour</p>
+                            <h4 style="color: #919191;">TOTAL <span style="color: #fe5c3c;">{{ TotalPerDay }} €</span></h4>
+                            <button class="select-btn">Sélectionner</button>
+                        </div>
+                    </li>
+                    <!-- Hidden Modal -->
+                <div class="modal-select" style="display: none;">
+    <div class="content">
+        <span class="close-selectionner">&times;</span>
+        <div class="car-details">
+            <div>
+                <h1>Choisissez le tarif qui vous convient</h1>
+                <h2><br></h2>
+                <span class="info-similaire">
+                    ou similaire économique
+                    <i class="ri-information-line info-icon"></i>
+                    <span class="tooltip">Selon la disponibilité dans notre agence, un autre modèle de la même catégorie pourra vous être proposé.</span>
+                </span>
+            </div>
+            <img src="{{ asset('images/bmw_3_series.jpg') }}" alt="Mg4 Electric">
+        </div>
+        <div class="options">
+            <div class="option">
+                <h2 style="margin-top: 43px;">Payer en agence</h2>
+                <p style="margin-top: 20px;">Vous paierez au comptoir le jour de la prise en charge.</p>
+                <p>L'annulation est gratuite 48h avant la date de prise en charge.</p>
+                <div class="price"></div>
+                <div class="total"></div>
+                <button>Sélectionner</button>
+            </div>
+            <div class="option online">
+                <span>Économisez 9 %</span>
+                <h2 style="margin-top: 25px;">Payer en ligne</h2>
+                <p style="margin-top: 20px;">Votre carte de crédit sera débitée une fois la réservation terminée.</p>
+                <p>L'annulation est gratuite 48h avant la date de prise en charge.</p>
+                <div class="price"></div>
+                <div class="total"></div>
+                <button>Sélectionner</button>
+            </div>
+        </div>
+    </div>
+</div>
 
-			<p class="availability-text">1 disponible(s)</p>
+                {% endfor %}
+            </ul>
+        {% endif %}
+    </div>
 
-			<ul class="cars__list">
-				{% for car in cars %}
-					<li class="cars__item">
-						<div class="cars__image">
-							<img src="{{ asset('images/' ~ car.image) }}" alt="{{ car.brand }} {{ car.model }}">
-						</div>
-						<div class="cars__details">
-							<h1 style="    margin-bottom: 25px;">{{ car.brand }}
-								{{ car.model }}</h1>
-
-							<div class="cars__details1">
-								<p>
-									<i class="ri-calendar-line"></i>
-									{{ car.year }}</p>
-								<p>
-									<i class="ri-palette-line"></i>
-									{{ car.color }}</p>
-								<p>
-									<i class="ri-car-line"></i>
-									{{ car.registration }}</p>
-
-								<p style="display:flex; justify-content: start; align-items:center; ">
-									<img src="{{ asset('images/car.png') }}" alt="moteur" style="width: 0.9em; height: 0.9em; margin-right: 10px;">
-									{{ car.nbofcardoors }}
-									portes
-								</p>
-								<p>
-									<i class="ri-user-line"></i>
-									{{ car.nbofpersons }}
-									personnes</p>
-							</div>
-							<div class="cars__details1">
-								{% if car.isAirconditionner %}
-									<p>
-										<i class="fa-solid fa-snowflake"></i>
-										Climatisation</p>
-								{% endif %}
-
-
-								<p style="display:flex; justify-content: start; align-items:center; "><img src="{{ asset('images/gear.png') }}" alt="moteur" style="width: 1em; height: 1em; margin-right: 10px;
-										">
-									{{ car.gearbox }}</p>
-
-								<p style="display:flex; justify-content: start; align-items:center; "><img src="{{ asset('images/engine.png') }}" alt="moteur" style="width: 1.3em; height: 1.3em; margin-right: 10px;
-										">
-									{{ car.horsepower }}
-									CV</p>
-
-								<p>
-									<i class="ri-cloud-line"></i>
-									CO2:
-									{{ car.co2emissions }}
-									g/km</p>
-
-								{% if car.isElectric %}
-									<p class="isElec">
-										<i style="color:#fff;" class="ri-flashlight-line"></i>
-										Électrique</p>
-								{% endif %}
-
-							</div>
-
-						</div>
-
-						<div class="cars__price">
-							<p class="small-text">À PARTIR DE</p>
-							<p class="price-text">{{ car.dayprice }}
-								€ / jour</p>
-							<button class="select-btn">Sélectionner</button>
-						</div>
-					</li>
-
-					<!-- Hidden Modal -->
-					<div class="modal-select" style="display: none;">
-						<div class="content">
-							<span class="close-selectionner">&times;</span>
-							<div class="car-details">
-								<div>
-									<h1>Choisissez le tarif qui vous convient</h1>
-									<h2><br>
-									</h2>
-									<span class="info-similaire">
-										ou similaire économique
-										<i class="ri-information-line info-icon"></i>
-										<span class="tooltip">Selon la disponibilité dans notre agence, un autre modèle de la même catégorie pourra vous être proposé.</span>
-									</span>
-								</div>
-
-								<img src="public/images/bmw_3_series.jpg" alt="Mg4 Electric">
-							</div>
-
-							<div class="options">
-								<div class="option">
-									<h2 style="margin-top: 43px;">Payer en agence</h2>
-									<p style="margin-top: 20px;">Vous paierez au comptoir le jour de la prise en charge.</p>
-									<p>L'annulation est gratuite 48h avant la date de prise en charge.</p>
-									<div class="price">95,53 €/jour</div>
-									<div class="total">TOTAL 286,60 €</div>
-									<button>Sélectionner</button>
-								</div>
-								<div class="option online">
-									<span>Économisez 9 %</span>
-									<h2 style="margin-top: 25px;">Payer en ligne</h2>
-									<p style="margin-top: 20px;">Votre carte de crédit sera débitée une fois la réservation terminée.</p>
-									<p>L'annulation est gratuite 48h avant la date de prise en charge.</p>
-									<div class="price">86,90 €/jour</div>
-									<div class="total">TOTAL 260,71 €</div>
-									<button>Sélectionner</button>
-								</div>
-							</div>
-						</div>
-					</div>
-				{% endfor %}
-			</ul>
-		{% endif %}
-	</div>
-
-	{% include '_partials/footer.html.twig' %}
+    {% include '_partials/footer.html.twig' %}
 
 {% endblock %}
-

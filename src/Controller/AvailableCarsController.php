@@ -19,7 +19,9 @@ class AvailableCarsController extends AbstractController
         $dropoffLocation = $request->query->get('dropoffLocation');
         $startDate = $request->query->get('startDate') ? new \DateTime($request->query->get('startDate')) : null;
         $endDate = $request->query->get('endDate') ? new \DateTime($request->query->get('endDate')) : null;
-
+        // Récupere le nombre de jours
+        $interval = $startDate->diff($endDate);
+        $days = $interval->days;
         // Requête pour récupérer les voitures disponibles
         $cars = $carRepository->findAvailableCars($startDate, $endDate, $pickupLocation, $dropoffLocation);
 
@@ -29,6 +31,7 @@ class AvailableCarsController extends AbstractController
         return $this->render('availablecars/availablecars.html.twig', [
             'cars' => $cars,
             'recommendedCars' => $recommendedCars,
+            'days' => $days,
         ]);
     }
 }

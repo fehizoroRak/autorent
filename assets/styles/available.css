@@ -134,7 +134,7 @@
 .cars__price {
     font-size: 1.25rem;
     font-weight: 700;
-    color: var(--primary-color);
+
 }
 
 .cars__details p.isElec {

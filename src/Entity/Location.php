@@ -33,21 +33,31 @@ class Location
     #[ORM\JoinColumn(nullable: false)]
     private ?Car $car = null;
 
+    #[ORM\ManyToOne(targetEntity: CityPickupLocation::class, inversedBy: 'locations')]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?CityPickupLocation $pickupLocation = null;
+
+    #[ORM\ManyToOne(targetEntity: CityDropoffLocation::class, inversedBy: 'locations')]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?CityDropoffLocation $dropoffLocation = null;
+
+    #[ORM\ManyToOne(targetEntity: Pack::class)]
+    #[ORM\JoinColumn(nullable: true)]
+    private ?Pack $pack = null;
+
+    #[ORM\ManyToMany(targetEntity: Option::class)]
+    private Collection $options;
+
     /**
      * @var Collection<int, Payment>
      */
     #[ORM\OneToMany(targetEntity: Payment::class, mappedBy: 'location')]
     private Collection $payments;
 
-    #[ORM\Column(length: 255)]
-    private ?string $pickupLocation = null;
-
-    #[ORM\Column(length: 255)]
-    private ?string $dropoffLocation = null;
-
     public function __construct()
     {
         $this->payments = new ArrayCollection();
+        $this->options = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -115,6 +125,66 @@ class Location
         return $this;
     }
 
+    public function getPickupLocation(): ?CityPickupLocation
+    {
+        return $this->pickupLocation;
+    }
+
+    public function setPickupLocation(?CityPickupLocation $pickupLocation): static
+    {
+        $this->pickupLocation = $pickupLocation;
+
+        return $this;
+    }
+
+    public function getDropoffLocation(): ?CityDropoffLocation
+    {
+        return $this->dropoffLocation;
+    }
+
+    public function setDropoffLocation(?CityDropoffLocation $dropoffLocation): static
+    {
+        $this->dropoffLocation = $dropoffLocation;
+
+        return $this;
+    }
+
+    public function getPack(): ?Pack
+    {
+        return $this->pack;
+    }
+
+    public function setPack(?Pack $pack): static
+    {
+        $this->pack = $pack;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Option>
+     */
+    public function getOptions(): Collection
+    {
+        return $this->options;
+    }
+
+    public function addOption(Option $option): static
+    {
+        if (!$this->options->contains($option)) {
+            $this->options->add($option);
+        }
+
+        return $this;
+    }
+
+    public function removeOption(Option $option): static
+    {
+        $this->options->removeElement($option);
+
+        return $this;
+    }
+
     /**
      * @return Collection<int, Payment>
      */
@@ -136,35 +206,10 @@ class Location
     public function removePayment(Payment $payment): static
     {
         if ($this->payments->removeElement($payment)) {
-            // set the owning side to null (unless already changed)
             if ($payment->getLocation() === $this) {
                 $payment->setLocation(null);
             }
         }
-
-        return $this;
-    }
-
-    public function getPickupLocation(): ?string
-    {
-        return $this->pickupLocation;
-    }
-
-    public function setPickupLocation(string $pickupLocation): static
-    {
-        $this->pickupLocation = $pickupLocation;
-
-        return $this;
-    }
-
-    public function getDropoffLocation(): ?string
-    {
-        return $this->dropoffLocation;
-    }
-
-    public function setDropoffLocation(string $dropoffLocation): static
-    {
-        $this->dropoffLocation = $dropoffLocation;
 
         return $this;
     }

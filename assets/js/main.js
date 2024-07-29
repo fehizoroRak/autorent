@@ -88,10 +88,10 @@ ScrollReveal().reveal(".download__links", {
 //MAIN.JS END
 
 
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-//cars recommandées
 document.addEventListener('DOMContentLoaded', () => {
-  // Carrousel
+  // Carousel
   const prevButton = document.querySelector('.carousel-prev');
   const nextButton = document.querySelector('.carousel-next');
   const carouselContainer = document.querySelector('.carousel-container');
@@ -148,7 +148,9 @@ document.addEventListener('DOMContentLoaded', () => {
               co2emissions: carItem.dataset.co2emissions,
               electric: carItem.dataset.electric === 'true' ? 'Oui' : 'Non',
               image: carItem.dataset.image,
-              dayprice : carItem.dataset.dayprice,
+              dayprice: carItem.dataset.dayprice,
+              days: carItem.dataset.days,
+              totalperday: carItem.dataset.totalperday,
           };
 
           modalBody.innerHTML = `
@@ -189,8 +191,8 @@ document.addEventListener('DOMContentLoaded', () => {
               <div class="prices">
                   <p>À PARTIR DE</p>
                   <p class="price-text">${carData.dayprice} € / jour</p>
+                  <p class="total-per-day">TOTAL ${carData.totalperday} €</p>
               </div>
-        
           `;
 
           modal.style.display = "block";
@@ -208,36 +210,47 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 });
 
-
-//SCRIPT FOR BOUTON SELECTIONNER
+// SCRIPT FOR BUTTON SELECTIONNER
 
 document.addEventListener('DOMContentLoaded', function() {
   const selectButtons = document.querySelectorAll('.select-btn');
 
   selectButtons.forEach(button => {
       button.addEventListener('click', function() {
-          const carItem = this.closest('.carousel-item');
-          const brand = carItem.getAttribute('data-brand');
-          const model = carItem.getAttribute('data-model');
-          const image = carItem.getAttribute('data-image');
-          const dayPrice = carItem.getAttribute('data-dayprice');
+          const carItem = this.closest('.carousel-item') || this.closest('.cars__item');
+          const brand = carItem.dataset.brand;
+          const model = carItem.dataset.model;
+          const image = carItem.dataset.image;
+          const dayPrice = parseFloat(carItem.dataset.dayprice);
+          const days = parseInt(carItem.dataset.days, 10);
+          const totalPerDay = parseFloat(carItem.dataset.totalperday);
+
+          // Calculate online price with 9% discount
+          const onlineDayPrice = dayPrice * 0.91;
+          const onlineTotal = onlineDayPrice * days;
 
           const modal = document.querySelector('.modal-select');
           const modalDetails = modal.querySelector('.car-details');
           const modalPrice = modal.querySelector('.price');
+          const modalTotal = modal.querySelector('.total');
 
           modalDetails.querySelector('h1').textContent = `Choisissez le tarif qui vous convient`;
 
-             // Update the innerHTML and apply CSS style
-             const detailsParagraph = modalDetails.querySelector('h2');
-             detailsParagraph.innerHTML = `${brand} ${model}`;
-             detailsParagraph.style.margin = '15px 0'; // Apply margin
+          // Update the innerHTML and apply CSS style
+          const detailsParagraph = modalDetails.querySelector('h2');
+          detailsParagraph.innerHTML = `${brand} ${model}`;
+          detailsParagraph.style.margin = '15px 0'; // Apply margin
 
-
-   
           modalDetails.querySelector('img').src = `/images/${image}`;
           modalDetails.querySelector('img').alt = `${brand} ${model}`;
-          modalPrice.textContent = `${dayPrice} € / jour`;
+
+          // Update "Payer en agence" section
+          modal.querySelector('.option .price').textContent = `${dayPrice.toFixed(2)} € / jour`;
+          modal.querySelector('.option .total').textContent = `TOTAL ${totalPerDay.toFixed(2)} €`;
+
+          // Update "Payer en ligne" section
+          modal.querySelector('.option.online .price').textContent = `${onlineDayPrice.toFixed(2)} € / jour`;
+          modal.querySelector('.option.online .total').textContent = `TOTAL ${onlineTotal.toFixed(2)} €`;
 
           modal.style.display = 'block';
       });
@@ -248,11 +261,6 @@ document.addEventListener('DOMContentLoaded', function() {
       document.querySelector('.modal-select').style.display = 'none';
   });
 });
-
-document.querySelector('.modal-select .close-selectionner').addEventListener('click', function() {
-  document.querySelector('.modal-select').style.display = 'none';
-});
-
 
 document.addEventListener('DOMContentLoaded', function() {
   // Attach click event listeners to all "Sélectionner" buttons
@@ -265,16 +273,29 @@ document.addEventListener('DOMContentLoaded', function() {
           const brand = carItem.querySelector('.cars__details h1').textContent.split(' ')[0]; // Gets the brand and model
           const model = carItem.querySelector('.cars__details h1').textContent.split(' ')[1];
           const image = carItem.querySelector('.cars__image img').src;
-          const dayPrice = carItem.querySelector('.cars__price .price-text').textContent;
+          const dayPrice = parseFloat(carItem.querySelector('.cars__price .price-text').textContent);
+          const days = parseInt(carItem.dataset.days, 10);
+          const totalPerDay = dayPrice * days;
+
+          // Calculate online price with 9% discount
+          const onlineDayPrice = dayPrice * 0.91;
+          const onlineTotal = onlineDayPrice * days;
 
           // Get the modal and populate it with the car data
           const modal = document.querySelector('.modal-select');
           modal.querySelector('.car-details h1').textContent = "Choisissez le tarif qui vous convient"; // Modal header
-          modal.querySelector('.car-details h2').textContent = brand + " " + model + " "; // Car details
+          modal.querySelector('.car-details h2').textContent = `${brand} ${model}`; // Car details
           modal.querySelector('.car-details h2').style.margin = '15px 0'; // Apply margin
           modal.querySelector('.car-details img').src = image;
-          modal.querySelector('.car-details img').alt = brand + " " + model;
-          modal.querySelector('.options .price').textContent = dayPrice;
+          modal.querySelector('.car-details img').alt = `${brand} ${model}`;
+
+          // Update "Payer en agence" section
+          modal.querySelector('.option .price').textContent = `${dayPrice.toFixed(2)} € / jour`;
+          modal.querySelector('.option .total').textContent = `TOTAL ${totalPerDay.toFixed(2)} €`;
+
+          // Update "Payer en ligne" section
+          modal.querySelector('.option.online .price').textContent = `${onlineDayPrice.toFixed(2)} € / jour`;
+          modal.querySelector('.option.online .total').textContent = `TOTAL ${onlineTotal.toFixed(2)} €`;
 
           // Display the modal
           modal.style.display = 'block';

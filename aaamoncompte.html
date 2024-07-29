@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mon Compte</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <aside class="sidebar">
+            <h3>Compte</h3>
+            <ul>
+                <li><a href="#">Mon compte en synthèse</a></li>
+                <li><a href="#" class="active">Mon Profil</a></li>
+                <li><a href="#">Informations personnelles</a></li>
+                <li><a href="#">Information sur votre carte</a></li>
+                <li><a href="#">Modifier mon Mot de passe</a></li>
+                <li><a href="#">Cookies</a></li>
+                <li><a href="#">Communications</a></li>
+                <li><a href="#">Réservations existantes</a></li>
+                <li><a href="#">Locations terminées</a></li>
+                <li><a href="#">Cumuler vos miles</a></li>
+            </ul>
+            <button>Déconnexion</button>
+        </aside>
+        <main>
+            <section class="profile">
+                <h1>Mon Compte</h1>
+                <div class="profile-details">
+                    <h2>ÉTAPE 1 : Profil</h2>
+                    <p>M. FEHIZORO RAKOTOARISOA</p>
+                    <p>58 ALLEE BLERIOT, Montreuil, France</p>
+                    <p>Email: elivoknte@gmail.com</p>
+                    <button>Modifier vos informations personnelles</button>
+                </div>
+                <div class="reservations">
+                    <h2>Mes réservations / S'enregistrer en ligne</h2>
+                    <p>Nous n'avons pas retrouvé de réservations existantes sur les 6 derniers mois</p>
+                </div>
+                <div class="special-offers">
+                    <h2>Souscrivez aux offres spéciales Europcar</h2>
+                    <form>
+                        <input type="checkbox" id="subscribe">
+                        <label for="subscribe">Je souhaite recevoir des informations et des offres spéciales d'Europcar France</label>
+                        <button type="submit">Souscrivez</button>
+                    </form>
+                </div>
+            </section>
+        </main>
+    </div>
+</body>
+</html>
+
+<style>
+
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f4;
+}
+
+.container {
+    display: flex;
+}
+
+.sidebar {
+    background-color: #e6e6e6;
+    padding: 20px;
+    width: 250px;
+}
+
+.sidebar h3, .sidebar ul, .sidebar button {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.sidebar ul li a {
+    display: block;
+    padding: 10px;
+    text-decoration: none;
+    color: #333;
+    border-bottom: 1px solid #ccc;
+}
+
+.sidebar ul li a.active {
+    color: green;
+    font-weight: bold;
+}
+
+.sidebar button {
+    background-color: green;
+    color: white;
+    border: none;
+    padding: 10px;
+    margin-top: 20px;
+    cursor: pointer;
+}
+
+main {
+    flex-grow: 1;
+    padding: 20px;
+    background: white;
+}
+
+.profile-details, .reservations, .special-offers {
+    border-bottom: 1px solid #ccc;
+    padding-bottom: 20px;
+    margin-bottom: 20px;
+}
+
+.profile-details button, .special-offers button {
+    background-color: #fe5b3e;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+    display: block; /* Makes button take the full width of the form */
+    width: auto;
+}
+
+.profile-details button:hover, .special-offers button:hover {
+    background-color: darken(#fe5b3e, 10%);
+}
+
+</style>

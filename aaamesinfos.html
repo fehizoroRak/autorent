@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mon Compte - Informations Personnelles</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <aside class="sidebar">
+            <h3>Compte</h3>
+            <ul>
+                <li><a href="#">Mon compte en synthèse</a></li>
+                <li><a href="#" class="active">Informations personnelles</a></li>
+                <li><a href="#">Information sur votre carte</a></li>
+                <li><a href="#">Modifier mon Mot de passe</a></li>
+                <li><a href="#">Cookies</a></li>
+                <li><a href="#">Communications</a></li>
+                <li><a href="#">Réservations existantes</a></li>
+                <li><a href="#">Locations terminées</a></li>
+                <li><a href="#">Cumuler vos miles</a></li>
+            </ul>
+            <button>Déconnexion</button>
+        </aside>
+        <main>
+            <section class="profile">
+                <h1>Mon Compte</h1>
+                <h2>Informations personnelles et préférences</h2>
+                <form>
+                    <fieldset>
+                        <legend>Adresse préférée</legend>
+                        <label for="civility">Civilité</label>
+                        <select id="civility" name="civility">
+                            <option>M.</option>
+                            <option>Mme</option>
+                            <option>Mlle</option>
+                        </select>
+                        
+                        <label for="first-name">Prénom</label>
+                        <input type="text" id="first-name" name="first-name" value="FEHIZORO">
+
+                        <label for="last-name">Nom</label>
+                        <input type="text" id="last-name" name="last-name" value="RAKOTOARISOA">
+
+                        <label for="email">Email</label>
+                        <input type="email" id="email" name="email" value="elivoknte@gmail.com">
+                        
+                        <label for="confirm-email">Confirmez votre E-mail</label>
+                        <input type="email" id="confirm-email" name="confirm-email" value="elivoknte@gmail.com">
+                        
+                        <label for="address1">Adresse</label>
+                        <input type="text" id="address1" name="address1" value="58 ALLEE BLERIOT">
+                        
+                        <label for="address2">Adresse, ligne 2</label>
+                        <input type="text" id="address2" name="address2">
+                        
+                        <label for="address3">Adresse, ligne 3</label>
+                        <input type="text" id="address3" name="address3">
+                        
+                        <label for="zip-code">Code postal</label>
+                        <input type="text" id="zip-code" name="zip-code" value="93100">
+                        
+                        <label for="city">Ville</label>
+                        <input type="text" id="city" name="city" value="Montreuil">
+                        
+                        <label for="country">Pays</label>
+                        <select id="country" name="country">
+                            <option>France</option>
+                            <!-- Ajouter d'autres options de pays -->
+                        </select>
+                        
+                        <label for="phone-number">Numéro de téléphone</label>
+                        <input type="text" id="phone-number" name="phone-number" value="0626197660">
+                    </fieldset>
+                    
+                    <fieldset>
+                        <legend>Informations sur le conducteur</legend>
+                        <label for="birth-date">Date de naissance</label>
+                        <input type="date" id="birth-date" name="birth-date" value="1987-01-06">
+                        
+                        <label for="driving-license-number">Numéro de permis de conduire</label>
+                        <input type="text" id="driving-license-number" name="driving-license-number">
+                        
+                        <label for="license-issue-date">Date de délivrance</label>
+                        <input type="date" id="license-issue-date" name="license-issue-date">
+                        
+                        <label for="license-expiry-date">Date d'expiration</label>
+                        <input type="date" id="license-expiry-date" name="license-expiry-date">
+                    </fieldset>
+                    
+                    <fieldset>
+                        <legend>Carte de crédit / carte de débit</legend>
+                        <label for="card-number">Numéro de carte</label>
+                        <input type="text" id="card-number" name="card-number">
+                        
+                        <label for="expiry-date">Date d'expiration</label>
+                        <input type="text" id="expiry-date" name="expiry-date" placeholder="MM/AA">
+                        
+                        <label for="cvv">CVV</label>
+                        <input type="text" id="cvv" name="cvv">
+                    </fieldset>
+                    
+                    <button type="submit">Mettre à jour mon profil</button>
+                </form>
+            </section>
+        </main>
+    </div>
+</body>
+</html>
+
+<style>
+    body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f4;
+}
+
+.container {
+    display: flex;
+}
+
+.sidebar {
+    background-color: #e6e6e6;
+    padding: 20px;
+    width: 250px;
+}
+
+.sidebar h3, .sidebar ul, .sidebar button {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.sidebar ul {
+    margin-top: 20px;
+}
+
+.sidebar ul li {
+    margin-bottom: 10px;
+}
+
+.sidebar ul li a {
+    display: block;
+    padding: 10px;
+    text-decoration: none;
+    color: #333;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+.sidebar ul li a.active, .sidebar ul li a:hover {
+    background-color: #fe5b3e;
+    color: white;
+}
+
+.sidebar button {
+    background-color: #fe5b3e;
+    color: white;
+    border: none;
+    padding: 10px;
+    margin-top: 20px;
+    width: 100%;
+    cursor: pointer;
+    border-radius: 4px;
+    font-size: 16px;
+    transition: background-color 0.3s;
+}
+
+.sidebar button:hover {
+    background-color: darken(#fe5b3e, 10%);
+}
+
+main {
+    flex-grow: 1;
+    padding: 20px;
+    background: white;
+    margin-left: 10px;
+    border-radius: 4px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+h1 {
+    color: #333;
+}
+
+h2 {
+    color: #fe5b3e;
+    margin-top: 0;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+}
+
+fieldset {
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    padding: 10px 20px;
+    margin-bottom: 20px;
+}
+
+legend {
+    padding: 0 10px;
+    font-weight: bold;
+    color: #333;
+}
+
+label {
+    margin-top: 10px;
+    font-weight: bold;
+}
+
+input[type="text"],
+input[type="email"],
+input[type="date"],
+input[type="password"],
+select {
+    width: 100%;
+    padding: 8px;
+    margin-top: 5px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+button[type="submit"] {
+    background-color: #fe5b3e;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+    border-radius: 4px;
+    font-size: 16px;
+    transition: background-color 0.3s;
+}
+
+button[type="submit"]:hover {
+    background-color: darken(#fe5b3e, 10%);
+}
+
+</style>

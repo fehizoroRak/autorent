@@ -500,7 +500,7 @@ nav {
 
   nav {
     position: static;
-    padding-block: 2rem;
+    padding-block: 1rem;
     padding-inline: 1rem;
     max-width: var(--max-width);
     margin-inline: auto;
