@@ -37,6 +37,96 @@
     background-color: #fe5b3e;
 }
 
+
+.date-time {
+    display: flex;
+
+
+    overflow: hidden;
+}
+.date, .time {
+    display: flex;
+    align-items: center;
+}
+.input-date{
+  padding: 11px 0 11px 0;
+  border: 1px solid #ccc;
+  border-radius: 8px 0 0 8px;
+          
+}
+.input-time{
+  padding: 11px 0 11px 0;
+  border: 1px solid #ccc;
+  border-radius:  0 8px 8px 0;
+          
+}
+.input-date:focus{
+  border:2px solid #fe5b3e;
+}
+.input-time:focus{
+  border:2px solid #fe5b3e;
+}
+.date {
+    width:60%;
+}
+
+.time {
+   width:40%;
+}
+.icon {
+    margin-right: 10px;
+}
+
+
+input[type="date"], input[type="time"] {
+
+    font-size: 16px;
+    font-weight: bold;
+    font-family: inherit;
+    width: 100%;
+    text-align: center;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+}
+
+input[type="date"]:focus, input[type="time"]:focus {
+    outline: none;
+}
+
+input[type="date"]::-webkit-calendar-picker-indicator,
+input[type="time"]::-webkit-calendar-picker-indicator {
+    color: green;
+    cursor: pointer;
+    position: absolute;
+    right: 0;
+    opacity: 0;
+    width: 100%;
+}
+
+input[type="date"]:focus,
+input[type="time"]:focus {
+    outline: none;
+}
+
+      .date, .time {
+            position: relative;
+            margin-right: 7px;
+        }
+        .input-date, .input-time {
+            padding-left: 35px; /* espace pour les icônes */
+        }
+        .date span, .time span {
+            position: absolute;
+            left: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #fe5b3e;
+            pointer-events: none;
+        }
+
+  
+   
 </style>
 
 
@@ -98,7 +188,7 @@
             <div id="dropoffSuggestions" class="suggestions"></div>
         </div>
     </div>
-    <div class="form-group">
+    {# <div class="form-group">
         <div class="input-icon">
             <span>Date de début:</span>
             <input type="date" id="startDate" name="startDate" class="form-control-date" required />
@@ -109,7 +199,34 @@
             <span>Date de fin:</span>
             <input type="date" id="endDate" name="endDate" class="form-control-date" required />
         </div>
-    </div>
+    </div> #}
+   
+
+        <h4 style="margin:8px 0 8px 0;">Date et heure de départ </h4>
+         <div class="date-time">
+            <div class="date">
+                   <span class="fas fa-calendar-alt"></span>
+                <input type="date" id="startDate"  name="startDate" class="input-date" required >
+            </div>
+
+            <div class="time">
+             <span class="fas fa-clock"></span>
+             <input type="time" class="input-time" id="startTime" name="startTime" value="09:00" required>
+            </div>
+        </div>
+
+        <h4 style="margin:8px 0 8px 0;">Date et heure de retour </h4>
+         <div style="margin-bottom:15px;" class="date-time">
+            <div class="date">
+            <span class="fas fa-calendar-alt"></span>
+                <input type="date" id="endDate" class="input-date" name="endDate">
+            </div>
+            <div class="time">
+             <span class="fas fa-clock"></span>
+             <input type="time" class="input-time" id="endTime" name="endTime" value="10:00" required>
+            </div>
+        </div>
+
     <button type="submit" class="btn-submit">Voir les véhicules</button>
 </form>
 

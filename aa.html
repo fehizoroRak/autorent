@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Date and Time Input</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <div class="date-time">
+            <div class="date">
+                <label for="date">
+                    <span class="icon">&#x1F4C5;</span>
+                </label>
+                <input type="date" id="date" value="2024-08-02">
+            </div>
+            <div class="time">
+                <input type="time" id="time" value="10:00">
+            </div>
+        </div>
+    </div>
+</body>
+</html>
+
+
+<style>
+    body {
+    font-family: Arial, sans-serif;
+}
+
+.container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+.date-time {
+    display: flex;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+.date, .time {
+    display: flex;
+    align-items: center;
+    padding: 10px 20px;
+}
+
+.date {
+    border-right: 1px solid #ccc;
+}
+
+.icon {
+    color: green;
+    margin-right: 10px;
+}
+
+input[type="date"], input[type="time"] {
+    border: none;
+    font-size: 18px;
+    font-weight: bold;
+    font-family: inherit;
+    width: 100%;
+    text-align: center;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+}
+
+input[type="date"]::-webkit-calendar-picker-indicator,
+input[type="time"]::-webkit-calendar-picker-indicator {
+    color: green;
+    cursor: pointer;
+    position: absolute;
+    right: 0;
+    opacity: 0;
+    width: 100%;
+}
+
+input[type="date"]:focus,
+input[type="time"]:focus {
+    outline: none;
+}
+
+
+</style>

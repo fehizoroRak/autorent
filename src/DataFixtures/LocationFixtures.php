@@ -37,8 +37,14 @@ class LocationFixtures extends Fixture implements DependentFixtureInterface
             $endDate = (clone $startDate)->modify(sprintf('+%d days', rand(1, 10)));
             $totalAmount = rand(100, 1000);
 
+            // Generate random times
+            $startTime = (new \DateTime())->setTime(rand(0, 23), rand(0, 59));
+            $endTime = (clone $startTime)->modify(sprintf('+%d hours', rand(1, 12)));
+
             $location->setStartdate($startDate);
             $location->setEnddate($endDate);
+            $location->setStarttime($startTime);
+            $location->setEndtime($endTime);
             $location->setTotalamount($totalAmount);
             $location->setUser($users[array_rand($users)]);
             $location->setCar($cars[array_rand($cars)]);

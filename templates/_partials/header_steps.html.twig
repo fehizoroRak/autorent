@@ -46,32 +46,30 @@
 
 
 	<div class="reservation-steps">
-		<div class="step-1">
-
-			<div class="step-title" style="display: flex; gap:10px; align-items:center;">
-				<div class="step-number">1</div>
-				<h4 style="color:#b2b2b2;">AGENCE DE LOCATION</h4>
-			</div>
-
-			<div class="step-details">
-				<div>
-					<h4>Départ</h4>
-					<h4 class="location">Paris Le Bourget Aeroport</h4>
-					<p>2024-08-01 10:00</p>
-				</div>
-				<div>
-					<h4>Retour</h4>
-					<h4 class="location">Paris Le Bourget Aeroport</h4>
-					<p>2024-08-03 10:00</p>
-				</div>
-			</div>
-		</div>
+	   <div class="step-1">
+        <div class="step-title" style="display: flex; gap:10px; align-items:center;">
+            <div class="step-number-1">1</div>
+            <h4 style="color:#fe5b3e;;">AGENCE DE LOCATION</h4>
+        </div>
+        <div class="step-details">
+            <div style="width:50%;">
+                <h4>Départ</h4>
+                <h4 class="location" id="departureLocation">{{ pickupLocation }}</h4>
+                <p id="departureDateTime">{{ startDate }} | {{ startTime }}</p>
+            </div>
+            <div style="width:50%;">
+                <h4>Retour</h4>
+                <h4 class="location" id="returnLocation">{{ dropoffLocation }}</h4>
+                <p id="returnDateTime">{{ endDate }} | {{ endTime }}</p>
+            </div>
+        </div>
+    </div>
 
 		<div class="step-2">
 
 			<div class="step-title" style="display: flex; gap:10px; align-items:center;">
-				<div class="step-number">2</div>
-				<h4 style="color:#b2b2b2;">VÉHICULE</h4>
+				<div class="step-number-2">2</div>
+				<h4 style="color:#fe5b3e;;">VÉHICULE</h4>
 			</div>
 
 			<div class="step-details2" style="margin-top:10px;">
@@ -152,7 +150,7 @@
 		font-size: 0.9rem;
 		width: 40%;
 		padding: 10px;
-		border: 1px solid #ddd;
+		border: 1px solid #fe5b3e;
 		background-color: #fff;
 		border-radius: 8px;
 	}
@@ -160,7 +158,7 @@
         font-size: 0.9rem;
 		width: 20%;
 		padding: 10px;
-		border: 1px solid #ddd;
+		border: 1px solid #fe5b3e;
 		background-color: #fff;
 		border-radius: 8px;
 	}
@@ -186,6 +184,30 @@
 
 	.step-number {
 		background-color: #b2b2b2;
+		color: #fff;
+		padding: 5px;
+		border-radius: 10px 0 10px 0;
+		width: 25px;
+		height: 25px;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		font-size: 1rem;
+	}
+	.step-number-1 {
+		background-color: #fe5b3e;
+		color: #fff;
+		padding: 5px;
+		border-radius: 10px 0 10px 0;
+		width: 25px;
+		height: 25px;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		font-size: 1rem;
+	}
+		.step-number-2 {
+		background-color: #fe5b3e;
 		color: #fff;
 		padding: 5px;
 		border-radius: 10px 0 10px 0;

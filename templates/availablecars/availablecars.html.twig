@@ -33,6 +33,7 @@
                                         <p class="price-text">{{ car.dayprice }} € / jour</p>
                                         <h4 style="color: #919191;">
                                             TOTAL <span style="color: #fe5c3c;">{{ TotalPerDay }} €</span>
+											<p style="color:#c3c3c3;"><span style="font-weight: bold;color: #919191;"> {{ days }} jrs </span> de locations </p>
                                         </h4>
                                         <button class="select-btn">Sélectionner</button>
                                     </div>
@@ -45,7 +46,7 @@
             </div>
         </div>
 
-        <!-- Modal -->
+        <!-- Modal INFORMATIONS-->
         <div id="carModal" class="modal">
             <div class="modal-content">
                 <span class="close">&times;</span>
@@ -107,6 +108,7 @@
                             <p class="small-text">À PARTIR DE</p>
                             <p class="price-text">{{ car.dayprice }} € / jour</p>
                             <h4 style="color: #919191;">TOTAL <span style="color: #fe5c3c;">{{ TotalPerDay }} €</span></h4>
+							<p style="color:#c3c3c3; font-size:1rem;"> <span style="font-weight: bold;color: #919191;"> {{ days }} jrs </span>  de locations </p>
                             <button class="select-btn">Sélectionner</button>
                         </div>
                     </li>

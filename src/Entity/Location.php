@@ -54,6 +54,12 @@ class Location
     #[ORM\OneToMany(targetEntity: Payment::class, mappedBy: 'location')]
     private Collection $payments;
 
+    #[ORM\Column(type: Types::TIME_MUTABLE, nullable: true)]
+    private ?\DateTimeInterface $starttime = null;
+
+    #[ORM\Column(type: Types::TIME_MUTABLE, nullable: true)]
+    private ?\DateTimeInterface $endtime = null;
+
     public function __construct()
     {
         $this->payments = new ArrayCollection();
@@ -210,6 +216,30 @@ class Location
                 $payment->setLocation(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getStarttime(): ?\DateTimeInterface
+    {
+        return $this->starttime;
+    }
+
+    public function setStarttime(?\DateTimeInterface $starttime): static
+    {
+        $this->starttime = $starttime;
+
+        return $this;
+    }
+
+    public function getEndtime(): ?\DateTimeInterface
+    {
+        return $this->endtime;
+    }
+
+    public function setEndtime(?\DateTimeInterface $endtime): static
+    {
+        $this->endtime = $endtime;
 
         return $this;
     }

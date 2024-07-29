@@ -681,6 +681,7 @@ nav {
   color: var(--primary-color);
   transform: translateY(-50%);
   font-weight: 700;
+  font-size: 1.2rem;
 }
 .input-icon span {
     position: absolute;
@@ -692,24 +693,25 @@ nav {
 }
 .car-form .form-control {
   width: 100%;
-  padding: 0.75rem 1.5rem 0.75rem 2.5rem; /* Adjust padding to make space for the icon */
+  padding: 0.9rem 1.5rem 0.9rem 2.5rem; /* Adjust padding to make space for the icon */
   font-size: 1rem;
-  border: 1px solid var(--text-light);
-  border-radius: 4px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
   transition: border-color 0.3s;
 }
 .car-form .form-control-date {
     width: 100%;
     padding: 0.75rem 1.5rem 0.75rem 8.5rem; /* Adjust padding to make space for the icon */
     font-size: 1rem;
-    border: 1px solid var(--text-light);
-    border-radius: 4px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
     transition: border-color 0.3s;
 }
 
 .car-form .form-control:focus {
-    border-color: var(--primary-color);
+ 
     outline: none;
+    border: 2px solid var(--primary-color);;
 }
 
 .car-form .btn-submit {

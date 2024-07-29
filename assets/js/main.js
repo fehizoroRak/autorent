@@ -190,7 +190,7 @@ document.addEventListener('DOMContentLoaded', () => {
               </div>
               <div class="prices">
                   <p>À PARTIR DE</p>
-                  <p class="price-text">${carData.dayprice} € / jour</p>
+                  <p class="price-text" style="text-align:center;">${carData.dayprice} € / jour</p>
                   <p class="total-per-day">TOTAL ${carData.totalperday} €</p>
               </div>
           `;
