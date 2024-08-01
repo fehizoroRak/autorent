@@ -331,12 +331,7 @@
 }
 
 /* Styles pour les boîtes rectangulaires */
-.modal-body .rect-box {
-    background-color: #f0f0f0;
-    padding: 1rem;
-    margin-bottom: 1rem;
-    border-radius: 5px;
-}
+
 
 .info {
     display: flex;
@@ -346,29 +341,9 @@
     margin-bottom: 0.5rem;
 }
 
-.rect-box .details {
-    display: flex;
-    justify-content: space-between;
-}
 
-.rect-box .details p {
-    flex: 1;
-    text-align: center;
-    border-right: 1px solid #ccc;
-    padding: 0 0.5rem;
-}
 
-.rect-box .details p:last-child {
-    border-right: none;
-}
 
-.rect-box .inclus {
-    margin-bottom: 1rem;
-}
-
-.rect-box .inclus p {
-    margin: 0.25rem 0;
-}
 
 .prices {
   margin-top: 2.5rem;
@@ -389,20 +364,7 @@
 }
 
 
-/* Responsive styles */
-@media (max-width: 768px) {
-    .rect-box .details {
-        flex-direction: column;
-    }
 
-    .rect-box .details p {
-        border-right: none;
-    }
-
-    .rect-box .details p:last-child {
-        border-bottom: none;
-    }
-}
 
 /* MODAL SELECT */
 
@@ -469,38 +431,12 @@
     color: red;
 }
 
-.modal-select {
-    display: none; /* Hidden by default */
-    position: fixed; /* Stay in place */
-    z-index: 9999999; /* Sit on top */
-    left: 0;
-    top: 0;
-    width: 100%; /* Full width */
-    height: 100%; /* Full height */
-    overflow: auto; /* Enable scroll if needed */
-    background-color: rgb(0,0,0); /* Fallback color */
-    background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
-}
-
-.modal-select .content {
-    background-color: #fefefe;
-    margin: 11% auto; /* 15% from the top and centered */
-    padding: 40px;
-    border: 1px solid #888;
-    width: 80%; /* Could be more or less, depending on screen size */
-    position: relative;
-    border-radius: 10px;
-}
-.content {
-    display: flex;
-    padding: 30px;
-}
 
 .car-details {
-    flex: 1;
+    border-radius: 10px;
+    flex: 2;
     display: flex;
 
-    flex-direction: column;
     justify-content: center;
     align-items: center;
     text-align: center;
@@ -529,7 +465,7 @@
         flex: 1;
         display: flex;
         flex-direction: column;
-        gap: 30px;
+        gap: 20px;
       
     }
     
@@ -563,8 +499,8 @@ color: red;
 .options {
     flex: 2;
     display: flex;
-    gap: 30px;
-  
+    gap: 10px;
+ 
 }
 
 .option {

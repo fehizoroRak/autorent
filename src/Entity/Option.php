@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use App\Repository\OptionRepository;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: OptionRepository::class)]
@@ -19,6 +20,12 @@ class Option
 
     #[ORM\Column]
     private ?float $price = null;
+
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $image = null;
+
+    #[ORM\Column(type: Types::TEXT, nullable: true)]
+    private ?string $content = null;
 
     public function getId(): ?int
     {
@@ -45,6 +52,30 @@ class Option
     public function setPrice(float $price): static
     {
         $this->price = $price;
+
+        return $this;
+    }
+
+    public function getImage(): ?string
+    {
+        return $this->image;
+    }
+
+    public function setImage(?string $image): static
+    {
+        $this->image = $image;
+
+        return $this;
+    }
+
+    public function getContent(): ?string
+    {
+        return $this->content;
+    }
+
+    public function setContent(?string $content): static
+    {
+        $this->content = $content;
 
         return $this;
     }

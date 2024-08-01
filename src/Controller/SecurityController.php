@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\User;
 use App\Form\RegistrationFormType;
+use App\Repository\CarRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -15,21 +16,36 @@ use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 class SecurityController extends AbstractController
 {
     #[Route('/login', name: 'app_login')]
-    public function login(AuthenticationUtils $authenticationUtils): Response
+    public function login(Request $request, CarRepository $carRepository, AuthenticationUtils $authenticationUtils): Response
     {
         // get the login error if there is one
         $error = $authenticationUtils->getLastAuthenticationError();
         // last username entered by the user
         $lastUsername = $authenticationUtils->getLastUsername();
 
+         // Récupérer l'ID de la voiture et le total depuis la requête
+         $carId = $request->query->get('id');
+         $total = $request->query->get('total');
+
+         // Récupérer les informations de la voiture depuis la base de données
+         $car = $carRepository->find($carId);
+ 
+         // Si la voiture n'existe pas, lever une exception ou rediriger vers une autre page
+         if (!$car) {
+             throw $this->createNotFoundException('The car does not exist');
+         }
+
+
         return $this->render('security/login.html.twig', [
             'last_username' => $lastUsername,
             'error'         => $error,
+             'car' => $car,
+             'total' => $total,
         ]);
     }
     
     #[Route('/register', name: 'app_register')]
-    public function register(Request $request, EntityManagerInterface $entityManager, UserPasswordHasherInterface $passwordHasher): Response
+    public function register(CarRepository $carRepository,Request $request, EntityManagerInterface $entityManager, UserPasswordHasherInterface $passwordHasher): Response
     {
         $user = new User();
         $form = $this->createForm(RegistrationFormType::class, $user);
@@ -50,9 +66,21 @@ class SecurityController extends AbstractController
     
             return $this->redirectToRoute('app_login');
         }
+        $carId = $request->query->get('id');
+        $total = $request->query->get('total');
+
+        // Récupérer les informations de la voiture depuis la base de données
+        $car = $carRepository->find($carId);
+
+        // Si la voiture n'existe pas, lever une exception ou rediriger vers une autre page
+        if (!$car) {
+            throw $this->createNotFoundException('The car does not exist');
+        }
     
         return $this->render('security/register.html.twig', [
             'registrationForm' => $form->createView(),
+            'car' => $car,
+            'total' => $total,
         ]);
     }
     

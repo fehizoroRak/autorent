@@ -1,0 +1,269 @@
+<div id="header" style="position:fixed;background-color:#f7f7f7;z-index: 99999; width:100%;">
+	<nav>
+		<div class="nav__header">
+			<div class="nav__logo">
+				<a href="{{ path('app_home') }}">AutoRent</a>
+			</div>
+			<div class="nav__menu__btn" id="menu-btn">
+				<i class="ri-menu-line"></i>
+			</div>
+		</div>
+		<ul
+			class="nav__links" id="nav-links">
+			{# <li class="nav__links__btn">
+							<button class="btn">
+								<i class="ri-login-box-line"></i>
+								Identifiez-vous</button>
+						</li> #}
+			<li class="nav__links__btn">
+				<button class="btn">
+					<i class="ri-question-line"></i>
+					Aide</button>
+			</li>
+			<li class="nav__links__btn">
+				<button class="btn">
+					<i class="ri-contacts-line"></i>
+					Contacts</button>
+			</li>
+		</ul>
+		<div class="nav__btns">
+			{% if app.user %}
+				<a style="margin-right:20px;" class="" href="{{ path('app_login') }}">
+					<i class="ri-user-line"></i>
+					Bonjour,
+					{{ app.user.name }}
+					{{ app.user.firstname }}
+				</a>
+
+			{% endif %}
+
+			<a class="" href="">
+				<i class="ri-question-line"></i>
+				Aide
+			</a>
+
+			{% if app.user %}
+				<a style="margin-left:20px;" class="" href="{{ path('app_logout') }}">
+					<i class="ri-logout-box-r-line"></i>
+				</a>
+			{% endif %}
+		</div>
+
+	</nav>
+
+
+	<div class="reservation-steps">
+	   <div class="step-1">
+        <div class="step-title" style="display: flex; gap:10px; align-items:center;">
+            <div class="step-number-1">1</div>
+            <h4 style="color:#fe5b3e;;">AGENCE DE LOCATION</h4>
+        </div>
+        <div class="step-details">
+            <div style="width:50%;">
+                <h4>Départ</h4>
+                <h4 class="location" id="departureLocation">{{ pickupLocation }}</h4>
+                <p id="departureDateTime">{{ startDate }} | {{ startTime }}</p>
+            </div>
+            <div style="width:50%;">
+                <h4>Retour</h4>
+                <h4 class="location" id="returnLocation">{{ dropoffLocation }}</h4>
+                <p id="returnDateTime">{{ endDate }} | {{ endTime }}</p>
+            </div>
+        </div>
+    </div>
+
+		<div class="step-2">
+
+			<div class="step-title" style="display: flex; gap:10px; align-items:center;">
+				<div class="step-number-2">2</div>
+				<h4 style="color:#fe5b3e;;">VÉHICULE</h4>
+				
+			</div>
+
+			<div class="step-details2" style="margin-top:10px;">
+				<h4>{#PEUGEOT 208 #}</h4>
+				<div>{# 117,19 €#}</div>
+				 <p style="margin-top: 45px;">Veuillez choisir un véhicule</p>
+			</div>
+
+		</div>
+
+		<div class="step-3">
+
+			<div class="step-title" style="display: flex; gap:10px; align-items:center;">
+				<div class="step-number">3</div>
+				<h4 style="color:#b2b2b2;">PROTECTIONS ET OPTIONS</h4>
+			</div>
+
+			<div class="step-details">
+				<div style="width:50%; border-right: 1px solid #475569;">
+					<h4>Basic</h4>
+					<div>Inclus</div>
+				</div>
+
+				<div style="width:50%; text-align:right;">
+					<h4>0 option</h4>
+					<div>0,00 €</div>
+				</div>
+
+			</div>
+		</div>
+
+		<div class="step-4">
+			<div class="step-title" style="display: flex; gap:10px; align-items:center;">
+				<div class="step-number">4</div>
+				<h4 style="color:#b2b2b2;">RÉSUMÉ</h4>
+			</div>
+			<div class="step-details4" style="margin-top:10px;">
+				<h4>Prix total</h4>
+				<div>117,19 €</div>
+			</div>
+		</div>
+
+	</div>
+</div>
+
+
+<style>
+
+	.nav__btns i {
+		margin-right: 3px;
+		font-size: 1.3rem;
+		font-weight: bold;
+	}
+	.nav__btns a {
+		color: #000;
+		font-size: 1rem;
+		font-weight: bold;
+		padding-bottom: 5px;
+	}
+	.nav__btns a:hover {
+		font-size: 1rem;
+		font-weight: bold;
+		border-bottom: 2px solid #000;
+	}
+</style>
+
+
+<style>
+
+	.reservation-steps {
+		margin: 0 auto;
+		width: 80%;
+		display: flex;
+		justify-content: space-between;
+		padding: 0 0 10px;
+		gap: 10px;
+	}
+
+	.step-1 {
+		font-size: 0.9rem;
+		width: 40%;
+		padding: 10px;
+		border: 1px solid #fe5b3e;
+		background-color: #fff;
+		border-radius: 8px;
+	}
+	.step-2 {
+        font-size: 0.9rem;
+		width: 20%;
+		padding: 10px;
+		border: 1px solid #fe5b3e;
+		background-color: #fff;
+		border-radius: 8px;
+	}
+	.step-3 {
+        font-size: 0.9rem;
+		width: 25%;
+		padding: 10px;
+		border: 1px solid #ddd;
+		background-color: #fff;
+		border-radius: 8px;
+	}
+	.step-4 {
+        font-size: 0.9rem;
+		width: 15%;
+		padding: 10px;
+		border: 1px solid #ddd;
+		background-color: #fff;
+		border-radius: 8px;
+	}
+	.step:last-child {
+		border-right: none;
+	}
+
+	.step-number {
+		background-color: #b2b2b2;
+		color: #fff;
+		padding: 5px;
+		border-radius: 10px 0 10px 0;
+		width: 25px;
+		height: 25px;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		font-size: 1rem;
+	}
+	.step-number-1 {
+		background-color: #fe5b3e;
+		color: #fff;
+		padding: 5px;
+		border-radius: 10px 0 10px 0;
+		width: 25px;
+		height: 25px;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		font-size: 1rem;
+	}
+		.step-number-2 {
+		background-color: #fe5b3e;
+		color: #fff;
+		padding: 5px;
+		border-radius: 10px 0 10px 0;
+		width: 25px;
+		height: 25px;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		font-size: 1rem;
+	}
+
+	.step-details {
+		display: flex;
+		justify-content: space-between;
+        margin-top:10px;
+	}
+
+
+    	@media(max-width: 860px) {
+        .reservation-steps {
+            width: 96%;
+			padding:68px 0 10px 0;
+            gap:5px;
+		}
+		.step-details, .step-details2,.step-details4  {
+			display: none;
+		}
+        .step-1, .step-2, .step-3,.step-4 {
+		font-size: 0.6rem;
+        width:25%;
+	    }
+
+        .step-number {
+		width: 18px;
+		height: 18px;
+		font-size: 0.6rem;
+        border-radius: 7px 0 7px 0;
+	}
+        }
+
+    @media(max-width: 460px) {
+
+.step-title{
+    flex-direction: column;
+}
+        }
+
+</style>
+

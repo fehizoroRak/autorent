@@ -18,11 +18,11 @@
                 <div class="carousel-container">
                     {% for car in recommendedCars %}
                         {% set TotalPerDay = car.dayprice * days %}
-                        <div class="carousel-item" data-brand="{{ car.brand }}" data-model="{{ car.model }}" data-year="{{ car.year }}" data-image="{{ car.image }}" data-color="{{ car.color }}" data-registration="{{ car.registration }}" data-nbofcardoors="{{ car.nbofcardoors }}" data-nbofpersons="{{ car.nbofpersons }}" data-airconditionner="{{ car.isAirconditionner }}" data-gearbox="{{ car.gearbox }}" data-horsepower="{{ car.horsepower }}" data-co2emissions="{{ car.co2emissions }}" data-electric="{{ car.isElectric }}" data-dayprice="{{ car.dayprice }}" data-days="{{ days }}" data-totalperday="{{ TotalPerDay }}">
+                        <div class="carousel-item">
                             <div class="card">
                                 <div class="card-header">
                                     <span>{{ car.brand }} {{ car.model }}</span>
-                                    <i class="ri-information-line info-icon" data-car="{{ car.id }}"></i>
+                                   
                                 </div>
                                 <div class="card-body">
                                     <div class="card-body__left">
@@ -31,11 +31,11 @@
                                     <div class="card-body__right">
                                         <p>À PARTIR DE</p>
                                         <p class="price-text">{{ car.dayprice }} € / jour</p>
-                                        <h4 style="color: #919191;">
+                                        <h4 style="color: #919191;margin-bottom: 1.5rem;">
                                             TOTAL <span style="color: #fe5c3c;">{{ TotalPerDay }} €</span>
-											<p style="color:#c3c3c3;"><span style="font-weight: bold;color: #919191;"> {{ days }} jrs </span> de locations </p>
+                                            <p style="color:#c3c3c3;"><span style="font-weight: bold;color: #919191;"> {{ days }} jrs </span> de location</p>
                                         </h4>
-                                        <button class="select-btn">Sélectionner</button>
+                                        <a href="{{ path('app_cars_available_details', { id: car.id }) }}" class="select-btn">Sélectionner</a>
                                     </div>
                                 </div>
                             </div>
@@ -46,18 +46,8 @@
             </div>
         </div>
 
-        <!-- Modal INFORMATIONS-->
-        <div id="carModal" class="modal">
-            <div class="modal-content">
-                <span class="close">&times;</span>
-                <div class="modal-body">
-                    <!-- Les informations du car seront insérées ici via JavaScript -->
-                </div>
-            </div>
-        </div>
 
         {# LISTE DES CARS DISPONIBLES #}
-
         <h1 style="margin-top:80px;">Choisissez votre véhicule</h1>
 
         {% if cars is empty %}
@@ -68,9 +58,7 @@
             <ul class="cars__list">
                 {% for car in cars %}
                     {% set TotalPerDay = car.dayprice * days %}
-
-					<li class="cars__item" data-brand="{{ car.brand }}" data-model="{{ car.model }}" data-year="{{ car.year }}" data-image="{{ car.image }}" data-color="{{ car.color }}" data-registration="{{ car.registration }}" data-nbofcardoors="{{ car.nbofcardoors }}" data-nbofpersons="{{ car.nbofpersons }}" data-airconditionner="{{ car.isAirconditionner }}" data-gearbox="{{ car.gearbox }}" data-horsepower="{{ car.horsepower }}" data-co2emissions="{{ car.co2emissions }}" data-electric="{{ car.isElectric }}" data-dayprice="{{ car.dayprice }}" data-days="{{ days }}" data-totalperday="{{ TotalPerDay }}">
-             
+                    <li class="cars__item">
                         <div class="cars__image">
                             <img src="{{ asset('images/' ~ car.image) }}" alt="{{ car.brand }} {{ car.model }}">
                         </div>
@@ -108,48 +96,10 @@
                             <p class="small-text">À PARTIR DE</p>
                             <p class="price-text">{{ car.dayprice }} € / jour</p>
                             <h4 style="color: #919191;">TOTAL <span style="color: #fe5c3c;">{{ TotalPerDay }} €</span></h4>
-							<p style="color:#c3c3c3; font-size:1rem;"> <span style="font-weight: bold;color: #919191;"> {{ days }} jrs </span>  de locations </p>
-                            <button class="select-btn">Sélectionner</button>
+                            <p style="color:#c3c3c3; font-size:1rem;margin-bottom: 1.5rem;"> <span style="font-weight: bold;color: #919191;"> {{ days }} jrs </span> de location</p>
+                            <a href="{{ path('app_cars_available_details', { id: car.id }) }}" class="select-btn">Sélectionner</a>
                         </div>
                     </li>
-                    <!-- Hidden Modal -->
-                <div class="modal-select" style="display: none;">
-    <div class="content">
-        <span class="close-selectionner">&times;</span>
-        <div class="car-details">
-            <div>
-                <h1>Choisissez le tarif qui vous convient</h1>
-                <h2><br></h2>
-                <span class="info-similaire">
-                    ou similaire économique
-                    <i class="ri-information-line info-icon"></i>
-                    <span class="tooltip">Selon la disponibilité dans notre agence, un autre modèle de la même catégorie pourra vous être proposé.</span>
-                </span>
-            </div>
-            <img src="{{ asset('images/bmw_3_series.jpg') }}" alt="Mg4 Electric">
-        </div>
-        <div class="options">
-            <div class="option">
-                <h2 style="margin-top: 43px;">Payer en agence</h2>
-                <p style="margin-top: 20px;">Vous paierez au comptoir le jour de la prise en charge.</p>
-                <p>L'annulation est gratuite 48h avant la date de prise en charge.</p>
-                <div class="price"></div>
-                <div class="total"></div>
-                <button>Sélectionner</button>
-            </div>
-            <div class="option online">
-                <span>Économisez 9 %</span>
-                <h2 style="margin-top: 25px;">Payer en ligne</h2>
-                <p style="margin-top: 20px;">Votre carte de crédit sera débitée une fois la réservation terminée.</p>
-                <p>L'annulation est gratuite 48h avant la date de prise en charge.</p>
-                <div class="price"></div>
-                <div class="total"></div>
-                <button>Sélectionner</button>
-            </div>
-        </div>
-    </div>
-</div>
-
                 {% endfor %}
             </ul>
         {% endif %}

@@ -1,5 +1,4 @@
 <?php
-// src/Controller/CityController.php
 
 namespace App\Controller;
 

@@ -1,259 +1,133 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Connexion compte personnel{% endblock %}
+{% block title %}Pack | Options{% endblock %}
 
 {% block body %}
 
-{% include '_partials/header_connected.html.twig' %}
+{% include '_partials/header_steps.html.twig' %}
+<div class="pack_title">
+    <div style="width:80%; margin: 0 auto; display:flex; justify-content: space-between; align-items: center; padding: 4px 0;">
+        <h5>Choisissez votre protection et vos options</h5>
+        <div style=" display:flex; justify-content: space-between;gap:20px;">
+            <div>
+                <p style="font-size:1rem;">TOTAL</p>
+                <p id="total-price" style="font-size:1.8rem; font-weight:bold;">{{ total }} €</p>
+                <input type="hidden" id="initial-total" value="{{ total }}">
+                <input type="hidden" id="hidden-total" value="{{ total }}">
+            </div>
+            <a href="#">
+                <div style="background-color:#fe5b3e; height:100%; border-radius:8px;padding: 10px; font-size: 1.3rem; text-decoration: none; color:black; font-weight:bold; display:flex; justify-content:center; align-items:center;">
+                    Valider
+                </div>
+            </a>
+        </div>
+    </div>
+</div>
 
 <div class="section__container" id="available-cars">
+    <h3 style="font-size: 1.5rem; margin: 180px 0 50px 0;">Pack protections</h3>
 
-	<h1 class="pack_title">Choisissez votre protection et vos options</h1>
+    <div class="packages">
+        {% for pack in packs %}
+        <div class="package {% if pack.name == 'Basic' %}default-selected{% endif %}" data-price="{{ pack.pricePerDay }}">
+            <div class="selected-label">Sélectionné</div>
+            <div style="display: flex; align-items: center; justify-content: start;">
+                <h1>{{ pack.name }}</h1>
+                <div style="display: flex; justify-content: center; align-items: center; margin-left: 10px;">
+                    {% for i in 1..3 %}
+                        <i class="ri-star-fill" style="color: {% if i <= loop.index0 %}orange{% else %}#ccc{% endif %};"></i>
+                    {% endfor %}
+                </div>
+            </div>
+        
+            <p class="franchise">Franchise à {{ pack.franchise | number_format(2, ',', ' ') }} €</p>
+            <p class="price">{% if pack.pricePerDay == 0 %}INCLUS{% else %}{{ pack.pricePerDay | number_format(2, ',', ' ') }} € / jour{% endif %}</p>
 
-    <h3 style="  font-size: 1.5rem; margin: 60px 0;">Pack protections</h3>
-
-	<div class="packages">
-		<div class="package">
-            <div style="display: flex;
-                        align-items: center;
-                        justify-content: start; ">
-                <h1>Basic</h1>
-                <div style="  display: flex; justify-content: center;
-                            align-items: center;
-                            margin-left: 10px;">
-                    <i class="ri-star-fill"></i>
+            <ul class="includes">
+                {% if pack.content1 %}<li style="display:flex; gap:10px;"><i style="color:green;font-size:0.9rem; margin-top:3px;" class="fa-solid fa-check"></i><p>{{ pack.content1 }}</p></li>{% endif %}
+                {% if pack.content2 %}<li style="display:flex; gap:10px;"><i style="color:green;font-size:0.9rem; margin-top:3px;" class="fa-solid fa-check"></i><p>{{ pack.content2 }}</p></li>{% endif %}
                 
-                 
-                </div>
+                {# For Basic Pack - Display content 3, 4, and 5 with strikethrough and gray cross icon, hardcoded if null #}
+                {% if pack.name == 'Basic' %}
+                    <li style="display:flex; gap:10px; color: gray; text-decoration: line-through;">
+                        <i style="color: gray;font-size:0.9rem; margin-top:3px;" class="fa-solid fa-times"></i>
+                        <p>{{ pack.content3 is not null ? pack.content3 : 'Protection bris de glace, phares et pneumatiques' }}</p>
+                    </li>
+                    <li style="display:flex; gap:10px; color: gray; text-decoration: line-through;">
+                        <i style="color: gray;font-size:0.9rem; margin-top:3px;" class="fa-solid fa-times"></i>
+                        <p>{{ pack.content4 is not null ? pack.content4 : 'Protection personnelle accident' }}</p>
+                    </li>
+                    <li style="display:flex; gap:10px; color: gray; text-decoration: line-through;">
+                        <i style="color: gray;font-size:0.9rem; margin-top:3px;" class="fa-solid fa-times"></i>
+                        <p>{{ pack.content5 is not null ? pack.content5 : 'Protection des biens personnels' }}</p>
+                    </li>
+                {% endif %}
+                
+                {# For Medium Pack - Display content 5 with strikethrough and gray cross icon, hardcoded if null #}
+                {% if pack.name == 'Medium' %}
+                    {% if pack.content3 %}<li style="display:flex; gap:10px;"><i style="color:green;font-size:0.9rem; margin-top:3px;" class="fa-solid fa-check"></i><p>{{ pack.content3 }}</p></li>{% endif %}
+                    {% if pack.content4 %}<li style="display:flex; gap:10px;"><i style="color:green;font-size:0.9rem; margin-top:3px;" class="fa-solid fa-check"></i><p>{{ pack.content4 }}</p></li>{% endif %}
+                    <li style="display:flex; gap:10px; color: gray; text-decoration: line-through;">
+                        <i style="color: gray;font-size:0.9rem; margin-top:3px;" class="fa-solid fa-times"></i>
+                        <p>{{ pack.content5 is not null ? pack.content5 : 'Protection des biens personnels' }}</p>
+                    </li>
+                {% endif %}
+
+                {# For Premium Pack - Display all content normally #}
+                {% if pack.name == 'Premium' %}
+                    {% if pack.content3 %}<li style="display:flex; gap:10px;"><i style="color:green;font-size:0.9rem; margin-top:3px;" class="fa-solid fa-check"></i><p>{{ pack.content3 }}</p></li>{% endif %}
+                    {% if pack.content4 %}<li style="display:flex; gap:10px;"><i style="color:green;font-size:0.9rem; margin-top:3px;" class="fa-solid fa-check"></i><p>{{ pack.content4 }}</p></li>{% endif %}
+                    {% if pack.content5 %}<li style="display:flex; gap:10px;"><i style="color:green;font-size:0.9rem; margin-top:3px;" class="fa-solid fa-check"></i><p>{{ pack.content5 }}</p></li>{% endif %}
+                {% endif %}
+            </ul>
+            <button class="btn btn-primary" onclick="selectPack(this)">Sélectionner</button>
+        </div>
+        {% endfor %}
+    </div>
+
+    <h3 style="font-size: 1.5rem; margin: 60px 0;">Options disponibles</h3>
+
+    <div class="options-container">
+        {% for option in options %}
+        <div class="option-card" data-price="{{ option.price }}">
+            <div class="added-label">Ajouté</div>
+            <div class="option-image">
+                <img src="{{ asset('images/options/' ~ option.image) }}" alt="{{ option.name }}">
+                <p>{{ option.name }}</p>
             </div>
-		
-			<p class="franchise">Franchise à 1,700.00 €</p>
-			<p class="price">INCLUS</p>
-
-			<ul class="includes">
-                <li style="display:flex; gap:10px;">
-                    <p>
-                        <i style="color:green;font-size:0.9rem; margin-top:3px;" class="fa-solid fa-check"></i>
-                    </p>
-                    <p>Protection contre les dommages résultant d'une collision</p>
-                </li>
-
-                  <li style="display:flex; gap:10px;">
-                    <p>
-                        <i style="color:green;font-size:0.9rem; margin-top:3px;" class="fa-solid fa-check"></i>
-                    </p>
-                    <p>Protection contre le vol</p>
-                </li>
-
-                <li style="display:flex; gap:5px;">
-                    <p>
-                        <i style="color:#999;font-size:1.2rem; margin-top:3px;" class="ri-close-line"></i>
-                    </p>
-                    <p class="not-included" >Protection bris de glace, phares et pneumatiques</p>
-                </li>
-
-                <li style="display:flex; gap:5px;">
-                    <p>
-                        <i style="color:#999;font-size:1.2rem; margin-top:3px;" class="ri-close-line"></i>
-                    </p>
-                    <p class="not-included" >Protection personnelle accident</p>
-                </li>
-
-                  <li style="display:flex; gap:5px;">
-                    <p>
-                        <i style="color:#999;font-size:1.2rem; margin-top:3px;" class="ri-close-line"></i>
-                    </p>
-                    <p class="not-included" >Protection des biens personnels</p>
-                </li>
-			</ul>
-			<button>Sélectionner</button>
-		</div>
-		<div class="package selected">
-            <div style="display: flex;
-                        align-items: center;
-                        justify-content: start; ">
-                <h1>Medium</h1>
-                <div style="  display: flex; justify-content: center;
-                            align-items: center;
-                            margin-left: 10px;">
-                    <i class="ri-star-fill"></i>
-                    <i class="ri-star-fill"></i>
-                 
-                </div>
+            <div class="option-description">
+                <p>{{ option.content }}</p>
+                <div class="price">{{ option.price | number_format(2, ',', ' ') }} € / total</div>
+                <button class="btn btn-primary add-btn" onclick="toggleOption(this, {{ option.price }})">Ajouter</button>
             </div>
-		
-			<p class="franchise">Franchise à 508,00 €</p>
-			<p class="price">28,00 € / jour</p>
-			<ul class="includes">
-                <li style="display:flex; gap:10px;">
-                    <p>
-                        <i style="color:green;font-size:0.9rem; margin-top:3px;" class="fa-solid fa-check"></i>
-                    </p>
-                    <p>Protection contre les dommages résultant d'une collision</p>
-                </li>
-
-                  <li style="display:flex; gap:10px;">
-                    <p>
-                        <i style="color:green;font-size:0.9rem; margin-top:3px;" class="fa-solid fa-check"></i>
-                    </p>
-                    <p>Protection contre le vol</p>
-                </li>
-
-                <li style="display:flex; gap:5px;">
-                    <p>
-                        <i style="color:green;font-size:0.9rem; margin-top:3px;" class="fa-solid fa-check"></i>
-                    </p>
-                    <p>Protection bris de glace, phares et pneumatiques</p>
-                </li>
-
-                <li style="display:flex; gap:5px;">
-                    <p>
-                        <i style="color:green;font-size:0.9rem; margin-top:3px;" class="fa-solid fa-check"></i>
-                    </p>
-                    <p>Protection personnelle accident</p>
-                </li>
-
-                  <li style="display:flex; gap:5px;">
-                    <p>
-                        <i style="color:#999;font-size:1.2rem; margin-top:3px;" class="ri-close-line"></i>
-                    </p>
-                    <p class="not-included" >Protection des biens personnels</p>
-                </li>
-			</ul>
-			<button>Sélectionner</button>
-		</div>
-		<div class="package">
-            <div style="display: flex;
-                        align-items: center;
-                        justify-content: start; ">
-                <h1>Premium</h1>
-                <div style="  display: flex; justify-content: center;
-                            align-items: center;
-                            margin-left: 10px;">
-                    <i class="ri-star-fill"></i>
-                    <i class="ri-star-fill"></i>
-                    <i class="ri-star-fill"></i>
-                </div>
-            </div>
-
-			<p class="franchise">Franchise à 0.00 €</p>
-			<p class="price">30,00 € / jour</p>
-			<ul class="includes">
-                <li style="display:flex; gap:10px;">
-                    <p>
-                        <i style="color:green;font-size:0.9rem; margin-top:3px;" class="fa-solid fa-check"></i>
-                    </p>
-                    <p>Protection contre les dommages résultant d'une collision</p>
-                </li>
-
-                  <li style="display:flex; gap:10px;">
-                    <p>
-                        <i style="color:green;font-size:0.9rem; margin-top:3px;" class="fa-solid fa-check"></i>
-                    </p>
-                    <p>Protection contre le vol</p>
-                </li>
-
-                <li style="display:flex; gap:5px;">
-                    <p>
-                        <i style="color:green;font-size:0.9rem; margin-top:3px;" class="fa-solid fa-check"></i>
-                    </p>
-                    <p>Protection bris de glace, phares et pneumatiques</p>
-                </li>
-
-                <li style="display:flex; gap:5px;">
-                    <p>
-                        <i style="color:green;font-size:0.9rem; margin-top:3px;" class="fa-solid fa-check"></i>
-                    </p>
-                    <p>Protection personnelle accident</p>
-                </li>
-
-                  <li style="display:flex; gap:5px;">
-                    <p>
-                        <i style="color:green;font-size:0.9rem; margin-top:3px;" class="fa-solid fa-check"></i>
-                    </p>
-                    <p  >Protection des biens personnels</p>
-                </li>
-			</ul>
-			<button>Sélectionner</button>
-		</div>
-	</div>
-
-
-    <h3 style="  font-size: 1.5rem; margin: 60px 0;">Options disponibles</h3>
-
-<div class="options-container">
-    <div class="option-card">
-        <div class="option-image">
-            <img src="{{ asset('images/audi_a4.jpg') }}" alt="Additional Driver"> 
-            <p> Conductor additionnel</p>
         </div>
-        <div class="option-description">
-            <p>Partez l'esprit tranquille et partagez le volant avec une autre personne assuré ... <a href="#">Lire la suite</a></p>
-            <div class="price">38,99 € / total</div>
-            <button class="add-button">Ajouter</button>
-        </div>
+        {% endfor %}
     </div>
-
-    <div class="option-card">
-        <div class="option-image">
-            <img src="{{ asset('images/audi_a4.jpg') }}" alt="Additional Driver"> 
-            <p> Conductor additionnel</p>
-        </div>
-        <div class="option-description">
-            <p>Partez l'esprit tranquille et partagez le volant avec une autre personne assuré ... <a href="#">Lire la suite</a></p>
-            <div class="price">38,99 € / total</div>
-            <button class="add-button">Ajouter</button>
-        </div>
-    </div>
-
-    <div class="option-card">
-        <div class="option-image">
-            <img src="{{ asset('images/audi_a4.jpg') }}" alt="Additional Driver"> 
-            <p> Conductor additionnel</p>
-        </div>
-        <div class="option-description">
-            <p>Partez l'esprit tranquille et partagez le volant avec une autre personne assuré ... <a href="#">Lire la suite</a></p>
-            <div class="price">38,99 € / total</div>
-            <button class="add-button">Ajouter</button>
-        </div>
-    </div>
-
-    <div class="option-card">
-        <div class="option-image">
-            <img src="{{ asset('images/audi_a4.jpg') }}" alt="Additional Driver"> 
-            <p> Conductor additionnel</p>
-        </div>
-        <div class="option-description">
-            <p>Partez l'esprit tranquille et partagez le volant avec une autre personne assuré ... <a href="#">Lire la suite</a></p>
-            <div class="price">38,99 € / total</div>
-            <button class="add-button">Ajouter</button>
-        </div>
-    </div>
-</div>
 
 </div>
 
-
-    <style>
+<style>
 .ri-star-fill{
     height: 10px;
     width: 20px;
     font-size: 1.1rem;
-
 }
- .pack_title {
+.pack_title {
+    position: fixed;
+    background:#ffffff;
+    width:100%;
+    top:32px;
+    left:0;
     font-size: 2.2rem;
-    margin-top:50px;
-   
+    margin-top:150px;
+    border-bottom: 1px solid #f3f3f3;
+    z-index: 99999;
 }
-
 .packages {
     display: flex;
     justify-content: space-between;
     flex-wrap: wrap;
- 
 }
-
 .package {
     background: white;
     border: 1px solid #e5e5e5;
@@ -262,48 +136,41 @@
     box-shadow: 0 4px 8px rgba(0,0,0,0.1);
     transition: transform 0.3s ease;
     border-radius: 10px;
+    cursor: pointer;
+    position: relative;
 }
-
-/* .package.selected {
-    border-color: green;
-    background: #e8f5e9;
-} */
-
+.package.default-selected {
+    border: 2px solid #fe5b3e;
+    box-shadow: 0 4px 12px rgba(254, 91, 62, 0.5);
+}
 .package h1 {
-     color:#fe5b3e;
+    color:#fe5b3e;
     font-weight: bold; 
 }
-
 .package .franchise {
- margin:10px 0 30px 0;
+    margin:10px 0 30px 0;
 }
-
 .package .price {
     padding-bottom: 40px;
-    border-bottom: 1px solid #e5e5e5
+    border-bottom: 1px solid #e5e5e5;
 }
-
 .franchise, .price {
     color: #555;
     font-weight: bold;
 }
-
 .includes {
     list-style: none;
     padding: 0;
     margin-bottom:60px;
 }
-
 .includes li {
     padding: 5px;
     margin-bottom:10px;
 }
-
 .not-included {
     color: #999;
 }
-
-button {
+button, .btn.btn-primary {
     background-color: #fe5b3e;
     color: white;
     border: none;
@@ -314,57 +181,53 @@ button {
     border-radius:10px;
     font-size: 1.2rem;
 }
-
-button:hover {
+button:hover, .btn.btn-primary:hover {
     opacity:0.9;
 }
 
-
-
+button.disabled, .btn.btn-primary.disabled {
+    background-color: #cccccc;
+    cursor: not-allowed;
+    opacity: 0.7;
+}
 
 .options-container {
     display: flex;
     justify-content: space-between;
     flex-wrap: wrap;
 } 
-
 .option-card {
     background: #fff;
     border: 1px solid #e5e5e5;
     padding: 20px;
     width: 270px;
     border-radius: 10px;
+    position: relative;
 }
-
 .option-image{
     display: flex;
     gap: 15px;
 }
-
 .option-image img {
     width: 30%;
     height: auto;
 }
-
 .option-image p {
     font-size: 1.4rem;
     font-weight: bold;
 }
 .option-description  {
-margin-top: 40px;
+    margin-top: 40px;
 }
-
 .option-description p {
     font-size: 16px;
     color: #666;
 }
-
 .price {
     font-size: 1.5rem;
     font-weight: bold;
     margin: 15px 0;
 }
-
 .add-button {
     width: 100%;
     padding: 10px;
@@ -376,60 +239,132 @@ margin-top: 40px;
     border-radius: 10px;
     font-size: 1.2rem;
 }
-
 .add-button:hover {
     background-color: #e04a2f;
 }
-
-
-/* Responsive adjustments */
 /* Responsive adjustments */
 @media (max-width: 1024px) {
     .packages, .options-container {
         flex-wrap: wrap;
         justify-content: space-around;
     }
-
     .package, .option-card {
         width: 48%; /* Adjust width to show 2 cards per row */
         margin-bottom: 20px;
     }
 }
-
 @media (max-width: 768px) {
     .packages, .options-container {
         flex-direction: row;
     }
-
     .package, .option-card {
         width: 48%; /* Keeps 2 cards per row for this range too */
     }
 }
-
 @media (max-width: 672px) {
     .packages, .options-container {
         flex-direction: column;
         align-items: center;
     }
-
     .package, .option-card {
         width: 90%; /* Full width for smaller devices */
     }
 }
-
 /* Adding specific styles for 650px to 1024px */
 @media (min-width: 672px) and (max-width: 1024px) {
     .packages, .options-container {
         flex-direction: row;
         justify-content: space-between;
     }
-
     .package, .option-card {
         width: 48%; /* Show two cards per row */
     }
 }
+.package.selected, .option-card.selected {
+    border: 2px solid #fe5b3e;
+    box-shadow: 0 4px 12px rgba(254, 91, 62, 0.5);
+}
+.selected-label, .added-label {
+    display: none;
+    position: absolute;
+    top: -10px;
+    left: 10px;
+    background-color: #fe5b3e;
+    color: white;
+    padding: 5px 10px;
+    border-radius: 5px;
+    font-size: 0.9rem;
+    font-weight: bold;
+}
+.package.selected .selected-label, .option-card.selected .added-label {
+    display: block;
+}
+</style>
 
-    </style>
+<script>
+const packages = document.querySelectorAll('.package');
+const defaultPackage = document.querySelector('.package.default-selected');
+let selectedPackage = defaultPackage;
+let total = parseFloat(document.getElementById('initial-total').value);
+const days = {{ app.session.get('days') }};
+
+if (defaultPackage) {
+    selectPack(defaultPackage.querySelector('.btn.btn-primary'), true);
+}
+
+function selectPack(button, isDefault = false) {
+    const package = button.closest('.package');
+
+    if (selectedPackage) {
+        selectedPackage.classList.remove('selected');
+        selectedPackage.querySelector('.btn.btn-primary').classList.remove('disabled');
+        selectedPackage.querySelector('.btn.btn-primary').disabled = false;
+    }
+
+    package.classList.add('selected');
+    button.classList.add('disabled');
+    button.disabled = true;
+    selectedPackage = package;
+
+    const packagePrice = parseFloat(package.getAttribute('data-price'));
+    const totalElement = document.getElementById('total-price');
+    const hiddenTotalElement = document.getElementById('hidden-total');
+    const initialTotal = parseFloat(document.getElementById('initial-total').value);
+
+    // Calculer le total des options sélectionnées
+    let optionsTotal = 0;
+    document.querySelectorAll('.option-card.selected').forEach(option => {
+        optionsTotal += parseFloat(option.getAttribute('data-price'));
+    });
+
+    total = initialTotal + (packagePrice * days) + optionsTotal;
+    hiddenTotalElement.value = total;
+
+    totalElement.textContent = total.toFixed(2) + ' €';
+}
+
+function toggleOption(button, price) {
+    const optionCard = button.closest('.option-card');
+    const totalElement = document.getElementById('total-price');
+    const hiddenTotalElement = document.getElementById('hidden-total');
+    let currentTotal = parseFloat(hiddenTotalElement.value);
+
+    if (optionCard.classList.contains('selected')) {
+        optionCard.classList.remove('selected');
+        button.textContent = 'Ajouter';
+        button.classList.remove('disabled');
+        currentTotal -= price;
+    } else {
+        optionCard.classList.add('selected');
+        button.textContent = 'Retirer';
+        button.classList.add('disabled');
+        currentTotal += price;
+    }
+
+    hiddenTotalElement.value = currentTotal;
+    totalElement.textContent = currentTotal.toFixed(2) + ' €';
+}
+</script>
 
 {% include '_partials/footer.html.twig' %}
 
