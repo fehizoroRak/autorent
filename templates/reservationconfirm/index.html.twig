@@ -9,6 +9,75 @@
 
 	<div class="section__container" id="available-cars">
 
+///////////////////////////////////////////////////////////
+
+
+
+<h1>Confirmation de la réservation</h1>
+
+<div>
+    <h2>Détails de la réservation</h2>
+    <p><strong>Lieu de départ :</strong> {{ pickup_location }}</p>
+    <p><strong>Lieu de retour :</strong> {{ dropoff_location }}</p>
+    <p><strong>Date de départ :</strong> {{ start_date }}</p>
+    <p><strong>Date de retour :</strong> {{ end_date }}</p>
+    <p><strong>Heure de départ :</strong> {{ start_time }}</p>
+    <p><strong>Heure de retour :</strong> {{ end_time }}</p>
+    <p><strong>Nombre de jours de location :</strong> {{ days }}</p>
+    <p><strong>Total de la location :</strong> {{ total }} €</p>
+</div>
+
+<div>
+    <h2>Voiture sélectionnée</h2>
+    <p><strong>Modèle :</strong> {{ car.model }}</p>
+    <p><strong>Marque :</strong> {{ car.brand }}</p>
+    <p><strong>Année :</strong> {{ car.year }}</p>
+    <p><strong>Boîte de vitesses :</strong> {{ car.gearbox }}</p>
+    <!-- Ajoutez d'autres détails si nécessaire -->
+</div>
+
+<div>
+    <h2>Informations utilisateur</h2>
+    <p><strong>Nom :</strong> {{ user.name }}</p>
+    <p><strong>Prénom :</strong> {{ user.firstname }}</p>
+    <p><strong>Email :</strong> {{ user.email }}</p>
+    <p><strong>Numéro de téléphone :</strong> {{ user.phonenumber }}</p>
+    <!-- Ajoutez d'autres détails si nécessaire -->
+</div>
+
+<div>
+    <h2>Pack sélectionné</h2>
+    <p>{{ pack }}</p>
+</div>
+
+<div>
+    <h2>Options sélectionnées</h2>
+    <p>{{ options }}</p>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//////////////////////////////////////////////////////////////////////
+
+
+
+
+
 		<h1 style="margin-top:80px;">Confirmez votre réservation</h1>
 
 		<div class="reservation-form">

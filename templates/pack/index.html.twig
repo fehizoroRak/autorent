@@ -15,17 +15,23 @@
                 <input type="hidden" id="initial-total" value="{{ total }}">
                 <input type="hidden" id="hidden-total" value="{{ total }}">
             </div>
-            <a href="#">
-                <div style="background-color:#fe5b3e; height:100%; border-radius:8px;padding: 10px; font-size: 1.3rem; text-decoration: none; color:black; font-weight:bold; display:flex; justify-content:center; align-items:center;">
+            <form id="confirm-form" action="{{ path('app_reservation_confirm') }}" method="POST">
+                <input type="hidden" name="total" id="final-total">
+                <input type="hidden" name="pack" id="selected-pack">
+                <input type="hidden" name="options" id="selected-options">
+                <input type="hidden" name="car_id" value="{{ car.id }}">
+                <input type="hidden" name="user_id" value="{{ user.id }}">
+                <button type="submit" style="background-color:#fe5b3e; height:100%; border-radius:8px;padding: 10px; font-size: 1.3rem; text-decoration: none; color:black; font-weight:bold; display:flex; justify-content:center; align-items:center;">
                     Valider
-                </div>
-            </a>
+                </button>
+            </form>
         </div>
     </div>
 </div>
 
 <div class="section__container" id="available-cars">
     <h3 style="font-size: 1.5rem; margin: 180px 0 50px 0;">Pack protections</h3>
+      <h3 style="font-size: 1.5rem; margin: 180px 0 50px 0;">  user id :   {{ user.id}}</h3>
 
     <div class="packages">
         {% for pack in packs %}
@@ -341,6 +347,13 @@ function selectPack(button, isDefault = false) {
     hiddenTotalElement.value = total;
 
     totalElement.textContent = total.toFixed(2) + ' €';
+
+    // Mettre à jour les champs du formulaire
+    document.getElementById('final-total').value = total;
+    document.getElementById('selected-pack').value = package.querySelector('h1').textContent.trim();
+    document.getElementById('selected-options').value = Array.from(document.querySelectorAll('.option-card.selected'))
+        .map(option => option.querySelector('p').textContent.trim())
+        .join(', ');
 }
 
 function toggleOption(button, price) {
@@ -363,6 +376,12 @@ function toggleOption(button, price) {
 
     hiddenTotalElement.value = currentTotal;
     totalElement.textContent = currentTotal.toFixed(2) + ' €';
+    
+    // Mettre à jour les champs du formulaire
+    document.getElementById('final-total').value = currentTotal;
+    document.getElementById('selected-options').value = Array.from(document.querySelectorAll('.option-card.selected'))
+        .map(option => option.querySelector('p').textContent.trim())
+        .join(', ');
 }
 </script>
 
