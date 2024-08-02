@@ -37,25 +37,16 @@ class SecurityController extends AbstractController
             throw $this->createNotFoundException('The car does not exist');
         }
 
-        // Récupérer l'utilisateur connecté
-
-         /** @var User|null $user */
-        $user = $security->getUser();
-        $userId = null;
-
-        if ($user) {
-            $userId = $user->getId(); // Suppose que votre entité User a une méthode getId()
-        }
-
-        $user = $userRepository->find($userId);
-      
-
+    // Retrieve the authenticated user (if logged in)
+    /** @var User|null $user */
+    $user = $security->getUser();
+    $userId = $user ? $user->getId() : null;
         return $this->render('security/login.html.twig', [
             'last_username' => $lastUsername,
             'error' => $error,
             'car' => $car,
             'total' => $total,
-            'user' => $user,
+            'user_id' => $userId,
         ]);
     }
     

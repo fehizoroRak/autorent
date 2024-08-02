@@ -50,12 +50,16 @@
     <p>ID: {{ pack.id }}</p>
     <p>Nom: {{ pack.name }}</p>
 
-    <h2>Options sélectionnées</h2>
-    <ul>
-        {% for i in 0..(option_ids|length - 1) %}
-            <li>ID: {{ option_ids[i] }}, Nom: {{ option_names[i] }}</li>
-        {% endfor %}
-    </ul>
+
+    {% if option_ids is defined and option_names is defined and option_ids|length > 0 and option_names|length > 0 %}
+        <h2>Options sélectionnées</h2>
+        <ul>
+            {% for i in 0..(option_ids|length - 1) %}
+                <li>ID: {{ option_ids[i] }}, Nom: {{ option_names[i] }}</li>
+            {% endfor %}
+        </ul>
+    {% endif %}
+    
 
     <form action="{{ path('app_reservation_confirm_final') }}" method="post">
         <input type="hidden" name="total" value="{{ total }}">

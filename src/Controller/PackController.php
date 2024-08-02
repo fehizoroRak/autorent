@@ -9,28 +9,34 @@ use Symfony\Component\Routing\Annotation\Route;
 use App\Repository\CarRepository;
 use App\Repository\PackRepository;
 use App\Repository\OptionRepository;
+use App\Repository\UserRepository;
 
 class PackController extends AbstractController
 {
     #[Route('/pack', name: 'app_pack')]
-    public function index(Request $request, CarRepository $carRepository, PackRepository $packRepository, OptionRepository $optionRepository): Response
+    public function index(Request $request,UserRepository $userRepository, CarRepository $carRepository, PackRepository $packRepository, OptionRepository $optionRepository): Response
     {
         $carId = $request->query->get('id');
         $total = $request->query->get('total');
-        $userId = $request->query->get('idUser');
+        $userId = $request->query->get('userId');
+   
 
+      
         // Récupérer les informations de la voiture depuis la base de données
         $car = $carRepository->find($carId);
-        $user = $carRepository->find($userId);
+        $user = $userRepository->find($userId);
 
-        // Si la voiture n'existe pas, lever une exception ou rediriger vers une autre page
+
+
         if (!$car) {
             throw $this->createNotFoundException('The car does not exist');
         }
-        // Si le User n'existe pas, lever une exception ou rediriger vers une autre page
+  
         if (!$user) {
             throw $this->createNotFoundException('The user does not exist');
         }
+        
+
         // Récupérer les packs de protection et les options depuis la base de données
         $packs = $packRepository->findAll();
         $options = $optionRepository->findAll();
@@ -41,6 +47,7 @@ class PackController extends AbstractController
             'packs' => $packs,
             'options' => $options,
             'user' => $user,
+
         ]);
     }
 }
