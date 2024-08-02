@@ -5,7 +5,7 @@
 
 {% block body %}
 
-	{% include '_partials/header_connected.html.twig' %}
+	{% include '_partials/header_steps.html.twig' %}
 
 	<div class="section__container" id="available-cars">
 
@@ -13,12 +13,19 @@
 
 
 
-<h1>Confirmation de la réservation</h1>
+<h1 style="margin-top:300px;">Confirmation de la réservation</h1>
 
 <div>
     <h2>Détails de la réservation</h2>
-    <p><strong>Lieu de départ :</strong> {{ pickup_location }}</p>
-    <p><strong>Lieu de retour :</strong> {{ dropoff_location }}</p>
+	<br>	<br>
+<p><strong> ID Lieu de départ :</strong> {{ pickupLocationId }}</p>
+    <p><strong>Lieu de départ :</strong> {{ pickupLocationName }}</p>
+	<br>
+	<br>
+	  <p><strong>ID Lieu de retour :</strong> {{ dropoffLocationId }}</p>
+    <p><strong>Lieu de retour :</strong> {{ dropoffLocationName }}</p>
+
+	<br>	<br>
     <p><strong>Date de départ :</strong> {{ start_date }}</p>
     <p><strong>Date de retour :</strong> {{ end_date }}</p>
     <p><strong>Heure de départ :</strong> {{ start_time }}</p>
@@ -29,6 +36,7 @@
 
 <div>
     <h2>Voiture sélectionnée</h2>
+	 <p><strong>ID CAR :</strong> {{ car.id }}</p>
     <p><strong>Modèle :</strong> {{ car.model }}</p>
     <p><strong>Marque :</strong> {{ car.brand }}</p>
     <p><strong>Année :</strong> {{ car.year }}</p>
@@ -38,6 +46,7 @@
 
 <div>
     <h2>Informations utilisateur</h2>
+	  <p><strong>USER ID :</strong> {{ user.id }}</p>
     <p><strong>Nom :</strong> {{ user.name }}</p>
     <p><strong>Prénom :</strong> {{ user.firstname }}</p>
     <p><strong>Email :</strong> {{ user.email }}</p>
@@ -45,15 +54,16 @@
     <!-- Ajoutez d'autres détails si nécessaire -->
 </div>
 
-<div>
-    <h2>Pack sélectionné</h2>
-    <p>{{ pack }}</p>
-</div>
+<h2>Pack sélectionné</h2>
+<p>ID: {{ pack_id }}</p>
+<p>Nom: {{ pack_name }}</p>
 
-<div>
-    <h2>Options sélectionnées</h2>
-    <p>{{ options }}</p>
-</div>
+<h2>Options sélectionnées</h2>
+<ul>
+    {% for i in 0..(option_ids|length - 1) %}
+        <li>ID: {{ option_ids[i] }}, Nom: {{ option_names[i] }}</li>
+    {% endfor %}
+</ul>
 
 
 

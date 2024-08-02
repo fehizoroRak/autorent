@@ -9,6 +9,7 @@ use App\Entity\Pack;
 use App\Entity\Option;
 use App\Entity\CityPickupLocation;
 use App\Entity\CityDropoffLocation;
+use App\Entity\Status;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
@@ -17,13 +18,14 @@ class LocationFixtures extends Fixture implements DependentFixtureInterface
 {
     public function load(ObjectManager $manager): void
     {
-        // Retrieve all users, cars, pickup and dropoff locations, packs and options from the database
+        // Retrieve all users, cars, pickup and dropoff locations, packs, options, and statuses from the database
         $users = $manager->getRepository(User::class)->findAll();
         $cars = $manager->getRepository(Car::class)->findAll();
         $pickupLocations = $manager->getRepository(CityPickupLocation::class)->findAll();
         $dropoffLocations = $manager->getRepository(CityDropoffLocation::class)->findAll();
         $packs = $manager->getRepository(Pack::class)->findAll();
         $options = $manager->getRepository(Option::class)->findAll();
+        $statuses = $manager->getRepository(Status::class)->findAll();
 
         // Ensure we have enough data to create 10 locations
         if (count($users) < 10 || count($cars) < 10 || count($pickupLocations) < 10 || count($dropoffLocations) < 10) {
@@ -66,13 +68,25 @@ class LocationFixtures extends Fixture implements DependentFixtureInterface
                 $location->addOption($options[$optionIndex]);
             }
 
+            // Calculate number of days
+            $numberOfDays = $endDate->diff($startDate)->days;
+            $location->setNumberOfDays($numberOfDays);
+
             // Adjust the total amount based on pack and options
-            $days = $endDate->diff($startDate)->days;
-            $totalAmount += $randomPack->getPricePerDay() * $days;
+            $totalAmount += $randomPack->getPricePerDay() * $numberOfDays;
             foreach ($location->getOptions() as $option) {
                 $totalAmount += $option->getPrice();
             }
             $location->setTotalamount($totalAmount);
+
+            // Set initial status to "Pending" and add to status history
+            $initialStatus = array_filter($statuses, fn($status) => $status->getName() === 'Pending');
+            if (!empty($initialStatus)) {
+                $initialStatus = reset($initialStatus);
+                $location->addStatus($initialStatus);
+            } else {
+                throw new \Exception('Status "Pending" not found.');
+            }
 
             $manager->persist($location);
         }
@@ -90,6 +104,7 @@ class LocationFixtures extends Fixture implements DependentFixtureInterface
             CityDropoffLocationFixtures::class,
             PackFixtures::class,
             OptionFixtures::class,
+            StatusFixtures::class, 
         ];
     }
 }

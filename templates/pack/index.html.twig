@@ -15,27 +15,30 @@
                 <input type="hidden" id="initial-total" value="{{ total }}">
                 <input type="hidden" id="hidden-total" value="{{ total }}">
             </div>
-            <form id="confirm-form" action="{{ path('app_reservation_confirm') }}" method="POST">
-                <input type="hidden" name="total" id="final-total">
-                <input type="hidden" name="pack" id="selected-pack">
-                <input type="hidden" name="options" id="selected-options">
-                <input type="hidden" name="car_id" value="{{ car.id }}">
-                <input type="hidden" name="user_id" value="{{ user.id }}">
-                <button type="submit" style="background-color:#fe5b3e; height:100%; border-radius:8px;padding: 10px; font-size: 1.3rem; text-decoration: none; color:black; font-weight:bold; display:flex; justify-content:center; align-items:center;">
-                    Valider
-                </button>
-            </form>
+         <form id="confirm-form" action="{{ path('app_reservation_confirm') }}" method="POST">
+    <input type="hidden" name="total" id="final-total">
+    <input type="hidden" name="pack_id" id="selected-pack-id">
+    <input type="hidden" name="pack_name" id="selected-pack-name">
+    <input type="hidden" name="option_ids" id="selected-option-ids">
+    <input type="hidden" name="option_names" id="selected-option-names">
+    <input type="hidden" name="car_id" value="{{ car.id }}">
+    <input type="hidden" name="user_id" value="{{ user.id }}">
+    <button type="submit" style="background-color:#fe5b3e; height:100%; border-radius:8px;padding: 10px; font-size: 1.3rem; text-decoration: none; color:black; font-weight:bold; display:flex; justify-content:center; align-items:center;">
+        Valider
+    </button>
+</form>
+
         </div>
     </div>
 </div>
 
 <div class="section__container" id="available-cars">
     <h3 style="font-size: 1.5rem; margin: 180px 0 50px 0;">Pack protections</h3>
-      <h3 style="font-size: 1.5rem; margin: 180px 0 50px 0;">  user id :   {{ user.id}}</h3>
+    <h3 style="font-size: 1.5rem; margin: 180px 0 50px 0;">user id : {{ user.id }}</h3>
 
     <div class="packages">
         {% for pack in packs %}
-        <div class="package {% if pack.name == 'Basic' %}default-selected{% endif %}" data-price="{{ pack.pricePerDay }}">
+        <div class="package {% if pack.name == 'Basic' %}default-selected{% endif %}" data-price="{{ pack.pricePerDay }}" data-id="{{ pack.id }}">
             <div class="selected-label">Sélectionné</div>
             <div style="display: flex; align-items: center; justify-content: start;">
                 <h1>{{ pack.name }}</h1>
@@ -95,7 +98,7 @@
 
     <div class="options-container">
         {% for option in options %}
-        <div class="option-card" data-price="{{ option.price }}">
+        <div class="option-card" data-price="{{ option.price }}" data-id="{{ option.id }}">
             <div class="added-label">Ajouté</div>
             <div class="option-image">
                 <img src="{{ asset('images/options/' ~ option.image) }}" alt="{{ option.name }}">
@@ -350,8 +353,12 @@ function selectPack(button, isDefault = false) {
 
     // Mettre à jour les champs du formulaire
     document.getElementById('final-total').value = total;
-    document.getElementById('selected-pack').value = package.querySelector('h1').textContent.trim();
-    document.getElementById('selected-options').value = Array.from(document.querySelectorAll('.option-card.selected'))
+    document.getElementById('selected-pack-id').value = package.getAttribute('data-id');
+    document.getElementById('selected-pack-name').value = package.querySelector('h1').textContent.trim();
+    document.getElementById('selected-option-ids').value = Array.from(document.querySelectorAll('.option-card.selected'))
+        .map(option => option.getAttribute('data-id'))
+        .join(',');
+    document.getElementById('selected-option-names').value = Array.from(document.querySelectorAll('.option-card.selected'))
         .map(option => option.querySelector('p').textContent.trim())
         .join(', ');
 }
@@ -376,10 +383,45 @@ function toggleOption(button, price) {
 
     hiddenTotalElement.value = currentTotal;
     totalElement.textContent = currentTotal.toFixed(2) + ' €';
+
+    // Mettre à jour les champs du formulaire
+    document.getElementById('final-total').value = currentTotal;
+    document.getElementById('selected-option-ids').value = Array.from(document.querySelectorAll('.option-card.selected'))
+        .map(option => option.getAttribute('data-id'))
+        .join(',');
+    document.getElementById('selected-option-names').value = Array.from(document.querySelectorAll('.option-card.selected'))
+        .map(option => option.querySelector('p').textContent.trim())
+        .join(', ');
+}
+
+
+function toggleOption(button, price) {
+    const optionCard = button.closest('.option-card');
+    const totalElement = document.getElementById('total-price');
+    const hiddenTotalElement = document.getElementById('hidden-total');
+    let currentTotal = parseFloat(hiddenTotalElement.value);
+
+    if (optionCard.classList.contains('selected')) {
+        optionCard.classList.remove('selected');
+        button.textContent = 'Ajouter';
+        button.classList.remove('disabled');
+        currentTotal -= price;
+    } else {
+        optionCard.classList.add('selected');
+        button.textContent = 'Retirer';
+        button.classList.add('disabled');
+        currentTotal += price;
+    }
+
+    hiddenTotalElement.value = currentTotal;
+    totalElement.textContent = currentTotal.toFixed(2) + ' €';
     
     // Mettre à jour les champs du formulaire
     document.getElementById('final-total').value = currentTotal;
-    document.getElementById('selected-options').value = Array.from(document.querySelectorAll('.option-card.selected'))
+    document.getElementById('selected-option-ids').value = Array.from(document.querySelectorAll('.option-card.selected'))
+        .map(option => option.getAttribute('data-id'))
+        .join(',');
+    document.getElementById('selected-option-names').value = Array.from(document.querySelectorAll('.option-card.selected'))
         .map(option => option.querySelector('p').textContent.trim())
         .join(', ');
 }

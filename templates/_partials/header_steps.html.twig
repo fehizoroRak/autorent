@@ -22,12 +22,32 @@
                     Contacts</button>
             </li>
         </ul>
-        <div class="nav__btns">
-            <a class="" href="">
-                <i class="ri-question-line"></i>
-                Aide
-            </a>
-        </div>
+
+
+
+
+       	<div class="nav__btns">
+			{% if app.user %}
+				<a style="margin-right:20px;" class="" href="{{ path('app_login') }}">
+					<i class="ri-user-line"></i>
+					Bonjour,
+					{{ app.user.name }}
+					{{ app.user.firstname }}
+				</a>
+
+			{% endif %}
+
+			<a class="" href="">
+				<i class="ri-question-line"></i>
+				Aide
+			</a>
+
+			{% if app.user %}
+				<a style="margin-left:20px;" class="" href="{{ path('app_logout') }}">
+					<i class="ri-logout-box-r-line"></i>
+				</a>
+			{% endif %}
+		</div>
     </nav>
 
     <div class="reservation-steps">

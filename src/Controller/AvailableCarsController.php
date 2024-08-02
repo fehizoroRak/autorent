@@ -3,6 +3,8 @@
 namespace App\Controller;
 
 use App\Repository\CarRepository;
+use App\Repository\CityDropoffLocationRepository;
+use App\Repository\CityPickupLocationRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -13,12 +15,16 @@ use Symfony\Component\Routing\Annotation\Route;
 class AvailableCarsController extends AbstractController
 {
     #[Route('/cars/available', name: 'app_cars_available')]
-    public function availableCars(Request $request, CarRepository $carRepository, SessionInterface $session): Response
-    {
+    public function availableCars(
+        Request $request,
+        CarRepository $carRepository,
+        CityPickupLocationRepository $cityPickupLocationRepository,
+        CityDropoffLocationRepository $cityDropoffLocationRepository,
+        SessionInterface $session
+    ): Response {
         // Récupérer les paramètres de la requête
-    
-        $pickupLocation = $request->query->get('pickupLocation');
-        $dropoffLocation = $request->query->get('dropoffLocation');
+        $pickupLocationName = $request->query->get('pickupLocation');
+        $dropoffLocationName = $request->query->get('dropoffLocation');
         $startDate = $request->query->get('startDate') ? new \DateTime($request->query->get('startDate')) : null;
         $startTime = $request->query->get('startTime') ? new \DateTime($request->query->get('startTime')) : null;
         $endDate = $request->query->get('endDate') ? new \DateTime($request->query->get('endDate')) : null;
@@ -37,19 +43,27 @@ class AvailableCarsController extends AbstractController
         $interval = $startDate->diff($endDate);
         $days = $interval->days;
 
+        // Récupérer les IDs des lieux à partir des noms
+        $pickupLocation = $cityPickupLocationRepository->findOneBy(['name' => $pickupLocationName]);
+        $dropoffLocation = $cityDropoffLocationRepository->findOneBy(['name' => $dropoffLocationName]);
+
+        $pickupLocationId = $pickupLocation ? $pickupLocation->getId() : null;
+        $dropoffLocationId = $dropoffLocation ? $dropoffLocation->getId() : null;
+ 
+
         // Stocker les variables dans la session
         $session->set('days', $days);
-        $session->set('pickupLocation', $pickupLocation);
-        $session->set('dropoffLocation', $dropoffLocation);
+        $session->set('pickupLocationId', $pickupLocationId);
+        $session->set('pickupLocationName', $pickupLocationName);
+        $session->set('dropoffLocationId', $dropoffLocationId);
+        $session->set('dropoffLocationName', $dropoffLocationName);
         $session->set('startDate', $startDate ? $startDate->format('Y-m-d') : '');
         $session->set('startTime', $startTime ? $startTime->format('H:i') : '');
         $session->set('endDate', $endDate ? $endDate->format('Y-m-d') : '');
         $session->set('endTime', $endTime ? $endTime->format('H:i') : '');
 
         // Requête pour récupérer les voitures disponibles
-        $cars = $carRepository->findAvailableCars($startDate, $endDate, $pickupLocation, $dropoffLocation);
-
-     
+        $cars = $carRepository->findAvailableCars($startDate, $endDate, $pickupLocationId, $dropoffLocationId);
 
         // Récupérer les voitures recommandées
         $recommendedCars = $carRepository->findRecommendedCars();
@@ -58,8 +72,8 @@ class AvailableCarsController extends AbstractController
             'cars' => $cars,
             'recommendedCars' => $recommendedCars,
             'days' => $days,
-            'pickupLocation' => $pickupLocation,
-            'dropoffLocation' => $dropoffLocation,
+            'pickupLocation' => $pickupLocationName,
+            'dropoffLocation' => $dropoffLocationName,
             'startDate' => $startDate ? $startDate->format('Y-m-d') : '',
             'startTime' => $startTime ? $startTime->format('H:i') : '',
             'endDate' => $endDate ? $endDate->format('Y-m-d') : '',

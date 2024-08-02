@@ -60,10 +60,20 @@ class Location
     #[ORM\Column(type: Types::TIME_MUTABLE, nullable: true)]
     private ?\DateTimeInterface $endtime = null;
 
+    #[ORM\Column(nullable: true)]
+    private ?int $numberOfDays = null;
+
+    /**
+     * @var Collection<int, Status>
+     */
+    #[ORM\ManyToMany(targetEntity: Status::class, mappedBy: 'location_status')]
+    private Collection $statuses;
+
     public function __construct()
     {
         $this->payments = new ArrayCollection();
         $this->options = new ArrayCollection();
+        $this->statuses = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -240,6 +250,45 @@ class Location
     public function setEndtime(?\DateTimeInterface $endtime): static
     {
         $this->endtime = $endtime;
+
+        return $this;
+    }
+
+    public function getNumberOfDays(): ?int
+    {
+        return $this->numberOfDays;
+    }
+
+    public function setNumberOfDays(?int $numberOfDays): static
+    {
+        $this->numberOfDays = $numberOfDays;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Status>
+     */
+    public function getStatuses(): Collection
+    {
+        return $this->statuses;
+    }
+
+    public function addStatus(Status $status): static
+    {
+        if (!$this->statuses->contains($status)) {
+            $this->statuses->add($status);
+            $status->addLocationStatus($this);
+        }
+
+        return $this;
+    }
+
+    public function removeStatus(Status $status): static
+    {
+        if ($this->statuses->removeElement($status)) {
+            $status->removeLocationStatus($this);
+        }
 
         return $this;
     }

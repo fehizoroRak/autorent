@@ -16,8 +16,15 @@ class ReservationConfirmController extends AbstractController
     {
         // Récupérer les données du formulaire
         $total = $request->request->get('total');
-        $pack = $request->request->get('pack');
-        $options = $request->request->get('options');
+        $packId = $request->request->get('pack_id');
+        $packName = $request->request->get('pack_name');
+        $optionIds = $request->request->get('option_ids');
+        $optionNames = $request->request->get('option_names');
+
+        if (is_null($packId) || is_null($packName) || is_null($optionIds) || is_null($optionNames)) {
+            return new Response('Some form fields are missing.', Response::HTTP_BAD_REQUEST);
+        }
+
         $carId = $request->request->get('car_id');
         $userId = $request->request->get('user_id');
 
@@ -33,20 +40,36 @@ class ReservationConfirmController extends AbstractController
         $endDate = $session->get('endDate');
         $startTime = $session->get('startTime');
         $endTime = $session->get('endTime');
-        $pickupLocation = $session->get('pickupLocation');
-        $dropoffLocation = $session->get('dropoffLocation');
+
+        $pickupLocationId = $session->get('pickupLocationId');
+        $pickupLocationName = $session->get('pickupLocationName');
+
+        $dropoffLocationId = $session->get('dropoffLocationId');
+        $dropoffLocationName = $session->get('dropoffLocationName');
+
         $days = $session->get('days');
+
+        // Convertir les options IDs et noms en tableaux
+        $optionIdsArray = explode(',', $optionIds);
+        $optionNamesArray = explode(',', $optionNames);
 
         return $this->render('reservationconfirm/index.html.twig', [
             'total' => $total,
-            'pack' => $pack,
-            'options' => $options,
+            'pack_id' => $packId,
+            'pack_name' => $packName,
+            'option_ids' => $optionIdsArray,
+            'option_names' => $optionNamesArray,
             'start_date' => $startDate,
             'end_date' => $endDate,
             'start_time' => $startTime,
             'end_time' => $endTime,
-            'pickup_location' => $pickupLocation,
-            'dropoff_location' => $dropoffLocation,
+
+            'pickupLocationId' => $pickupLocationId,
+            'pickupLocationName' => $pickupLocationName,
+
+            'dropoffLocationId' => $dropoffLocationId,
+            'dropoffLocationName' => $dropoffLocationName,
+
             'days' => $days,
             'car' => $car,
             'user' => $user,
