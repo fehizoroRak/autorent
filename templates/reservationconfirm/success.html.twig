@@ -1,0 +1,21 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Réservation Confirmée{% endblock %}
+
+{% block body %}
+{% include '_partials/header_steps.html.twig' %}
+
+<div class="section__container" id="confirmation-message">
+    <h1 style="margin-top:300px;">Votre réservation a été confirmée</h1>
+
+    <div>
+        <h2>Merci pour votre réservation !</h2>
+        <p>Votre numéro de réservation est : {{ location.id }}</p>
+        <p>Un email de confirmation a été envoyé à : {{ location.user.email }}</p>
+        <p>Statut de la réservation : {{ status.name }}</p>
+    </div>
+</div>
+
+{% include '_partials/footer.html.twig' %}
+
+{% endblock %}
