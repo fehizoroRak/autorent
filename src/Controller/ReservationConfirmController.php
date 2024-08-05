@@ -86,6 +86,16 @@ class ReservationConfirmController extends AbstractController
         ]);
     }
 
+    private function generateUniqueRentalNumber(EntityManagerInterface $entityManager): string
+    {
+        do {
+            $rentalNumber = str_pad((string)rand(0, 999999999), 9, '0', STR_PAD_LEFT);
+            $existingLocation = $entityManager->getRepository(Location::class)->findOneBy(['rentalNumber' => $rentalNumber]);
+        } while ($existingLocation !== null);
+
+        return $rentalNumber;
+    }
+
     #[Route('/reservation/confirm/final', name: 'app_reservation_confirm_final', methods: ['POST'])]
     public function finalConfirmReservation(
         Request $request,
@@ -146,6 +156,10 @@ class ReservationConfirmController extends AbstractController
         $location->setEndtime($endTime);
         $location->setTotalamount($total);
         $location->setNumberOfDays($days);
+
+        // Générer un numéro de réservation unique
+        $rentalNumber = $this->generateUniqueRentalNumber($entityManager);
+        $location->setRentalNumber($rentalNumber);
 
         // Ajouter les options à la location
         foreach ($options as $option) {

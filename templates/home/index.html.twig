@@ -3,6 +3,18 @@
 {% block title %}Autorent | Accueil{% endblock %}
 
 {% block body %}
+<style>
+.ri-reservation-line {
+    font-size: 24px;
+    color: #000; /* Changez la couleur si nécessaire */
+    cursor: pointer; /* Changez le curseur pour indiquer qu'il est cliquable */
+    margin-right: 10px; /* Espacement optionnel */
+}
+
+.ri-reservation-line:hover {
+    color: #ff6600; /* Changez la couleur au survol si nécessaire */
+}
+</style>
 
   <header>
     <nav>
@@ -20,6 +32,9 @@
         <li><a href="#service">Services</a></li>
         <li><a href="#ride">Conduite</a></li>
         <li><a href="#contact">Contact</a></li>
+          <li class="nav__links__btn">
+				  <button class="btn"><i class="ri-calendar-check-line"></i> Mes réservations</button>
+			  </li>
         <li class="nav__links__btn">
 				  <button class="btn"><i class="ri-question-line"></i> Aide</button>
 			  </li>
@@ -31,6 +46,10 @@
         </li> #}
       </ul>
       <div class="nav__btns">
+     <a class="" href="{{ path('app_login', { '_target_path': path('app_myaccount') }) }}" style="margin-right:20px;">
+        <i class="ri-calendar-check-line"></i> 
+        Mes réservations
+    </a>
       <a class="" href="">
 				<i class="ri-question-line"></i>
 				Aide

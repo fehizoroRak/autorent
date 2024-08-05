@@ -137,7 +137,8 @@
                     {{ app.session.get('days') }} jrs
                 </span> de location
             </p>
-            <a href="{{ path('app_login', { id: car.id, total: TotalPerDay }) }}" class="btn-select-agency">
+			
+            <a href="{{ path('app_login', {'_target_path': path('app_pack'), id: car.id, total: TotalPerDay }) }}" class="btn-select-agency">
                 <div class="btn-select-agency">
                     Sélectionner
                 </div>
@@ -162,7 +163,7 @@
                     {{ app.session.get('days') }} jrs
                 </span> de location
             </p>
-            <a href="{{ path('app_login', { id: car.id, total: discountedTotal | number_format(2, '.', '') }) }}" class="btn-select-online">
+            <a href="{{ path('app_login', { '_target_path': path('app_pack'), id: car.id, total: discountedTotal | number_format(2, '.', '') }) }}" class="btn-select-online">
                 <div class="btn-select-online">
                     Sélectionner
                 </div>

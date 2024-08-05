@@ -20,8 +20,8 @@ class RegistrationFormType extends AbstractType
             ->add('address', TextType::class)
             ->add('password', PasswordType::class, [
                 'mapped' => false  // Password might need special handling
-            ])
-            ->add('register', SubmitType::class, ['label' => 'Register']);
+            ]);
+       
     }
 
     public function configureOptions(OptionsResolver $resolver): void

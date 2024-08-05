@@ -10,31 +10,28 @@ use App\Repository\CarRepository;
 use App\Repository\PackRepository;
 use App\Repository\OptionRepository;
 use App\Repository\UserRepository;
+use Symfony\Bundle\SecurityBundle\Security;
 
 class PackController extends AbstractController
 {
     #[Route('/pack', name: 'app_pack')]
-    public function index(Request $request,UserRepository $userRepository, CarRepository $carRepository, PackRepository $packRepository, OptionRepository $optionRepository): Response
+    public function index( Security $security, Request $request,UserRepository $userRepository, CarRepository $carRepository, PackRepository $packRepository, OptionRepository $optionRepository): Response
     {
+         // Récupérer l'utilisateur authentifié
+         $user = $security->getUser();
+
         $carId = $request->query->get('id');
         $total = $request->query->get('total');
-        $userId = $request->query->get('userId');
-   
 
-      
         // Récupérer les informations de la voiture depuis la base de données
         $car = $carRepository->find($carId);
-        $user = $userRepository->find($userId);
-
-
+   
 
         if (!$car) {
             throw $this->createNotFoundException('The car does not exist');
         }
   
-        if (!$user) {
-            throw $this->createNotFoundException('The user does not exist');
-        }
+   
         
 
         // Récupérer les packs de protection et les options depuis la base de données

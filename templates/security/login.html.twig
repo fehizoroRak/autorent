@@ -4,7 +4,11 @@
 
 {% block body %}
 
-    {% include '_partials/header_steps.html.twig' %}
+    {% if target_path == path('app_myaccount') %}
+        {% include '_partials/header.html.twig' %}
+    {% elseif target_path == path('app_pack') %}
+        {% include '_partials/header_steps.html.twig' %}
+    {% endif %}
 
     <div class="login-container">
         <div class="login-form">
@@ -13,9 +17,11 @@
                 <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
             {% endif %}
 
-            {% set discountedTotal = car.dayprice * 0.91 * app.session.get('days') %}
-            {% set TotalPerDay = app.session.get('days') * car.dayprice %}
-            {% set total = total is defined ? total : (discountedTotal != 0 ? discountedTotal : TotalPerDay) %}
+            {% if target_path == path('app_pack') and car is not null %}
+                {% set discountedTotal = car.dayprice * 0.91 * app.session.get('days') %}
+                {% set TotalPerDay = app.session.get('days') * car.dayprice %}
+                {% set total = total is defined ? total : (discountedTotal != 0 ? discountedTotal : TotalPerDay) %}
+            {% endif %}
 
             <form action="{{ path('app_login') }}" method="POST" id="login-form">
                 <label for="username">Email</label>
@@ -24,21 +30,29 @@
                 <label for="password">Password</label>
                 <input type="password" id="password" name="_password" required>
 
-                {# If you want to control the URL the user is redirected to on success #}
- <input type="hidden" name="_target_path" value="{{ path('app_pack', { id: car.id, total: total | number_format(2, '.', ''), userId: user_id }) }}">
-                <button type="submit" class="btn-login">Se connecter</button>
+                {% if target_path == path('app_pack') %}
+                    <input type="hidden" name="_target_path" value="{{ path('app_pack', { id: car.id, total: total | number_format(2, '.', ''), userId: user_id }) }}">
+                {% else %}
+                    <input type="hidden" name="_target_path" value="{{ target_path }}">
+                {% endif %}
+                
+                <button type="submit" class="btn-login">Se connecter</button> 
             </form>
 
-            <a style="color: #fe5b3e;" href="{{ path('app_register', { id: car.id, total: total | number_format(2, '.', '') }) }}">
-                <div class="create-account">
-                    Créez votre compte
-                </div>
-            </a>
+            {% if target_path == path('app_pack') and car is not null %}
+                <a style="color: #fe5b3e;" href="{{ path('app_register', { id: car.id, total: total | number_format(2, '.', '') }) }}">
+                    <div class="create-account">
+                        Créez votre compte
+                    </div>
+                </a>
+            {% endif %}
 
-            <div class="total-price">
-                <h3>Total: {{ total | number_format(2, '.', '') }} €</h3>
-                     <h3>Car id: {{ car.id }} </h3>
-            </div>
+            {% if target_path == path('app_pack') and car is not null %}
+                <div class="total-price">
+                    <h3>Total: {{ total | number_format(2, '.', '') }} €</h3>
+                    <h3>Car id: {{ car.id }} </h3>
+                </div>
+            {% endif %}
         </div>
     </div>
 

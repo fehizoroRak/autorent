@@ -1,0 +1,331 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Détails de la location{% endblock %}
+
+{% block body %}
+    {% include '_partials/header_connected.html.twig' %}
+
+    <div class="container">
+        <header>
+            <div class="navbar">
+                <h1>AutoRent</h1>
+                <div class="user-profile">
+                    <i style="margin-right: 15px;" class="fa-solid fa-user"></i>
+                    <span>{{ app.user.username }}</span>
+                </div>
+            </div>
+            <nav>
+                <ul>
+                    <li><a href="{{ path('app_myaccount') }}">RÉSERVATIONS</a></li>
+                    <li><a href="#">COMPTE</a></li>
+                </ul>
+            </nav>
+        </header>
+        <main style="width: 80%; margin: 0 auto;">
+ //////////////////////////////////////////////////////////////////
+
+
+		<h1 style="margin-top:80px;">Détails de la location</h1>
+
+		<div class="reservation-form">
+			<section class="summary">
+	
+				<div style="display: flex; justify-content: space-between; padding-bottom: 10px; border-bottom: 1px solid #dfdfdf;">
+					<h2>Total</h2>
+					<h2>144.5€</h2>
+				</div>
+
+				<div style="display: flex; justify-content:flex-start; align-items: center; gap: 25px; ">
+					<img style="width: 25%;" src="{{asset('images/bmw_3_series.jpg')}}" alt="Car Image">
+					<h2>PEUGEOT 208
+						<br>
+						OU SIMILAIRE ECONOMIQUE
+					</h2>
+
+				</div>
+
+
+			<ul style="list-style: none;padding: 0;margin-bottom: 1rem;">
+			
+					<li style="display: flex;align-items: center;justify-content: space-between;margin-bottom: 1rem;}" >
+					
+						<div class="cars__details">
+
+							<div class="cars__details1">
+								<p>
+									<i class="ri-calendar-line"></i>
+									2022</p>
+								<p>
+									<i class="ri-palette-line"></i>
+									Bleu</p>
+								<p>
+									<i class="ri-car-line"></i>
+									BT-231-LO</p>
+
+								<p style="display:flex; justify-content: start; align-items:center; ">
+									<img src="{{ asset('images/car.png') }}" alt="moteur" style="width: 0.9em; height: 0.9em; margin-right: 10px;">
+									5 portes
+								</p>
+								<p>
+									<i class="ri-user-line"></i>
+									5
+									personnes</p>
+							</div>
+							<div class="cars__details1">
+								{# {% if car.isAirconditionner %} #}
+									<p>
+										<i class="fa-solid fa-snowflake"></i>
+										Climatisation</p>
+								{# {% endif %} #}
+
+
+								<p style="display:flex; justify-content: start; align-items:center; "><img src="{{ asset('images/gear.png') }}" alt="moteur" style="width: 1em; height: 1em; margin-right: 10px;
+										">
+									Manuelle</p>
+
+								<p style="display:flex; justify-content: start; align-items:center; "><img src="{{ asset('images/engine.png') }}" alt="moteur" style="width: 1.3em; height: 1.3em; margin-right: 10px;
+										">
+									150
+									CV</p>
+
+								<p>
+									<i class="ri-cloud-line"></i>
+									CO2:
+									132
+									g/km</p>
+
+								{# {% if car.isElectric %} #}
+									<p class="isElec">
+										<i style="color:#fff;" class="ri-flashlight-line"></i>
+										Électrique</p>
+								{# {% endif %} #}
+
+							</div>
+
+						</div>
+
+					
+					</li>
+
+	
+			</ul>
+
+				<div style="margin: 25px 0; display: flex; justify-content: space-between; padding-bottom: 10px; border-bottom: 1px solid #dfdfdf;">
+					<h2>Tarif de base pour 3 jours</h2>
+					<h2>144.5€</h2>
+				</div>
+
+				<section style="margin: 20px 0;">
+					<div style="width:100%;  background: #f7f7f7;padding: 20px 10px; border-radius:10px 10px 0 0;border-bottom: 1px solid #dfdfdf;">
+						<p style="font-weight:bold;">Départ
+						</p>
+						<p style="font-weight:bold;font-size: 1.2rem;">Paris Le Bourget Aeroport
+						</p>
+						<p>2024-07-29 - 10:15
+						</p>
+
+					</div>
+
+					<div style="width:100%;  background: #f7f7f7;padding: 20px 10px; border-radius:0 0 10px 10px;">
+						<p style="font-weight:bold;">Retour
+						</p>
+						<p style="font-weight:bold;font-size: 1.2rem;">Paris Le Bourget Aeroport
+						</p>
+						<p>2024-07-29 - 10:15
+						</p>
+
+					</div>
+
+
+				</section>
+
+				<div style=" margin: 25px 0; display: flex; justify-content: space-between; padding-bottom: 10px; border-bottom: 1px solid #dfdfdf;">
+					<h2>Protections & Options</h2>
+					<h2>99.99€</h2>
+				</div>
+
+				<h3 style="margin-top:20px;">Medium</h3>
+
+				<div style="display: flex; justify-content: space-between; padding-bottom: 10px;">
+					<p>Pour 3 jours</p>
+					<p>41,70 €</p>
+				</div>
+
+				<h3 style="margin-top:20px;">Assistance Plus</h3>
+
+				<div style="display: flex; justify-content: space-between; padding-bottom: 10px;">
+					<p>Pour 3 jours</p>
+					<p>45,39 €</p>
+				</div>
+
+				<div style=" margin: 20px 0; display: flex; justify-content: space-between; padding-bottom: 10px; border-top: 1px solid #dfdfdf;">
+					<h2 style="margin-top: 20px;">Total:</h2>
+					<h2 style="margin-top: 20px;">399.99€</h2>
+				</div>
+
+
+			</section>
+
+			<aside class="information">
+				<h2>Informations conducteur</h2>
+				<p>Prénom: John</p>
+				<p>Nom: DOE</p>
+				<p>Email:</p>
+				<p>Téléphone:</p>
+				<p>Adresse:</p>
+			</aside>
+		</div>
+
+	</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+///////////////////////////////////////////////////////////////////
+                <h1>Détails de la location</h1>
+                <div class="details">
+                    <p><strong>Numéro de location :</strong> {{ location.rentalNumber }}</p>
+                    <p><strong>Utilisateur :</strong> {{ location.user.name }} {{ location.user.firstname }}</p>
+                    <p><strong>Voiture :</strong> {{ location.car.brand }} {{ location.car.model }}</p>
+                    <p><strong>Lieu de prise en charge :</strong> {{ location.pickupLocation.name }}</p>
+                    <p><strong>Date et heure de prise en charge :</strong> {{ location.startdate|date('d/m/Y') }} {{ location.starttime|date('H:i') }}</p>
+                    <p><strong>Lieu de dépose :</strong> {{ location.dropoffLocation.name }}</p>
+                    <p><strong>Date et heure de dépose :</strong> {{ location.enddate|date('d/m/Y') }} {{ location.endtime|date('H:i') }}</p>
+                    <p><strong>Pack :</strong> {{ location.pack.name }}</p>
+                    <p><strong>Options :</strong>
+                        {% if location.options is not empty %}
+                            <ul>
+                                {% for option in location.options %}
+                                    <li>{{ option.name }}</li>
+                                {% endfor %}
+                            </ul>
+                        {% else %}
+                            Aucune option
+                        {% endif %}
+                    </p>
+                    <p><strong>Montant total :</strong> {{ location.totalamount }} €</p>
+                    <p><strong>Nombre de jours de location :</strong> {{ location.numberOfDays }}</p>
+                </div>
+
+        </main>
+        {% include '_partials/footer.html.twig' %}
+    </div>
+
+    <style>
+        .container {
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        header, main {
+            flex: 1;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+
+        header {
+            background-color: #fff;
+        }
+
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 20px;
+            width: 90%;
+            margin: 0 auto;
+        }
+
+        .logo {
+            height: 50px;
+        }
+
+        .user-profile {
+            display: flex;
+            align-items: center;
+        }
+
+        .user-icon {
+            height: 30px;
+            margin-right: 10px;
+        }
+
+        nav ul {
+            list-style: none;
+            display: flex;
+            justify-content: start;
+            padding: 10px 0;
+            border-bottom: 1px solid #ddd;
+            background-color: #fff;
+            width: 100%;
+            margin: 0 auto;
+            gap: 30px;
+        }
+
+        nav a {
+            text-decoration: none;
+            color: #000;
+            font-weight: bold;
+            padding: 10px 0;
+        }
+
+        nav a:hover {
+            border-bottom: 3px solid #ff6600;
+        }
+
+        main {
+            padding: 20px;
+        }
+
+        .reservation-details {
+            text-align: start;
+        }
+
+        .reservation-details h1 {
+            font-size: 30px;
+            margin: 30px auto;
+        }
+
+        .details {
+            margin-top: 20px;
+            border: 1px solid #ddd;
+            padding: 20px;
+            border-radius: 5px;
+        }
+
+        .details p {
+            font-size: 16px;
+            margin: 10px 0;
+        }
+
+        ul {
+            padding-left: 20px;
+        }
+
+        ul li {
+            list-style: disc;
+        }
+    </style>
+{% endblock %}

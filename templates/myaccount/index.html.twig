@@ -1,0 +1,197 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Confirmation de la réservation{% endblock %}
+
+{% block body %}
+    {% include '_partials/header_connected.html.twig' %}
+
+    <div class="container">
+        <header>
+            <div class="navbar">
+                <h1>AutoRent</h1>
+                <div class="user-profile">
+                    <i style="margin-right: 15px;" class="fa-solid fa-user"></i>
+                    <span>{{ app.user.username }}</span>
+                </div>
+            </div>
+            <nav>
+                <ul>
+                    <li><a href="#">RÉSERVATIONS</a></li>
+                    <li><a href="#">COMPTE</a></li>
+                </ul>
+            </nav>
+        </header>
+        <main style="width: 80%; margin: 0 auto;">
+            <section class="reservations">
+                <h1>Mes réservations</h1>
+                <div class="add-reservation">
+                    <div style="display: flex; align-items: center; justify-content: space-around; margin-top: 30px;">
+                        {% for location in locations %}
+           <a href="{{ path('app_myaccount_details', { id: location.id }) }}" style="text-decoration: none; color: #000;">
+    <div class="car_card">
+        <img src="{{ asset('images/' ~ location.car.image) }}" alt="Car Image" class="box-icon">
+        <div class="add-reservation-text">
+            <b>N° location: {{ location.rentalNumber }}</b>
+            <p>{{ location.car.brand }} <span> {{ location.car.model }} </span></p>
+            <p>Status:
+                {% for status in location.statuses %}
+                    {{ status.name }}
+                {% endfor %}
+            </p>
+        </div>
+    </div>
+</a>
+
+                        {% else %}
+                            <p>Vous n'avez aucune réservation en cours.</p>
+                        {% endfor %}
+                    </div>
+                </div>
+            </section>
+            <div style="display: flex; gap: 10px; justify-content: start; align-items: baseline;">
+                <i style="font-size: 1.2rem;" class="ri-arrow-right-s-line"></i>
+                <a href="#" class="new-reservation-link">Faire une nouvelle réservation</a>
+            </div>
+        </main>
+        {% include '_partials/footer.html.twig' %}
+    </div>
+
+    <style>
+        .container {
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        header, main {
+            flex: 1;
+        }
+
+        .car_card {
+            padding: 10px;
+            display: flex;
+            justify-content: start;
+            align-items: center;
+        }
+
+        .car_card:hover {
+            border-radius: 7px;
+            background-color: #ddd;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+
+        header {
+            background-color: #fff;
+        }
+
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 20px;
+            width: 90%;
+            margin: 0 auto;
+        }
+
+        .logo {
+            height: 50px;
+        }
+
+        .user-profile {
+            display: flex;
+            align-items: center;
+        }
+
+        .user-icon {
+            height: 30px;
+            margin-right: 10px;
+        }
+
+        nav ul {
+            list-style: none;
+            display: flex;
+            justify-content: start;
+            padding: 10px 0;
+            border-bottom: 1px solid #ddd;
+            background-color: #fff;
+            width: 100%;
+            margin: 0 auto;
+            gap: 30px;
+        }
+
+        nav a {
+            text-decoration: none;
+            color: #000;
+            font-weight: bold;
+            padding: 10px 0;
+        }
+
+        nav a:hover {
+            border-bottom: 3px solid #ff6600;
+        }
+
+        main {
+            padding: 20px;
+        }
+
+        .reservations {
+            text-align: start;
+        }
+
+        .reservations h1 {
+            font-size: 30px;
+            margin: 30px auto;
+        }
+
+        .add-reservation {
+            margin-top: 20px;
+            border: 1px solid #ddd;
+            padding: 0 25px 25px;
+            border-radius: 5px;
+        }
+
+        .box-icon {
+            border-radius: 7px;
+            height: 70px;
+            width: 70px;
+            margin-right: 20px;
+        }
+
+        .add-reservation-text {
+            text-align: left;
+            line-height: 18px;
+        }
+
+        .add-reservation-text p {
+            font-size: 16px;
+            margin: 5px 0;
+        }
+
+        button {
+            background-color: #ff6600;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        button:hover {
+            background-color: #e55d00;
+        }
+
+        .new-reservation-link {
+            display: block;
+            margin-top: 20px;
+            font-size: 16px;
+            text-decoration: none;
+            color: #ff6600;
+        }
+    </style>
+{% endblock %}

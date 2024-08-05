@@ -19,6 +19,8 @@ security:
             form_login:
                 login_path: app_login
                 check_path: app_login
+                always_use_default_target_path: false
+                default_target_path: app_pack
             lazy: true
             provider: app_user_provider
 

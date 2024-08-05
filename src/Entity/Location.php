@@ -69,6 +69,9 @@ class Location
     #[ORM\ManyToMany(targetEntity: Status::class, mappedBy: 'location_status')]
     private Collection $statuses;
 
+    #[ORM\Column(length: 255)]
+    private ?string $rentalNumber = null;
+
     public function __construct()
     {
         $this->payments = new ArrayCollection();
@@ -289,6 +292,18 @@ class Location
         if ($this->statuses->removeElement($status)) {
             $status->removeLocationStatus($this);
         }
+
+        return $this;
+    }
+
+    public function getRentalNumber(): ?string
+    {
+        return $this->rentalNumber;
+    }
+
+    public function setRentalNumber(string $rentalNumber): static
+    {
+        $this->rentalNumber = $rentalNumber;
 
         return $this;
     }

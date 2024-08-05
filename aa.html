@@ -1,89 +1,264 @@
 <!DOCTYPE html>
 <html lang="fr">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Date and Time Input</title>
+    <title>Sixt Mes Réservations</title>
     <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"
+        integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@4.3.0/fonts/remixicon.css" rel="stylesheet" />
 </head>
+
 <body>
-    <div class="container">
-        <div class="date-time">
-            <div class="date">
-                <label for="date">
-                    <span class="icon">&#x1F4C5;</span>
-                </label>
-                <input type="date" id="date" value="2024-08-02">
-            </div>
-            <div class="time">
-                <input type="time" id="time" value="10:00">
+    <header>
+        <div class="navbar">
+            <h1>AutoRent</h1>
+            <div class="user-profile">
+                <i style="margin-right: 15px;" class="fa-solid fa-user"></i>
+                <span>Fehizoro T...</span>
             </div>
         </div>
-    </div>
+        <nav>
+            <ul>
+                <li><a href="#">RÉSERVATIONS</a></li>
+                <li><a href="#">COMPTE</a></li>
+
+            </ul>
+        </nav>
+    </header>
+    <main style="width: 80%;  margin: 0 auto;">
+        <section class="reservations">
+            <h1>Mes réservations</h1>
+
+
+            <div class="add-reservation">
+
+                <div style="display: flex;align-items: center;justify-content: space-between; margin-top: 30px;">
+
+                    <div style="display: flex;justify-content: start; align-items: center;">
+                        <img src="public/images/bmw_3_series.jpg" alt="Box Icon" class="box-icon">
+                        <div class="add-reservation-text">
+                            <b>N° location: 0125542</b>
+                            <p>PEUGOET 208</p>
+                            <p>23/07/2024 au 30/07/2024</p>
+                        </div>
+                    </div>
+
+                    <div style="display: flex;justify-content: start; align-items: center;">
+                        <img src="public/images/bmw_3_series.jpg" alt="Box Icon" class="box-icon">
+                        <div class="add-reservation-text">
+                            <b>N° location: 0125542</b>
+                            <p>PEUGOET 208</p>
+                            <p>23/07/2024 au 30/07/2024</p>
+
+                        </div>
+
+                    </div>
+
+                    <div style="display: flex;justify-content: start; align-items: center;">
+                        <img src="public/images/bmw_3_series.jpg" alt="Box Icon" class="box-icon">
+                        <div class="add-reservation-text">
+                            <b>N° location: 0125542</b>
+                            <p>PEUGOET 208</p>
+                            <p>23/07/2024 au 30/07/2024</p>
+
+                        </div>
+
+                    </div>
+                </div>
+
+                <div style="      display: flex;
+                align-items: center;
+                justify-content: space-between;margin-top: 30px;">
+
+
+                    <a href="" style="text-decoration: none; color: #000;">
+                        <div class="car_card" style="">
+                            <img src="public/images/bmw_3_series.jpg" alt="Box Icon" class="box-icon">
+                            <div class="add-reservation-text">
+                                <b>N° location: 0125542</b>
+                                <p>PEUGOET 208</p>
+                                <p>Status: réservé</p>
+
+                            </div>
+
+                        </div>
+                    </a>
+
+
+                    <div style="display: flex;justify-content: start; align-items: center;">
+                        <img src="public/images/bmw_3_series.jpg" alt="Box Icon" class="box-icon">
+                        <div class="add-reservation-text">
+                            <b>N° location: 0125542</b>
+                            <p>PEUGOET 208</p>
+                            <p>23/07/2024 au 30/07/2024</p>
+
+                        </div>
+
+                    </div>
+
+                    <div style="display: flex;justify-content: start; align-items: center;">
+                        <img src="public/images/bmw_3_series.jpg" alt="Box Icon" class="box-icon">
+                        <div class="add-reservation-text">
+                            <b>N° location: 0125542</b>
+                            <p>PEUGOET 208</p>
+                            <p>23/07/2024 au 30/07/2024</p>
+
+                        </div>
+
+                    </div>
+                </div>
+
+
+
+
+
+
+
+            </div>
+            <div style=" display: flex;
+            gap: 10px;
+            justify-content: start;
+            align-items: baseline;  ">
+                <i style="font-size:1.2rem;" class="ri-arrow-right-s-line"></i> <a href="#"
+                    class="new-reservation-link">Faire une nouvelle réservation</a>
+            </div>
+
+
+        </section>
+    </main>
 </body>
+
 </html>
-
-
 <style>
+    .car_card {
+        padding: 10px;
+        display: flex;
+        justify-content: start;
+        align-items: center;
+    }
+
+    .car_card:hover {
+        border-radius: 7px;
+        background-color: #ddd;
+    }
+
     body {
-    font-family: Arial, sans-serif;
-}
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+    }
 
-.container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-}
+    header {
+        background-color: #fff;
 
-.date-time {
-    display: flex;
-    border: 1px solid #ccc;
-    border-radius: 8px;
-    overflow: hidden;
-}
+    }
 
-.date, .time {
-    display: flex;
-    align-items: center;
-    padding: 10px 20px;
-}
+    .navbar {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 10px 20px;
+        width: 90%;
+        margin: 0 auto;
+    }
 
-.date {
-    border-right: 1px solid #ccc;
-}
+    .logo {
+        height: 50px;
+    }
 
-.icon {
-    color: green;
-    margin-right: 10px;
-}
+    .user-profile {
+        display: flex;
+        align-items: center;
+    }
 
-input[type="date"], input[type="time"] {
-    border: none;
-    font-size: 18px;
-    font-weight: bold;
-    font-family: inherit;
-    width: 100%;
-    text-align: center;
-    -webkit-appearance: none;
-    -moz-appearance: none;
-    appearance: none;
-}
+    .user-icon {
+        height: 30px;
+        margin-right: 10px;
+    }
 
-input[type="date"]::-webkit-calendar-picker-indicator,
-input[type="time"]::-webkit-calendar-picker-indicator {
-    color: green;
-    cursor: pointer;
-    position: absolute;
-    right: 0;
-    opacity: 0;
-    width: 100%;
-}
+    nav ul {
+        list-style: none;
+        display: flex;
+        justify-content: start;
+        padding: 10px 0;
+        border-bottom: 1px solid #ddd;
+        background-color: #fff;
+        width: 80%;
+        margin: 0 auto;
+        gap: 30px;
+    }
 
-input[type="date"]:focus,
-input[type="time"]:focus {
-    outline: none;
-}
+    nav a {
+        text-decoration: none;
+        color: #000;
+        font-weight: bold;
+        padding: 10px 0px;
+    }
 
+    nav a:hover {
+        border-bottom: 3px solid #ff6600;
+    }
 
+    main {
+        padding: 20px;
+    }
+
+    .reservations {
+        text-align: start;
+    }
+
+    .reservations h1 {
+        font-size: 30px;
+        margin: 30px auto;
+    }
+
+    .add-reservation {
+
+        margin-top: 20px;
+        border: 1px solid #ddd;
+        padding: 0px 25px 25px 25px;
+        border-radius: 5px;
+    }
+
+    .box-icon {
+        border-radius: 7px;
+        height: 70px;
+        margin-right: 20px;
+    }
+
+    .add-reservation-text {
+        text-align: left;
+        line-height: 18px;
+    }
+
+    .add-reservation-text p {
+        font-size: 16px;
+        margin: 5px 0;
+    }
+
+    button {
+        background-color: #ff6600;
+        color: #fff;
+        border: none;
+        padding: 10px 20px;
+        border-radius: 5px;
+        cursor: pointer;
+        font-size: 16px;
+    }
+
+    button:hover {
+        background-color: #e55d00;
+    }
+
+    .new-reservation-link {
+        display: block;
+        margin-top: 20px;
+        font-size: 16px;
+        text-decoration: none;
+        color: #ff6600;
+    }
 </style>
