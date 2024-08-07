@@ -4,7 +4,7 @@
     <nav>
         <div class="nav__header">
             <div class="nav__logo">
-                <a href="{{ path('app_home') }}">AutoRent</a>
+            <a href="{{ path('app_home') }}"> <img src="{{ asset('images/logoautorent.png') }}" style="width: 40%;" alt="logo" /> </a>
             </div>
             <div class="nav__menu__btn" id="menu-btn">
                 <i class="ri-menu-line"></i>
@@ -51,24 +51,25 @@
     </nav>
 
     <div class="reservation-steps">
-        <div class="step-1">
-            <div class="step-title" style="display: flex; gap:10px; align-items:center;">
-                <div class="step-number-1">1</div>
-                <h4 style="color:#fe5b3e;;">AGENCE DE LOCATION</h4>
-            </div>
-            <div class="step-details">
-                <div style="width:50%;">
-                    <h4>Départ</h4>
-                    <h4 class="location" id="departureLocation">{{ app.session.get('pickupLocation') }}</h4>
-                    <p id="departureDateTime">{{ app.session.get('startDate') }} | {{ app.session.get('startTime') }}</p>
-                </div>
-                <div style="width:50%;">
-                    <h4>Retour</h4>
-                    <h4 class="location" id="returnLocation">{{ app.session.get('dropoffLocation') }}</h4>
-                    <p id="returnDateTime">{{ app.session.get('endDate') }} | {{ app.session.get('endTime') }}</p>
-                </div>
-            </div>
+  <div class="step-1">
+    <div class="step-title" style="display: flex; gap:10px; align-items:center;">
+        <div class="step-number-1">1</div>
+        <h4 style="color:#fe5b3e;;">AGENCE DE LOCATION</h4>
+    </div>
+    <div class="step-details">
+        <div style="width:50%;">
+            <h4>Départ</h4>
+            <h4 class="location" id="departureLocation">{{ app.session.get('pickupLocationName') }}</h4>
+            <p id="departureDateTime">{{ app.session.get('startDate') }} | {{ app.session.get('startTime') }}</p>
         </div>
+        <div style="width:50%;">
+            <h4>Retour</h4>
+            <h4 class="location" id="returnLocation">{{ app.session.get('dropoffLocationName') }}</h4>
+            <p id="returnDateTime">{{ app.session.get('endDate') }} | {{ app.session.get('endTime') }}</p>
+        </div>
+    </div>
+</div>
+
 
 <div class="step-2">
     <div class="step-title" style="display: flex; gap:10px; align-items:center;">
@@ -88,22 +89,23 @@
 
 
 
-        <div class="step-3">
-            <div class="step-title" style="display: flex; gap:10px; align-items:center;">
-                <div class="step-number">3</div>
-                <h4 style="color:#b2b2b2;">PROTECTIONS ET OPTIONS</h4>
-            </div>
-            <div class="step-details">
-                <div style="width:50%; border-right: 1px solid #475569;">
-                    <h4>Basic</h4>
-                    <div>Inclus</div>
-                </div>
-                <div style="width:50%; text-align:right;">
-                    <h4>0 option</h4>
-                    <div>0,00 €</div>
-                </div>
-            </div>
+<div class="step-3">
+    <div class="step-title" style="display: flex; gap:10px; align-items:center;">
+        <div class="step-number">3</div>
+        <h4 style="color:#b2b2b2;">PROTECTIONS ET OPTIONS</h4>
+    </div>
+    <div class="step-details" style="display: flex; justify-content: space-between;">
+        <div id="selected-pack-details" style="width:50%; border-right: 1px solid #475569;">
+            <h4>Basic</h4>
+            <div>Inclus</div>
         </div>
+        <div id="selected-options-details" style="width:50%; text-align:right;">
+            <h4>0 option</h4>
+            <div>0,00 &euro;</div>
+        </div>
+    </div>
+</div>
+
 
         <div class="step-4">
             <div class="step-title" style="display: flex; gap:10px; align-items:center;">

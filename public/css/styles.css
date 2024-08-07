@@ -501,7 +501,7 @@ nav {
   nav {
     position: static;
     padding-block: 1rem;
-    padding-inline: 1rem;
+    /* padding-inline: 1rem; */
     max-width: var(--max-width);
     margin-inline: auto;
     display: flex;

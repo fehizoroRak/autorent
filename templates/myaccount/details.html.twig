@@ -16,30 +16,36 @@
             </div>
             <nav>
                 <ul>
-                    <li><a href="{{ path('app_myaccount') }}">RÉSERVATIONS</a></li>
-                    <li><a href="#">COMPTE</a></li>
+                           <li><a href="{{ path('app_myaccount') }}">RÉSERVATIONS</a></li>
+                    <li><a href="{{ path('app_account') }}">COMPTE</a></li>
+                     <li><a href="{{ path('account_password') }}">MOT DE PASSE</a></li>
                 </ul>
             </nav>
         </header>
         <main style="width: 80%; margin: 0 auto;">
- //////////////////////////////////////////////////////////////////
 
+		<h1 style="margin-top:60px;">Réservation n° : {{ location.rentalNumber }}</h1>
+        <h2 style="margin-top:20px;"> {{ location.user.name }} {{ location.user.firstname }}</h2>
+        <p> {{ location.user.address }}</p>
+        <p> {{ location.user.email }} </p>
+        <p> {{ location.user.phonenumber }}</p>
 
-		<h1 style="margin-top:80px;">Détails de la location</h1>
+  
+
 
 		<div class="reservation-form">
 			<section class="summary">
 	
-				<div style="display: flex; justify-content: space-between; padding-bottom: 10px; border-bottom: 1px solid #dfdfdf;">
-					<h2>Total</h2>
-					<h2>144.5€</h2>
-				</div>
+				 <div style="margin-top:25px;display: flex; justify-content: space-between; padding-bottom: 10px; border-bottom: 1px solid #dfdfdf;">
+					<h3>Statut</h3>
+					<h3 style="background-color: #FFCC00; padding:8px; border-radius: 8px; color:white;" >{{ status }}</h3>
+				</div> 
 
 				<div style="display: flex; justify-content:flex-start; align-items: center; gap: 25px; ">
-					<img style="width: 25%;" src="{{asset('images/bmw_3_series.jpg')}}" alt="Car Image">
-					<h2>PEUGEOT 208
+                    <img style="width: 25%;" src="{{ asset('images/' ~ location.car.image) }}" alt="{{ location.car.brand }} {{ location.car.model }}">
+   
+					<h2>   {{ location.car.brand }} {{ location.car.model }}
 						<br>
-						OU SIMILAIRE ECONOMIQUE
 					</h2>
 
 				</div>
@@ -54,51 +60,49 @@
 							<div class="cars__details1">
 								<p>
 									<i class="ri-calendar-line"></i>
-									2022</p>
+									{{ location.car.year }}</p>
 								<p>
 									<i class="ri-palette-line"></i>
-									Bleu</p>
+									{{ location.car.color }}</p>
 								<p>
 									<i class="ri-car-line"></i>
-									BT-231-LO</p>
+									{{ location.car.registration }}</p>
 
 								<p style="display:flex; justify-content: start; align-items:center; ">
 									<img src="{{ asset('images/car.png') }}" alt="moteur" style="width: 0.9em; height: 0.9em; margin-right: 10px;">
-									5 portes
+									{{ location.car.nbofcardoors }} portes
 								</p>
 								<p>
 									<i class="ri-user-line"></i>
-									5
-									personnes</p>
+									{{ location.car.nbofpersons }} personnes</p>
 							</div>
 							<div class="cars__details1">
-								{# {% if car.isAirconditionner %} #}
+								 {% if location.car.isAirconditionner %}
 									<p>
 										<i class="fa-solid fa-snowflake"></i>
 										Climatisation</p>
-								{# {% endif %} #}
+								{% endif %} 
 
 
 								<p style="display:flex; justify-content: start; align-items:center; "><img src="{{ asset('images/gear.png') }}" alt="moteur" style="width: 1em; height: 1em; margin-right: 10px;
 										">
-									Manuelle</p>
+									  {{ location.car.gearbox }}</p>
 
 								<p style="display:flex; justify-content: start; align-items:center; "><img src="{{ asset('images/engine.png') }}" alt="moteur" style="width: 1.3em; height: 1.3em; margin-right: 10px;
 										">
-									150
-									CV</p>
+									{{ location.car.horsepower }} CV</p>
 
 								<p>
 									<i class="ri-cloud-line"></i>
 									CO2:
-									132
+									{{ location.car.co2emissions }}
 									g/km</p>
 
-								{# {% if car.isElectric %} #}
+								{% if location.car.isElectric %}
 									<p class="isElec">
 										<i style="color:#fff;" class="ri-flashlight-line"></i>
 										Électrique</p>
-								{# {% endif %} #}
+								{% endif %}
 
 							</div>
 
@@ -111,17 +115,17 @@
 			</ul>
 
 				<div style="margin: 25px 0; display: flex; justify-content: space-between; padding-bottom: 10px; border-bottom: 1px solid #dfdfdf;">
-					<h2>Tarif de base pour 3 jours</h2>
-					<h2>144.5€</h2>
+					<h2>Tarif de base pour {{ location.numberOfDays }} jours</h2>
+					<h2>{{ location.totalamount }} €</h2>
 				</div>
 
 				<section style="margin: 20px 0;">
 					<div style="width:100%;  background: #f7f7f7;padding: 20px 10px; border-radius:10px 10px 0 0;border-bottom: 1px solid #dfdfdf;">
 						<p style="font-weight:bold;">Départ
 						</p>
-						<p style="font-weight:bold;font-size: 1.2rem;">Paris Le Bourget Aeroport
+						<p style="font-weight:bold;font-size: 1.2rem;">{{ location.pickupLocation.name }}
 						</p>
-						<p>2024-07-29 - 10:15
+						<p>{{ location.startdate|date('d/m/Y') }} | {{ location.starttime|date('H:i') }}
 						</p>
 
 					</div>
@@ -129,9 +133,9 @@
 					<div style="width:100%;  background: #f7f7f7;padding: 20px 10px; border-radius:0 0 10px 10px;">
 						<p style="font-weight:bold;">Retour
 						</p>
-						<p style="font-weight:bold;font-size: 1.2rem;">Paris Le Bourget Aeroport
+						<p style="font-weight:bold;font-size: 1.2rem;">{{ location.dropOffLocation.name }}
 						</p>
-						<p>2024-07-29 - 10:15
+						<p>{{ location.enddate|date('d/m/Y') }} | {{ location.endtime|date('H:i') }}
 						</p>
 
 					</div>
@@ -144,20 +148,29 @@
 					<h2>99.99€</h2>
 				</div>
 
-				<h3 style="margin-top:20px;">Medium</h3>
+				<h3 style="margin-top:20px;">{{ location.pack.name }}</h3>
 
 				<div style="display: flex; justify-content: space-between; padding-bottom: 10px;">
-					<p>Pour 3 jours</p>
+					<p>Pour {{ location.numberOfDays }} jours</p>
 					<p>41,70 €</p>
 				</div>
 
-				<h3 style="margin-top:20px;">Assistance Plus</h3>
+                {% if location.options is not empty %}
+                    <ul>
+                        {% for option in location.options %}
+                            <li style="margin-top:20px;">{{ option.name }}</li>
+                        {% endfor %}
+                    </ul>
+            
+				{# <h3 style="margin-top:20px;">Assistance Plus</h3> #}
 
 				<div style="display: flex; justify-content: space-between; padding-bottom: 10px;">
-					<p>Pour 3 jours</p>
+					<p>Pour {{ location.numberOfDays }} jours</p>
 					<p>45,39 €</p>
 				</div>
-
+                {% else %}
+                    
+                {% endif %}
 				<div style=" margin: 20px 0; display: flex; justify-content: space-between; padding-bottom: 10px; border-top: 1px solid #dfdfdf;">
 					<h2 style="margin-top: 20px;">Total:</h2>
 					<h2 style="margin-top: 20px;">399.99€</h2>
@@ -166,63 +179,17 @@
 
 			</section>
 
-			<aside class="information">
-				<h2>Informations conducteur</h2>
-				<p>Prénom: John</p>
-				<p>Nom: DOE</p>
-				<p>Email:</p>
-				<p>Téléphone:</p>
-				<p>Adresse:</p>
-			</aside>
 		</div>
 
 	</div>
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-///////////////////////////////////////////////////////////////////
-                <h1>Détails de la location</h1>
-                <div class="details">
-                    <p><strong>Numéro de location :</strong> {{ location.rentalNumber }}</p>
-                    <p><strong>Utilisateur :</strong> {{ location.user.name }} {{ location.user.firstname }}</p>
-                    <p><strong>Voiture :</strong> {{ location.car.brand }} {{ location.car.model }}</p>
-                    <p><strong>Lieu de prise en charge :</strong> {{ location.pickupLocation.name }}</p>
-                    <p><strong>Date et heure de prise en charge :</strong> {{ location.startdate|date('d/m/Y') }} {{ location.starttime|date('H:i') }}</p>
-                    <p><strong>Lieu de dépose :</strong> {{ location.dropoffLocation.name }}</p>
-                    <p><strong>Date et heure de dépose :</strong> {{ location.enddate|date('d/m/Y') }} {{ location.endtime|date('H:i') }}</p>
-                    <p><strong>Pack :</strong> {{ location.pack.name }}</p>
-                    <p><strong>Options :</strong>
-                        {% if location.options is not empty %}
-                            <ul>
-                                {% for option in location.options %}
-                                    <li>{{ option.name }}</li>
-                                {% endfor %}
-                            </ul>
-                        {% else %}
-                            Aucune option
-                        {% endif %}
-                    </p>
-                    <p><strong>Montant total :</strong> {{ location.totalamount }} €</p>
-                    <p><strong>Nombre de jours de location :</strong> {{ location.numberOfDays }}</p>
-                </div>
+                
+                    
+            
+              
+          
 
         </main>
         {% include '_partials/footer.html.twig' %}
@@ -324,8 +291,6 @@
             padding-left: 20px;
         }
 
-        ul li {
-            list-style: disc;
-        }
+   
     </style>
 {% endblock %}

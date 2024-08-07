@@ -40,8 +40,12 @@ class MyaccountController extends AbstractController
             throw $this->createNotFoundException('La location n\'existe pas');
         }
 
+        $status = $location->getCurrentStatus();
+
         return $this->render('myaccount/details.html.twig', [
             'location' => $location,
+            'status' => $status,
         ]);
     }
+
 }

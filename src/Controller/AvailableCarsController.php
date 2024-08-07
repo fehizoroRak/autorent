@@ -74,9 +74,9 @@ class AvailableCarsController extends AbstractController
             'days' => $days,
             'pickupLocation' => $pickupLocationName,
             'dropoffLocation' => $dropoffLocationName,
-            'startDate' => $startDate ? $startDate->format('Y-m-d') : '',
+            'startDate' => $startDate ? $startDate->format('d/m/Y') : '',
             'startTime' => $startTime ? $startTime->format('H:i') : '',
-            'endDate' => $endDate ? $endDate->format('Y-m-d') : '',
+            'endDate' => $endDate ? $endDate->format('d/m/Y') : '',
             'endTime' => $endTime ? $endTime->format('H:i') : '',
         ]);
     }
@@ -97,6 +97,26 @@ class AvailableCarsController extends AbstractController
         return $this->render('availablecars/availablecars_details.html.twig', [
             'car' => $car,
         ]);
+    }
+
+    #[Route('/cars/session', name: 'app_cars_session_data')]
+    public function getSessionData(SessionInterface $session): JsonResponse
+    {
+        // Récupérer les données de la session
+        $data = [
+            'days' => $session->get('days'),
+            'pickupLocationId' => $session->get('pickupLocationId'),
+            'pickupLocationName' => $session->get('pickupLocationName'),
+            'dropoffLocationId' => $session->get('dropoffLocationId'),
+            'dropoffLocationName' => $session->get('dropoffLocationName'),
+            'startDate' => $session->get('startDate'),
+            'startTime' => $session->get('startTime'),
+            'endDate' => $session->get('endDate'),
+            'endTime' => $session->get('endTime'),
+        ];
+
+        // Retourner les données sous forme de JSON
+        return new JsonResponse($data);
     }
 
 }

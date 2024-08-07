@@ -6,6 +6,7 @@ use App\Repository\LocationRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
+use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: LocationRepository::class)]
@@ -306,5 +307,41 @@ class Location
         $this->rentalNumber = $rentalNumber;
 
         return $this;
+    }
+
+
+
+
+    /**
+     * Get the current status of the location by its ID
+     * 
+     * @param int $id
+     * @param EntityManagerInterface $entityManager
+     * @return string|null
+     */
+    public static function getStatusById(int $id, EntityManagerInterface $entityManager): ?string
+    {
+        $location = $entityManager->getRepository(Location::class)->find($id);
+
+        if (!$location) {
+            return null;
+        }
+
+        return $location->getCurrentStatus();
+    }
+
+    /**
+     * Get the current status of this location
+     * 
+     * @return string|null
+     */
+    public function getCurrentStatus(): ?string
+    {
+        if ($this->statuses->isEmpty()) {
+            return null;
+        }
+
+        // Assuming the statuses are sorted by date and the last one is the current status
+        return $this->statuses->last()->getName();
     }
 }

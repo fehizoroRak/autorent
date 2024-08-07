@@ -16,8 +16,9 @@
             </div>
             <nav>
                 <ul>
-                    <li><a href="#">RÉSERVATIONS</a></li>
-                    <li><a href="#">COMPTE</a></li>
+                     <li><a href="{{ path('app_myaccount') }}">RÉSERVATIONS</a></li>
+                    <li><a href="{{ path('app_account') }}">COMPTE</a></li>
+                     <li><a href="{{ path('account_password') }}">MOT DE PASSE</a></li>
                 </ul>
             </nav>
         </header>
@@ -49,8 +50,8 @@
                 </div>
             </section>
             <div style="display: flex; gap: 10px; justify-content: start; align-items: baseline;">
-                <i style="font-size: 1.2rem;" class="ri-arrow-right-s-line"></i>
-                <a href="#" class="new-reservation-link">Faire une nouvelle réservation</a>
+                <i style="font-size: 1.2rem; color:#fe5b3e;" class="ri-arrow-right-s-line"></i>
+                <a href="{{ path('app_home') }}" class="new-reservation-link">Faire une nouvelle réservation</a>
             </div>
         </main>
         {% include '_partials/footer.html.twig' %}
@@ -132,7 +133,7 @@
         }
 
         nav a:hover {
-            border-bottom: 3px solid #ff6600;
+            border-bottom: 3px solid #fe5b3e;
         }
 
         main {
@@ -173,7 +174,7 @@
         }
 
         button {
-            background-color: #ff6600;
+            background-color: #fe5b3e;
             color: #fff;
             border: none;
             padding: 10px 20px;
@@ -183,7 +184,8 @@
         }
 
         button:hover {
-            background-color: #e55d00;
+            opacity:0.9;
+    
         }
 
         .new-reservation-link {
@@ -191,7 +193,7 @@
             margin-top: 20px;
             font-size: 16px;
             text-decoration: none;
-            color: #ff6600;
+            color: #fe5b3e;
         }
     </style>
 {% endblock %}

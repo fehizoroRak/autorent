@@ -1,9 +1,11 @@
 controllers:
-    resource:
-        path: ../src/Controller/
-        namespace: App\Controller
+    resource: '../src/Controller/'
     type: attribute
 
+account:
+    path: /account
+    controller: App\Controller\AccountController::index
 
-
-
+account_update:
+    path: /account/update
+    controller: App\Controller\AccountController::update
