@@ -101,7 +101,7 @@
             <div class="added-label">Ajouté</div>
             <div class="option-image">
                 <img src="{{ asset('images/options/' ~ option.image) }}" alt="{{ option.name }}">
-                <p>{{ option.name }}</p>
+                <h3>{{ option.name }}</h3>
             </div>
             <div class="option-description">
                 <p>{{ option.content }}</p>
@@ -199,6 +199,13 @@ button.disabled, .btn.btn-primary.disabled {
     opacity: 0.7;
 }
 
+button.disabled_retirer, .btn.btn-primary.disabled_retirer {
+    background-color: #cccccc;
+    opacity: 0.7;
+}
+
+
+
 .options-container {
     display: flex;
     justify-content: space-between;
@@ -218,7 +225,8 @@ button.disabled, .btn.btn-primary.disabled {
 }
 .option-image img {
     width: 30%;
-    height: auto;
+    height: 30%;
+    border-radius: 5px;
 }
 .option-image p {
     font-size: 1.4rem;
@@ -325,11 +333,15 @@ function selectPack(button, isDefault = false) {
 
     if (selectedPackage) {
         selectedPackage.classList.remove('selected');
+        selectedPackage.classList.remove('default-selected');
         selectedPackage.querySelector('.btn.btn-primary').classList.remove('disabled');
         selectedPackage.querySelector('.btn.btn-primary').disabled = false;
     }
 
     package.classList.add('selected');
+    if (!isDefault) {
+        package.classList.remove('default-selected');
+    }
     button.classList.add('disabled');
     button.disabled = true;
     selectedPackage = package;
@@ -352,7 +364,7 @@ function selectPack(button, isDefault = false) {
     // Update header step details for selected pack
     const packName = package.querySelector('h1').textContent.trim();
     const selectedPackDetails = document.getElementById('selected-pack-details');
-    selectedPackDetails.innerHTML = `<h4>${packName}</h4><div>${packagePrice === 0 ? 'Inclus' : (packagePrice * days).toFixed(2) + ' &euro;'}</div>`;
+    selectedPackDetails.innerHTML = `<h4>${packName}</h4><div>${packagePrice === 0 ? 'Inclus' : (packagePrice * days).toFixed(2) + ' €'}</div>`;
 
     // Update form fields
     document.getElementById('final-total').value = total;
@@ -378,17 +390,17 @@ function toggleOption(button, price) {
     if (optionCard.classList.contains('selected')) {
         optionCard.classList.remove('selected');
         button.textContent = 'Ajouter';
-        button.classList.remove('disabled');
+        button.classList.remove('disabled_retirer');
         currentTotal -= price;
     } else {
         optionCard.classList.add('selected');
         button.textContent = 'Retirer';
-        button.classList.add('disabled');
+        button.classList.add('disabled_retirer');
         currentTotal += price;
     }
 
     hiddenTotalElement.value = currentTotal;
-    totalElement.textContent = currentTotal.toFixed(2) + ' &euro;';
+    totalElement.textContent = currentTotal.toFixed(2) + ' €';
 
     // Update form fields
     document.getElementById('final-total').value = currentTotal;
@@ -413,6 +425,7 @@ function updateOptionsDetails() {
     selectedOptionsDetails.innerHTML = `<h4>${selectedOptions.length} option${selectedOptions.length > 1 ? 's' : ''}</h4><div>${optionsTotal.toFixed(2)} &euro;</div>`;
 }
 </script>
+
 
 
 {% include '_partials/footer.html.twig' %}
