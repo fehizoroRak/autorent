@@ -56,15 +56,11 @@ class LocationFixtures extends Fixture implements DependentFixtureInterface
             $startTime = (new \DateTime())->setTime(rand(0, 23), rand(0, 59));
             $endTime = (clone $startTime)->modify(sprintf('+%d hours', rand(1, 12)));
 
-            // Random total amount
-            $totalAmount = rand(100, 1000);
-
             // Assign random user, car, pickup and dropoff locations, pack
             $location->setStartdate($startDate);
             $location->setEnddate($endDate);
             $location->setStarttime($startTime);
             $location->setEndtime($endTime);
-            $location->setTotalamount($totalAmount);
             $location->setUser($users[array_rand($users)]);
             $location->setCar($cars[array_rand($cars)]);
             $location->setPickupLocation($pickupLocations[array_rand($pickupLocations)]);
@@ -84,11 +80,19 @@ class LocationFixtures extends Fixture implements DependentFixtureInterface
             $numberOfDays = $endDate->diff($startDate)->days;
             $location->setNumberOfDays($numberOfDays);
 
-            // Adjust total amount based on pack and options
-            $totalAmount += $location->getPack()->getPricePerDay() * $numberOfDays;
+            // Set pack price and options total price
+            $packPricePerDay = $location->getPack()->getPricePerDay();
+            $packTotalPrice = $packPricePerDay * $numberOfDays;
+            $location->setPackTotalPrice($packTotalPrice);
+
+            $optionsTotalPrice = 0;
             foreach ($location->getOptions() as $option) {
-                $totalAmount += $option->getPrice();
+                $optionsTotalPrice += $option->getPrice();
             }
+            $location->setOptionsTotalPrice($optionsTotalPrice);
+
+            // Calculate total amount
+            $totalAmount = $packTotalPrice + $optionsTotalPrice;
             $location->setTotalamount($totalAmount);
 
             // Set initial status to "Pending" and add to status history

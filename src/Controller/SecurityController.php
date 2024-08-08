@@ -8,8 +8,10 @@ use App\Repository\CarRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Bundle\SecurityBundle\Security;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
@@ -17,11 +19,12 @@ use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 class SecurityController extends AbstractController
 {
     #[Route('/login', name: 'app_login')]
-    public function login(Security $security, Request $request, AuthenticationUtils $authenticationUtils, CarRepository $carRepository): Response
+    public function login(SessionInterface $session, Security $security, Request $request, AuthenticationUtils $authenticationUtils, CarRepository $carRepository): Response
     {
-        // get the login error if there is one
+
+        // Get the login error if there is one
         $error = $authenticationUtils->getLastAuthenticationError();
-        // last username entered by the user
+        // Last username entered by the user
         $lastUsername = $authenticationUtils->getLastUsername();
 
         // Get the target path from the query parameter
@@ -30,16 +33,18 @@ class SecurityController extends AbstractController
         // Initialize car, total, and user_id variables
         $car = null;
         $total = null;
-         
-    /** @var User|null $user */
-    $user = $security->getUser();
-    $userId = $user ? $user->getId() : null;
+
+        /** @var User|null $user */
+        $user = $security->getUser();
+        $userId = $user ? $user->getId() : null;
 
         // Only process car and total if target path is app_pack
         if ($targetPath === $this->generateUrl('app_pack')) {
             // Récupérer l'ID de la voiture et le total depuis la requête
             $carId = $request->query->get('id');
             $total = $request->query->get('total');
+
+            $session->set('total_session', $total);
 
             // Récupérer les informations de la voiture depuis la base de données
             if ($carId) {
@@ -60,6 +65,37 @@ class SecurityController extends AbstractController
             'user_id' => $userId,
             'target_path' => $targetPath, // Pass the target path to the template
         ]);
+    }
+
+    #[Route('/redirect', name: 'app_redirect')]
+    public function redirectToAppropriatePage(Security $security, Request $request): Response
+    {
+        $user = $security->getUser();
+        $targetPath = $request->query->get('_target_path');
+        $carId = $request->query->get('id');
+        $total = $request->query->get('total');
+        if ($user) {
+            if ($targetPath === $this->generateUrl('app_pack')) {
+                $carId = $request->query->get('id');
+                $total = $request->query->get('total');
+                return $this->redirectToRoute('app_pack', ['id' => $carId, 'total' => $total]);
+            }
+            return $this->redirectToRoute('app_myaccount');
+        }
+
+        return $this->redirectToRoute('app_login', ['_target_path' => $targetPath, 'id' => $carId, 'total' => $total]);
+    }
+
+
+    #[Route('/total/session', name: 'app_toal_session_data')]
+    public function getSessionData(SessionInterface $session): JsonResponse
+    {
+
+        $data_total = [
+            'total_session' => $session->get('total_session'),
+        ];
+
+        return new JsonResponse($data_total);
     }
 
     #[Route('/register', name: 'app_register')]

@@ -73,6 +73,12 @@ class Location
     #[ORM\Column(length: 255)]
     private ?string $rentalNumber = null;
 
+    #[ORM\Column]
+    private ?float $packTotalPrice = null;
+
+    #[ORM\Column(nullable: true)]
+    private ?float $optionsTotalPrice = null;
+
     public function __construct()
     {
         $this->payments = new ArrayCollection();
@@ -343,5 +349,29 @@ class Location
 
         // Assuming the statuses are sorted by date and the last one is the current status
         return $this->statuses->last()->getName();
+    }
+
+    public function getPackTotalPrice(): ?float
+    {
+        return $this->packTotalPrice;
+    }
+
+    public function setPackTotalPrice(float $packTotalPrice): static
+    {
+        $this->packTotalPrice = $packTotalPrice;
+
+        return $this;
+    }
+
+    public function getOptionsTotalPrice(): ?float
+    {
+        return $this->optionsTotalPrice;
+    }
+
+    public function setOptionsTotalPrice(?float $optionsTotalPrice): static
+    {
+        $this->optionsTotalPrice = $optionsTotalPrice;
+
+        return $this;
     }
 }

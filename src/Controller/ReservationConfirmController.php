@@ -33,7 +33,11 @@ class ReservationConfirmController extends AbstractController
         // Récupérer les données du formulaire
         $total = $request->request->get('total');
         $packId = $request->request->get('pack_id');
+        $packTotalPrice = $request->request->get('pack_total_price'); // Nouveau champ pour le prix total du pack
         $optionIds = $request->request->get('option_ids');
+        $optionsTotalPrice = $request->request->get('option_total_price'); // Nouveau champ pour le total des options
+        $selectedOptionsCount = $request->request->get('selected_options_count');
+        $selectedOptionsTotal = $request->request->get('selected_options_total');
 
         $carId = $request->request->get('car_id');
         $userId = $request->request->get('user_id');
@@ -70,8 +74,12 @@ class ReservationConfirmController extends AbstractController
             'total' => $total,
             'pack' => $pack,
             'pack_id' => $packId,
+            'pack_total_price' => $packTotalPrice, // Passer le prix total du pack à la vue
             'option_ids' => $optionIdsArray,
             'option_names' => array_map(fn($option) => $option->getName(), $options),
+            'options_total_price' => $optionsTotalPrice, // Passer le total des options à la vue
+            'selected_options_count' => $selectedOptionsCount,
+            'selected_options_total' => $selectedOptionsTotal,
             'start_date' => $startDate,
             'end_date' => $endDate,
             'start_time' => $startTime,
@@ -111,7 +119,11 @@ class ReservationConfirmController extends AbstractController
         // Récupérer les données du formulaire
         $total = $request->request->get('total');
         $packId = $request->request->get('pack_id');
+        $packTotalPrice = $request->request->get('pack_total_price'); // Nouveau champ pour le prix total du pack
         $optionIds = $request->request->get('option_ids');
+        $optionsTotalPrice = $request->request->get('option_total_price'); // Nouveau champ pour le total des options
+        $selectedOptionsCount = $request->request->get('selected_options_count');
+        $selectedOptionsTotal = $request->request->get('selected_options_total');
 
         $carId = $request->request->get('car_id');
         $userId = $request->request->get('user_id');
@@ -150,12 +162,16 @@ class ReservationConfirmController extends AbstractController
         $location->setPickupLocation($pickupLocation);
         $location->setDropoffLocation($dropoffLocation);
         $location->setPack($pack);
+        $location->setPackTotalPrice($packTotalPrice); // Enregistrer le prix total du pack
+        $location->setOptionsTotalPrice($optionsTotalPrice); // Enregistrer le total des options
         $location->setStartdate($startDate);
         $location->setEnddate($endDate);
         $location->setStarttime($startTime);
         $location->setEndtime($endTime);
         $location->setTotalamount($total);
         $location->setNumberOfDays($days);
+        // $location->setSelectedOptionsCount($selectedOptionsCount); // Enregistrer le nombre d'options sélectionnées
+        // $location->setSelectedOptionsTotal($selectedOptionsTotal); // Enregistrer le coût total des options
 
         // Générer un numéro de réservation unique
         $rentalNumber = $this->generateUniqueRentalNumber($entityManager);

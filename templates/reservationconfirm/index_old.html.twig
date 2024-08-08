@@ -1,0 +1,80 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Confirmation de la réservation{% endblock %}
+
+{% block body %}
+{% include '_partials/header_steps.html.twig' %}
+
+<div class="section__container" id="available-cars">
+
+    <h1 style="margin-top:300px;">Confirmation de la réservation</h1>
+
+    <div>
+        <h2>Détails de la réservation</h2>
+        <br><br>
+        <p><strong>ID Lieu de départ :</strong> {{ pickupLocationId }}</p>
+        <p><strong>Lieu de départ :</strong> {{ pickupLocationName }}</p>
+        <br><br>
+        <p><strong>ID Lieu de retour :</strong> {{ dropoffLocationId }}</p>
+        <p><strong>Lieu de retour :</strong> {{ dropoffLocationName }}</p>
+        <br><br>
+        <p><strong>Date de départ :</strong> {{ start_date|date('Y-m-d') }}</p>
+        <p><strong>Date de retour :</strong> {{ end_date|date('Y-m-d') }}</p>
+        <p><strong>Heure de départ :</strong> {{ start_time|date('H:i') }}</p>
+        <p><strong>Heure de retour :</strong> {{ end_time|date('H:i') }}</p>
+        <p><strong>Nombre de jours de location :</strong> {{ days }}</p>
+        <p><strong>Total de la location :</strong> {{ total }} €</p>
+    </div>
+
+    <div>
+        <h2>Voiture sélectionnée</h2>
+        <p><strong>ID CAR :</strong> {{ car.id }}</p>
+        <p><strong>Modèle :</strong> {{ car.model }}</p>
+        <p><strong>Marque :</strong> {{ car.brand }}</p>
+        <p><strong>Année :</strong> {{ car.year }}</p>
+        <p><strong>Boîte de vitesses :</strong> {{ car.gearbox }}</p>
+        <!-- Ajoutez d'autres détails si nécessaire -->
+    </div>
+
+    <div>
+        <h2>Informations utilisateur</h2>
+        <p><strong>USER ID :</strong> {{ user.id }}</p>
+        <p><strong>Nom :</strong> {{ user.name }}</p>
+        <p><strong>Prénom :</strong> {{ user.firstname }}</p>
+        <p><strong>Email :</strong> {{ user.email }}</p>
+        <p><strong>Numéro de téléphone :</strong> {{ user.phonenumber }}</p>
+        <!-- Ajoutez d'autres détails si nécessaire -->
+    </div>
+
+    <h2>Pack sélectionné</h2>
+    <p><strong>ID:</strong> {{ pack.id }}</p>
+    <p><strong>Nom:</strong> {{ pack.name }}</p>
+    <p><strong>Prix par jour:</strong> {{ pack.pricePerDay }} €</p> <!-- Affichage du prix du pack -->
+    <p><strong>Prix total du pack:</strong> {{ pack.pricePerDay * days }} €</p> <!-- Calcul et affichage du prix total du pack -->
+
+    {% if option_ids is defined and option_names is defined and option_ids|length > 0 and option_names|length > 0 %}
+        <h2>Options sélectionnées</h2>
+        <ul>
+            {% for i in 0..(option_ids|length - 1) %}
+                <li>ID: {{ option_ids[i] }}, Nom: {{ option_names[i] }}</li>
+            {% endfor %}
+        </ul>
+        <p><strong>Prix total des options:</strong> {{ options_total_price }} €</p> <!-- Affichage du total des options -->
+    {% endif %}
+
+<form action="{{ path('app_reservation_confirm_final') }}" method="post">
+    <input type="hidden" name="total" value="{{ total }}">
+    <input type="hidden" name="pack_id" value="{{ pack.id }}">
+    <input type="hidden" name="pack_total_price" value="{{ pack.pricePerDay * days }}"> <!-- Champ caché pour le prix total du pack -->
+    <input type="hidden" name="option_ids" value="{{ option_ids|join(',') }}">
+    <input type="hidden" name="option_total_price" value="{{ options_total_price }}"> <!-- Champ caché pour le total des options -->
+    <input type="hidden" name="car_id" value="{{ car.id }}">
+    <input type="hidden" name="user_id" value="{{ user.id }}">
+    <button type="submit">Réserver maintenant</button>
+</form>
+
+</div>
+
+{% include '_partials/footer.html.twig' %}
+
+{% endblock %}

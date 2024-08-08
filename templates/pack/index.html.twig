@@ -11,23 +11,27 @@
         <div style=" display:flex; justify-content: space-between;gap:20px;">
             <div>
                 <p style="font-size:1rem;">TOTAL</p>
-                <p id="total-price" style="font-size:1.8rem; font-weight:bold;">{{ total }} €</p>
+                <p id="total-price-2" style="font-size:1.8rem; font-weight:bold;">{{ total }} €</p>
                 <input type="hidden" id="initial-total" value="{{ total }}">
                 <input type="hidden" id="hidden-total" value="{{ total }}">
             </div>
-         <form id="confirm-form" action="{{ path('app_reservation_confirm') }}" method="POST">
-    <input type="hidden" name="total" id="final-total">
-    <input type="hidden" name="pack_id" id="selected-pack-id">
-    <input type="hidden" name="pack_name" id="selected-pack-name">
-    <input type="hidden" name="option_ids" id="selected-option-ids">
-    <input type="hidden" name="option_names" id="selected-option-names">
-    <input type="hidden" name="car_id" value="{{ car.id }}">
-    <input type="hidden" name="user_id" value="{{ user.id }}"> 
-    <button type="submit" style="background-color:#fe5b3e; height:100%; border-radius:8px;padding: 10px; font-size: 1.3rem; text-decoration: none; color:black; font-weight:bold; display:flex; justify-content:center; align-items:center;">
-        Valider
-    </button>
-</form>
-
+            <form id="confirm-form" action="{{ path('app_reservation_confirm') }}" method="POST">
+                <input type="hidden" name="total_price" id="total-price">
+                <input type="hidden" name="total" id="final-total">
+                <input type="hidden" name="pack_id" id="selected-pack-id">
+                <input type="hidden" name="pack_name" id="selected-pack-name">
+                <input type="hidden" name="pack_price" id="selected-pack-price">
+                <input type="hidden" name="option_ids" id="selected-option-ids">
+                <input type="hidden" name="option_names" id="selected-option-names">
+                <input type="hidden" name="option_total_price" id="selected-options-total-price">
+                <input type="hidden" name="car_id" value="{{ car.id }}">
+                <input type="hidden" name="user_id" value="{{ user.id }}">
+                <input type="hidden" name="selected_options_count" id="selected-options-count">
+                <input type="hidden" name="selected_options_total" id="selected-options-total">
+                <button type="submit" style="background-color:#fe5b3e; height:100%; border-radius:8px;padding: 10px; font-size: 1.3rem; text-decoration: none; color:black; font-weight:bold; display:flex; justify-content:center; align-items:center;">
+                    Valider
+                </button>
+            </form>
         </div>
     </div>
 </div>
@@ -55,7 +59,6 @@
                 {% if pack.content1 %}<li style="display:flex; gap:10px;"><i style="color:green;font-size:0.9rem; margin-top:3px;" class="fa-solid fa-check"></i><p>{{ pack.content1 }}</p></li>{% endif %}
                 {% if pack.content2 %}<li style="display:flex; gap:10px;"><i style="color:green;font-size:0.9rem; margin-top:3px;" class="fa-solid fa-check"></i><p>{{ pack.content2 }}</p></li>{% endif %}
                 
-                {# For Basic Pack - Display content 3, 4, and 5 with strikethrough and gray cross icon, hardcoded if null #}
                 {% if pack.name == 'Basic' %}
                     <li style="display:flex; gap:10px; color: gray; text-decoration: line-through;">
                         <i style="color: gray;font-size:0.9rem; margin-top:3px;" class="fa-solid fa-times"></i>
@@ -71,7 +74,6 @@
                     </li>
                 {% endif %}
                 
-                {# For Medium Pack - Display content 5 with strikethrough and gray cross icon, hardcoded if null #}
                 {% if pack.name == 'Medium' %}
                     {% if pack.content3 %}<li style="display:flex; gap:10px;"><i style="color:green;font-size:0.9rem; margin-top:3px;" class="fa-solid fa-check"></i><p>{{ pack.content3 }}</p></li>{% endif %}
                     {% if pack.content4 %}<li style="display:flex; gap:10px;"><i style="color:green;font-size:0.9rem; margin-top:3px;" class="fa-solid fa-check"></i><p>{{ pack.content4 }}</p></li>{% endif %}
@@ -81,14 +83,13 @@
                     </li>
                 {% endif %}
 
-                {# For Premium Pack - Display all content normally #}
                 {% if pack.name == 'Premium' %}
                     {% if pack.content3 %}<li style="display:flex; gap:10px;"><i style="color:green;font-size:0.9rem; margin-top:3px;" class="fa-solid fa-check"></i><p>{{ pack.content3 }}</p></li>{% endif %}
                     {% if pack.content4 %}<li style="display:flex; gap:10px;"><i style="color:green;font-size:0.9rem; margin-top:3px;" class="fa-solid fa-check"></i><p>{{ pack.content4 }}</p></li>{% endif %}
                     {% if pack.content5 %}<li style="display:flex; gap:10px;"><i style="color:green;font-size:0.9rem; margin-top:3px;" class="fa-solid fa-check"></i><p>{{ pack.content5 }}</p></li>{% endif %}
                 {% endif %}
             </ul>
-            <button class="btn btn-primary" onclick="selectPack(this)">Sélectionner</button>
+            <button class="btn btn-primary select-btn">Sélectionner</button>
         </div>
         {% endfor %}
     </div>
@@ -106,7 +107,7 @@
             <div class="option-description">
                 <p>{{ option.content }}</p>
                 <div class="price">{{ option.price | number_format(2, ',', ' ') }} € / total</div>
-                <button class="btn btn-primary add-btn" onclick="toggleOption(this, {{ option.price }})">Ajouter</button>
+                <button class="btn btn-primary add-btn">Ajouter</button>
             </div>
         </div>
         {% endfor %}
@@ -204,8 +205,6 @@ button.disabled_retirer, .btn.btn-primary.disabled_retirer {
     opacity: 0.7;
 }
 
-
-
 .options-container {
     display: flex;
     justify-content: space-between;
@@ -258,6 +257,30 @@ button.disabled_retirer, .btn.btn-primary.disabled_retirer {
 .add-button:hover {
     background-color: #e04a2f;
 }
+
+.step-3 {
+    font-size: 0.9rem;
+    width: 25%;
+    padding: 10px;
+    border: 1px solid #fe5b3e;
+    background-color: #fff;
+    border-radius: 8px;
+}
+.step-number-3 {
+    background-color: #fe5b3e;
+    color: #fff;
+padding: 5px;
+    border-radius: 10px 0 10px 0;
+    width: 25px;
+    height: 25px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1rem;
+}
+.title-3{
+    color:#fe5b3e;
+}
 /* Responsive adjustments */
 @media (max-width: 1024px) {
     .packages, .options-container {
@@ -265,7 +288,7 @@ button.disabled_retirer, .btn.btn-primary.disabled_retirer {
         justify-content: space-around;
     }
     .package, .option-card {
-        width: 48%; /* Adjust width to show 2 cards per row */
+        width: 48%;
         margin-bottom: 20px;
     }
 }
@@ -274,7 +297,7 @@ button.disabled_retirer, .btn.btn-primary.disabled_retirer {
         flex-direction: row;
     }
     .package, .option-card {
-        width: 48%; /* Keeps 2 cards per row for this range too */
+        width: 48%;
     }
 }
 @media (max-width: 672px) {
@@ -283,17 +306,16 @@ button.disabled_retirer, .btn.btn-primary.disabled_retirer {
         align-items: center;
     }
     .package, .option-card {
-        width: 90%; /* Full width for smaller devices */
+        width: 90%;
     }
 }
-/* Adding specific styles for 650px to 1024px */
 @media (min-width: 672px) and (max-width: 1024px) {
     .packages, .options-container {
         flex-direction: row;
         justify-content: space-between;
     }
     .package, .option-card {
-        width: 48%; /* Show two cards per row */
+        width: 48%;
     }
 }
 .package.selected, .option-card.selected {
@@ -318,115 +340,141 @@ button.disabled_retirer, .btn.btn-primary.disabled_retirer {
 </style>
 
 <script>
-const packages = document.querySelectorAll('.package');
-const defaultPackage = document.querySelector('.package.default-selected');
-let selectedPackage = defaultPackage;
-let total = parseFloat(document.getElementById('initial-total').value);
-const days = {{ app.session.get('days') }};
+document.addEventListener("DOMContentLoaded", function() {
+    const packages = document.querySelectorAll('.package');
+    const defaultPackage = document.querySelector('.package.default-selected');
+    let selectedPackage = defaultPackage;
+    let total = parseFloat(document.getElementById('initial-total').value);
+    const days = {{ app.session.get('days') }};
 
-if (defaultPackage) {
-    selectPack(defaultPackage.querySelector('.btn.btn-primary'), true);
-}
-
-function selectPack(button, isDefault = false) {
-    const package = button.closest('.package');
-
-    if (selectedPackage) {
-        selectedPackage.classList.remove('selected');
-        selectedPackage.classList.remove('default-selected');
-        selectedPackage.querySelector('.btn.btn-primary').classList.remove('disabled');
-        selectedPackage.querySelector('.btn.btn-primary').disabled = false;
+    if (defaultPackage) {
+        selectPack(defaultPackage.querySelector('.btn.btn-primary'), true);
     }
 
-    package.classList.add('selected');
-    if (!isDefault) {
-        package.classList.remove('default-selected');
+    function selectPack(button, isDefault = false) {
+        const package = button.closest('.package');
+
+        if (selectedPackage) {
+            selectedPackage.classList.remove('selected');
+            selectedPackage.classList.remove('default-selected');
+            selectedPackage.querySelector('.btn.btn-primary').classList.remove('disabled');
+            selectedPackage.querySelector('.btn.btn-primary').disabled = false;
+        }
+
+        package.classList.add('selected');
+        if (!isDefault) {
+            package.classList.remove('default-selected');
+        }
+        button.classList.add('disabled');
+        button.disabled = true;
+        selectedPackage = package;
+
+        const packagePrice = parseFloat(package.getAttribute('data-price'));
+        const totalElement1 = document.getElementById('total-price-1');
+        const totalElement2 = document.getElementById('total-price-2');
+        const hiddenTotalElement = document.getElementById('hidden-total');
+        const initialTotal = parseFloat(document.getElementById('initial-total').value);
+
+        let optionsTotal = 0;
+        document.querySelectorAll('.option-card.selected').forEach(option => {
+            optionsTotal += parseFloat(option.getAttribute('data-price'));
+        });
+
+        total = initialTotal + (packagePrice * days) + optionsTotal;
+        hiddenTotalElement.value = total;
+        if (totalElement1) {
+            totalElement1.textContent = total.toFixed(2) + ' €';
+        }
+        totalElement2.textContent = total.toFixed(2) + ' €';
+
+        const packName = package.querySelector('h1').textContent.trim();
+        const selectedPackDetails = document.getElementById('selected-pack-details');
+        if (selectedPackDetails) {
+            selectedPackDetails.innerHTML = `<h4>${packName}</h4><div>${packagePrice === 0 ? 'Inclus' : (packagePrice * days).toFixed(2) + ' €'}</div>`;
+        }
+
+        document.getElementById('final-total').value = total;
+        document.getElementById('selected-pack-id').value = package.getAttribute('data-id');
+        document.getElementById('selected-pack-name').value = packName;
+        document.getElementById('selected-pack-price').value = packagePrice;
+
+        updateOptionsDetails();
     }
-    button.classList.add('disabled');
-    button.disabled = true;
-    selectedPackage = package;
 
-    const packagePrice = parseFloat(package.getAttribute('data-price'));
-    const totalElement = document.getElementById('total-price');
-    const hiddenTotalElement = document.getElementById('hidden-total');
-    const initialTotal = parseFloat(document.getElementById('initial-total').value);
+    function toggleOption(button, price) {
+        const optionCard = button.closest('.option-card');
+        const totalElement1 = document.getElementById('total-price-1');
+        const totalElement2 = document.getElementById('total-price-2');
+        const hiddenTotalElement = document.getElementById('hidden-total');
+        let currentTotal = parseFloat(hiddenTotalElement.value);
 
-    // Calculate total of selected options
-    let optionsTotal = 0;
-    document.querySelectorAll('.option-card.selected').forEach(option => {
-        optionsTotal += parseFloat(option.getAttribute('data-price'));
+        if (optionCard.classList.contains('selected')) {
+            optionCard.classList.remove('selected');
+            button.textContent = 'Ajouter';
+            button.classList.remove('disabled_retirer');
+            currentTotal -= price;
+        } else {
+            optionCard.classList.add('selected');
+            button.textContent = 'Retirer';
+            button.classList.add('disabled_retirer');
+            currentTotal += price;
+        }
+
+        hiddenTotalElement.value = currentTotal;
+        if (totalElement1) {
+            totalElement1.textContent = currentTotal.toFixed(2) + ' €';
+        }
+        totalElement2.textContent = currentTotal.toFixed(2) + ' €';
+
+        document.getElementById('final-total').value = currentTotal;
+        document.getElementById('selected-option-ids').value = Array.from(document.querySelectorAll('.option-card.selected'))
+            .map(option => option.getAttribute('data-id'))
+            .join(',');
+        document.getElementById('selected-option-names').value = Array.from(document.querySelectorAll('.option-card.selected'))
+            .map(option => option.querySelector('h3').textContent.trim())
+            .join(', ');
+
+        updateOptionsTotal();
+        updateOptionsDetails();
+    }
+
+    function updateOptionsTotal() {
+        let optionsTotal = 0;
+        document.querySelectorAll('.option-card.selected').forEach(option => {
+            optionsTotal += parseFloat(option.getAttribute('data-price'));
+        });
+
+        document.getElementById('selected-options-total-price').value = optionsTotal.toFixed(2);
+        document.getElementById('selected-options-count').value = document.querySelectorAll('.option-card.selected').length;
+        document.getElementById('selected-options-total').value = optionsTotal.toFixed(2);
+    }
+
+    function updateOptionsDetails() {
+        const selectedOptions = document.querySelectorAll('.option-card.selected');
+        const selectedOptionsDetails = document.getElementById('selected-options-details');
+        let optionsTotal = 0;
+        selectedOptions.forEach(option => {
+            optionsTotal += parseFloat(option.getAttribute('data-price'));
+        });
+        if (selectedOptionsDetails) {
+            selectedOptionsDetails.innerHTML = `<h4>${selectedOptions.length} option${selectedOptions.length > 1 ? 's' : ''}</h4><div>${optionsTotal.toFixed(2)} &euro;</div>`;
+        }
+    }
+
+    packages.forEach(pack => {
+        pack.querySelector('.select-btn').addEventListener('click', function() {
+            selectPack(this);
+        });
     });
 
-    total = initialTotal + (packagePrice * days) + optionsTotal;
-    hiddenTotalElement.value = total;
-    totalElement.textContent = total.toFixed(2) + ' €';
-
-    // Update header step details for selected pack
-    const packName = package.querySelector('h1').textContent.trim();
-    const selectedPackDetails = document.getElementById('selected-pack-details');
-    selectedPackDetails.innerHTML = `<h4>${packName}</h4><div>${packagePrice === 0 ? 'Inclus' : (packagePrice * days).toFixed(2) + ' €'}</div>`;
-
-    // Update form fields
-    document.getElementById('final-total').value = total;
-    document.getElementById('selected-pack-id').value = package.getAttribute('data-id');
-    document.getElementById('selected-pack-name').value = packName;
-    document.getElementById('selected-option-ids').value = Array.from(document.querySelectorAll('.option-card.selected'))
-        .map(option => option.getAttribute('data-id'))
-        .join(',');
-    document.getElementById('selected-option-names').value = Array.from(document.querySelectorAll('.option-card.selected'))
-        .map(option => option.querySelector('p').textContent.trim())
-        .join(', ');
-
-    // Update header step details for selected options
-    updateOptionsDetails();
-}
-
-function toggleOption(button, price) {
-    const optionCard = button.closest('.option-card');
-    const totalElement = document.getElementById('total-price');
-    const hiddenTotalElement = document.getElementById('hidden-total');
-    let currentTotal = parseFloat(hiddenTotalElement.value);
-
-    if (optionCard.classList.contains('selected')) {
-        optionCard.classList.remove('selected');
-        button.textContent = 'Ajouter';
-        button.classList.remove('disabled_retirer');
-        currentTotal -= price;
-    } else {
-        optionCard.classList.add('selected');
-        button.textContent = 'Retirer';
-        button.classList.add('disabled_retirer');
-        currentTotal += price;
-    }
-
-    hiddenTotalElement.value = currentTotal;
-    totalElement.textContent = currentTotal.toFixed(2) + ' €';
-
-    // Update form fields
-    document.getElementById('final-total').value = currentTotal;
-    document.getElementById('selected-option-ids').value = Array.from(document.querySelectorAll('.option-card.selected'))
-        .map(option => option.getAttribute('data-id'))
-        .join(',');
-    document.getElementById('selected-option-names').value = Array.from(document.querySelectorAll('.option-card.selected'))
-        .map(option => option.querySelector('p').textContent.trim())
-        .join(', ');
-
-    // Update header step details for selected options
-    updateOptionsDetails();
-}
-
-function updateOptionsDetails() {
-    const selectedOptions = document.querySelectorAll('.option-card.selected');
-    const selectedOptionsDetails = document.getElementById('selected-options-details');
-    let optionsTotal = 0;
-    selectedOptions.forEach(option => {
-        optionsTotal += parseFloat(option.getAttribute('data-price'));
+    document.querySelectorAll('.option-card .add-btn').forEach(button => {
+        const price = parseFloat(button.closest('.option-card').getAttribute('data-price'));
+        button.addEventListener('click', function() {
+            toggleOption(this, price);
+        });
     });
-    selectedOptionsDetails.innerHTML = `<h4>${selectedOptions.length} option${selectedOptions.length > 1 ? 's' : ''}</h4><div>${optionsTotal.toFixed(2)} &euro;</div>`;
-}
+});
 </script>
-
-
 
 {% include '_partials/footer.html.twig' %}
 

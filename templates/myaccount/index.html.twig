@@ -16,9 +16,9 @@
             </div>
             <nav>
                 <ul>
-                     <li><a href="{{ path('app_myaccount') }}">RÉSERVATIONS</a></li>
+                    <li><a href="{{ path('app_myaccount') }}">RÉSERVATIONS</a></li>
                     <li><a href="{{ path('app_account') }}">COMPTE</a></li>
-                     <li><a href="{{ path('account_password') }}">MOT DE PASSE</a></li>
+                    <li><a href="{{ path('account_password') }}">MOT DE PASSE</a></li>
                 </ul>
             </nav>
         </header>
@@ -26,23 +26,18 @@
             <section class="reservations">
                 <h1>Mes réservations</h1>
                 <div class="add-reservation">
-                    <div style="display: flex; align-items: center; justify-content: space-around; margin-top: 30px;">
+                    <div class="reservation-grid">
                         {% for location in locations %}
-           <a href="{{ path('app_myaccount_details', { id: location.id }) }}" style="text-decoration: none; color: #000;">
-    <div class="car_card">
-        <img src="{{ asset('images/' ~ location.car.image) }}" alt="Car Image" class="box-icon">
-        <div class="add-reservation-text">
-            <b>N° location: {{ location.rentalNumber }}</b>
-            <p>{{ location.car.brand }} <span> {{ location.car.model }} </span></p>
-            <p>Status:
-                {% for status in location.statuses %}
-                    {{ status.name }}
-                {% endfor %}
-            </p>
-        </div>
-    </div>
-</a>
-
+                            <a href="{{ path('app_myaccount_details', { id: location.id }) }}" style="text-decoration: none; color: #000;">
+                                <div class="car_card">
+                                    <img src="{{ asset('images/' ~ location.car.image) }}" alt="Car Image" class="box-icon">
+                                    <div class="add-reservation-text">
+                                        <b>N° location: {{ location.rentalNumber }}</b>
+                                        <p>{{ location.car.brand }} <span>{{ location.car.model }}</span></p>
+                                        <p>Status: {% for status in location.statuses %}{{ status.name }}{% endfor %}</p>
+                                    </div>
+                                </div>
+                            </a>
                         {% else %}
                             <p>Vous n'avez aucune réservation en cours.</p>
                         {% endfor %}
@@ -73,11 +68,14 @@
             display: flex;
             justify-content: start;
             align-items: center;
+            background-color: white;
+            border: 1px solid #ddd;
+            border-radius: 7px;
+            transition: background-color 0.3s;
         }
 
         .car_card:hover {
-            border-radius: 7px;
-            background-color: #ddd;
+            background-color: #f7f7f7;
         }
 
         body {
@@ -99,18 +97,9 @@
             margin: 0 auto;
         }
 
-        .logo {
-            height: 50px;
-        }
-
         .user-profile {
             display: flex;
             align-items: center;
-        }
-
-        .user-icon {
-            height: 30px;
-            margin-right: 10px;
         }
 
         nav ul {
@@ -151,9 +140,13 @@
 
         .add-reservation {
             margin-top: 20px;
-            border: 1px solid #ddd;
-            padding: 0 25px 25px;
-            border-radius: 5px;
+            padding: 0 0 25px 0;
+        }
+
+        .reservation-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
         }
 
         .box-icon {
@@ -184,8 +177,7 @@
         }
 
         button:hover {
-            opacity:0.9;
-    
+            opacity: 0.9;
         }
 
         .new-reservation-link {

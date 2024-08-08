@@ -145,20 +145,22 @@
 
 				<div style=" margin: 25px 0; display: flex; justify-content: space-between; padding-bottom: 10px; border-bottom: 1px solid #dfdfdf;">
 					<h2>Protections & Options</h2>
-					<h2>99.99€</h2>
+                    <h2>{{ location.packTotalPrice + location.optionsTotalPrice }} €</h2>
+
 				</div>
 
 				<h3 style="margin-top:20px;">{{ location.pack.name }}</h3>
 
 				<div style="display: flex; justify-content: space-between; padding-bottom: 10px;">
 					<p>Pour {{ location.numberOfDays }} jours</p>
-					<p>41,70 €</p>
+					<p>{{ location.packTotalPrice }} €</p>
 				</div>
 
                 {% if location.options is not empty %}
+                <h3 style="margin-top:20px;">Options</h3>
                     <ul>
                         {% for option in location.options %}
-                            <li style="margin-top:20px;">{{ option.name }}</li>
+                        <li style="margin:10px 0px;">{{ option.name }} | {{ option.price }} €</li>
                         {% endfor %}
                     </ul>
             
@@ -166,14 +168,14 @@
 
 				<div style="display: flex; justify-content: space-between; padding-bottom: 10px;">
 					<p>Pour {{ location.numberOfDays }} jours</p>
-					<p>45,39 €</p>
+					<p>{{ location.optionsTotalPrice }} €</p>
 				</div>
                 {% else %}
                     
                 {% endif %}
 				<div style=" margin: 20px 0; display: flex; justify-content: space-between; padding-bottom: 10px; border-top: 1px solid #dfdfdf;">
 					<h2 style="margin-top: 20px;">Total:</h2>
-					<h2 style="margin-top: 20px;">399.99€</h2>
+					<h2 style="margin-top: 20px;">{{ location.totalamount + location.packTotalPrice + location.optionsTotalPrice }} €</h2>
 				</div>
 
 
@@ -289,6 +291,7 @@
 
         ul {
             padding-left: 20px;
+
         }
 
    
