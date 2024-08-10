@@ -3,7 +3,6 @@
 namespace App\Controller;
 
 use App\Entity\Location;
-use App\Entity\Status;
 use App\Repository\CarRepository;
 use App\Repository\UserRepository;
 use App\Repository\PackRepository;
@@ -33,9 +32,9 @@ class ReservationConfirmController extends AbstractController
         // Récupérer les données du formulaire
         $total = $request->request->get('total');
         $packId = $request->request->get('pack_id');
-        $packTotalPrice = $request->request->get('pack_total_price'); // Nouveau champ pour le prix total du pack
+        $packTotalPrice = $request->request->get('pack_total_price'); 
         $optionIds = $request->request->get('option_ids');
-        $optionsTotalPrice = $request->request->get('option_total_price'); // Nouveau champ pour le total des options
+        $optionsTotalPrice = $request->request->get('option_total_price'); 
         $selectedOptionsCount = $request->request->get('selected_options_count');
         $selectedOptionsTotal = $request->request->get('selected_options_total');
 
@@ -65,6 +64,13 @@ class ReservationConfirmController extends AbstractController
         $dropoffLocationId = $session->get('dropoffLocationId');
         $days = $session->get('days');
 
+        // Récupérer le total par jour et la méthode de paiement depuis la session
+        $totalPerDay = $session->get('total_session') !== null ? (float) $session->get('total_session') : 0.0;
+        $paymentMethod = $session->get('paymentMethod') ?: 'unknown';
+
+        // Valeur par défaut de isPaid
+        $isPaid = false;
+
         // Récupérer les informations des lieux depuis la base de données
         $pickupLocation = $cityPickupLocationRepository->find($pickupLocationId);
         $dropoffLocation = $cityDropoffLocationRepository->find($dropoffLocationId);
@@ -74,10 +80,10 @@ class ReservationConfirmController extends AbstractController
             'total' => $total,
             'pack' => $pack,
             'pack_id' => $packId,
-            'pack_total_price' => $packTotalPrice, // Passer le prix total du pack à la vue
+            'pack_total_price' => $packTotalPrice, 
             'option_ids' => $optionIdsArray,
             'option_names' => array_map(fn($option) => $option->getName(), $options),
-            'options_total_price' => $optionsTotalPrice, // Passer le total des options à la vue
+            'options_total_price' => $optionsTotalPrice, 
             'selected_options_count' => $selectedOptionsCount,
             'selected_options_total' => $selectedOptionsTotal,
             'start_date' => $startDate,
@@ -91,6 +97,9 @@ class ReservationConfirmController extends AbstractController
             'days' => $days,
             'car' => $car,
             'user' => $user,
+            'totalPerDay' => $totalPerDay,  // Passer totalPerDay à la vue
+            'paymentMethod' => $paymentMethod,  // Passer paymentMethod à la vue
+            'isPaid' => $isPaid  // Passer isPaid à la vue
         ]);
     }
 
@@ -119,9 +128,9 @@ class ReservationConfirmController extends AbstractController
         // Récupérer les données du formulaire
         $total = $request->request->get('total');
         $packId = $request->request->get('pack_id');
-        $packTotalPrice = $request->request->get('pack_total_price'); // Nouveau champ pour le prix total du pack
+        $packTotalPrice = $request->request->get('pack_total_price'); 
         $optionIds = $request->request->get('option_ids');
-        $optionsTotalPrice = $request->request->get('option_total_price'); // Nouveau champ pour le total des options
+        $optionsTotalPrice = $request->request->get('option_total_price'); 
         $selectedOptionsCount = $request->request->get('selected_options_count');
         $selectedOptionsTotal = $request->request->get('selected_options_total');
 
@@ -162,16 +171,23 @@ class ReservationConfirmController extends AbstractController
         $location->setPickupLocation($pickupLocation);
         $location->setDropoffLocation($dropoffLocation);
         $location->setPack($pack);
-        $location->setPackTotalPrice($packTotalPrice); // Enregistrer le prix total du pack
-        $location->setOptionsTotalPrice($optionsTotalPrice); // Enregistrer le total des options
+        $location->setPackTotalPrice($packTotalPrice); 
+        $location->setOptionsTotalPrice($optionsTotalPrice); 
         $location->setStartdate($startDate);
         $location->setEnddate($endDate);
         $location->setStarttime($startTime);
         $location->setEndtime($endTime);
         $location->setTotalamount($total);
         $location->setNumberOfDays($days);
-        // $location->setSelectedOptionsCount($selectedOptionsCount); // Enregistrer le nombre d'options sélectionnées
-        // $location->setSelectedOptionsTotal($selectedOptionsTotal); // Enregistrer le coût total des options
+
+        // Récupérer le total par jour et la méthode de paiement depuis la session
+        $totalPerDay = $session->get('total_session') !== null ? (float) $session->get('total_session') : 0.0;
+        $paymentMethod = $session->get('paymentMethod') ?: 'unknown';
+
+        // Mettre à jour les champs totalPerDay, paymentMethod et isPaid
+        $location->setTotalPerDay($totalPerDay);
+        $location->setPaymentMethod($paymentMethod);
+        $location->setPaid(false);
 
         // Générer un numéro de réservation unique
         $rentalNumber = $this->generateUniqueRentalNumber($entityManager);
@@ -184,7 +200,7 @@ class ReservationConfirmController extends AbstractController
 
         // Persister la nouvelle location
         $entityManager->persist($location);
-        $entityManager->flush(); // Assurez-vous que l'ID de la location est généré avant d'insérer les options
+        $entityManager->flush(); 
 
         // Ajouter le statut "Pending"
         $pendingStatus = $statusRepository->findOneBy(['name' => 'Pending']);

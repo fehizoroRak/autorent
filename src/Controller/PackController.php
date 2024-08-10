@@ -26,14 +26,10 @@ class PackController extends AbstractController
         // Récupérer les informations de la voiture depuis la base de données
         $car = $carRepository->find($carId);
    
-
         if (!$car) {
             throw $this->createNotFoundException('The car does not exist');
         }
   
-   
-        
-
         // Récupérer les packs de protection et les options depuis la base de données
         $packs = $packRepository->findAll();
         $options = $optionRepository->findAll();

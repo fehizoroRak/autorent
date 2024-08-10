@@ -12,8 +12,11 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\Routing\Annotation\Route;
 
+
 class AvailableCarsController extends AbstractController
 {
+
+
     #[Route('/cars/available', name: 'app_cars_available')]
     public function availableCars(
         Request $request,
@@ -22,6 +25,7 @@ class AvailableCarsController extends AbstractController
         CityDropoffLocationRepository $cityDropoffLocationRepository,
         SessionInterface $session
     ): Response {
+
         // Récupérer les paramètres de la requête
         $pickupLocationName = $request->query->get('pickupLocation');
         $dropoffLocationName = $request->query->get('dropoffLocation');
@@ -49,7 +53,6 @@ class AvailableCarsController extends AbstractController
 
         $pickupLocationId = $pickupLocation ? $pickupLocation->getId() : null;
         $dropoffLocationId = $dropoffLocation ? $dropoffLocation->getId() : null;
- 
 
         // Stocker les variables dans la session
         $session->set('days', $days);
@@ -57,9 +60,9 @@ class AvailableCarsController extends AbstractController
         $session->set('pickupLocationName', $pickupLocationName);
         $session->set('dropoffLocationId', $dropoffLocationId);
         $session->set('dropoffLocationName', $dropoffLocationName);
-        $session->set('startDate', $startDate ? $startDate->format('Y-m-d') : '');
+        $session->set('startDate', $startDate ? $startDate->format('d-m-Y') : '');
         $session->set('startTime', $startTime ? $startTime->format('H:i') : '');
-        $session->set('endDate', $endDate ? $endDate->format('Y-m-d') : '');
+        $session->set('endDate', $endDate ? $endDate->format('d-m-Y') : '');
         $session->set('endTime', $endTime ? $endTime->format('H:i') : '');
 
         // Requête pour récupérer les voitures disponibles
@@ -81,10 +84,10 @@ class AvailableCarsController extends AbstractController
         ]);
     }
 
-
     #[Route('/cars/available/{id}', name: 'app_cars_available_details')]
     public function availableCarDetails(int $id, CarRepository $carRepository): Response
     {
+   
         // Récupérer la voiture par ID
         $car = $carRepository->find($id);
 
@@ -118,5 +121,4 @@ class AvailableCarsController extends AbstractController
         // Retourner les données sous forme de JSON
         return new JsonResponse($data);
     }
-
 }

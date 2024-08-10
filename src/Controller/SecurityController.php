@@ -16,8 +16,10 @@ use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 
+
 class SecurityController extends AbstractController
 {
+
     #[Route('/login', name: 'app_login')]
     public function login(SessionInterface $session, Security $security, Request $request, AuthenticationUtils $authenticationUtils, CarRepository $carRepository): Response
     {
@@ -40,12 +42,13 @@ class SecurityController extends AbstractController
 
         // Only process car and total if target path is app_pack
         if ($targetPath === $this->generateUrl('app_pack')) {
+
             // Récupérer l'ID de la voiture et le total depuis la requête
             $carId = $request->query->get('id');
             $total = $request->query->get('total');
 
             $session->set('total_session', $total);
-
+    
             // Récupérer les informations de la voiture depuis la base de données
             if ($carId) {
                 $car = $carRepository->find($carId);
@@ -68,12 +71,27 @@ class SecurityController extends AbstractController
     }
 
     #[Route('/redirect', name: 'app_redirect')]
-    public function redirectToAppropriatePage(Security $security, Request $request): Response
+    public function redirectToAppropriatePage(Security $security, Request $request, SessionInterface $session): Response
     {
         $user = $security->getUser();
         $targetPath = $request->query->get('_target_path');
         $carId = $request->query->get('id');
         $total = $request->query->get('total');
+        // Récupérer la méthode de paiement depuis la requête
+        $paymentMethod = $request->query->get('paymentMethod');
+
+    if ($paymentMethod) {
+        // Stocker la méthode de paiement choisie dans la session
+        $session->set('paymentMethod', $paymentMethod);
+    }
+    if ($total) {
+        // Stocker le total dans la session
+        $session->set('total_session', $total);
+        $session->set('new_session', true); // Indique que la session est nouvelle
+    }
+
+
+  
         if ($user) {
             if ($targetPath === $this->generateUrl('app_pack')) {
                 $carId = $request->query->get('id');
@@ -83,20 +101,20 @@ class SecurityController extends AbstractController
             return $this->redirectToRoute('app_myaccount');
         }
 
-        return $this->redirectToRoute('app_login', ['_target_path' => $targetPath, 'id' => $carId, 'total' => $total]);
+        return $this->redirectToRoute('app_login', ['_target_path' => $targetPath, 'id' => $carId, 'total' => $total, 'paymentMethod' => $paymentMethod ]);
     }
 
 
-    #[Route('/total/session', name: 'app_toal_session_data')]
-    public function getSessionData(SessionInterface $session): JsonResponse
-    {
+    // #[Route('/total/session', name: 'app_toal_session_data')]
+    // public function getSessionData(SessionInterface $session): JsonResponse
+    // {
 
-        $data_total = [
-            'total_session' => $session->get('total_session'),
-        ];
+    //     $data_total = [
+    //         'total_session' => $session->get('total_session'),
+    //     ];
 
-        return new JsonResponse($data_total);
-    }
+    //     return new JsonResponse($data_total);
+    // }
 
     #[Route('/register', name: 'app_register')]
     public function register(CarRepository $carRepository, Request $request, EntityManagerInterface $entityManager, UserPasswordHasherInterface $passwordHasher): Response

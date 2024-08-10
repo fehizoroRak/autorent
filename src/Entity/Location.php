@@ -79,6 +79,15 @@ class Location
     #[ORM\Column(nullable: true)]
     private ?float $optionsTotalPrice = null;
 
+    #[ORM\Column]
+    private ?bool $isPaid = null;
+
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $paymentMethod = null;
+
+    #[ORM\Column]
+    private ?float $totalPerDay = null;
+
     public function __construct()
     {
         $this->payments = new ArrayCollection();
@@ -371,6 +380,42 @@ class Location
     public function setOptionsTotalPrice(?float $optionsTotalPrice): static
     {
         $this->optionsTotalPrice = $optionsTotalPrice;
+
+        return $this;
+    }
+
+    public function isPaid(): ?bool
+    {
+        return $this->isPaid;
+    }
+
+    public function setPaid(bool $isPaid): static
+    {
+        $this->isPaid = $isPaid;
+
+        return $this;
+    }
+
+    public function getPaymentMethod(): ?string
+    {
+        return $this->paymentMethod;
+    }
+
+    public function setPaymentMethod(?string $paymentMethod): static
+    {
+        $this->paymentMethod = $paymentMethod;
+
+        return $this;
+    }
+
+    public function getTotalPerDay(): ?float
+    {
+        return $this->totalPerDay;
+    }
+
+    public function setTotalPerDay(float $totalPerDay): static
+    {
+        $this->totalPerDay = $totalPerDay;
 
         return $this;
     }

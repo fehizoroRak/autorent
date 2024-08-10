@@ -16,185 +16,306 @@
             </div>
             <nav>
                 <ul>
-                           <li><a href="{{ path('app_myaccount') }}">RÉSERVATIONS</a></li>
+                    <li><a href="{{ path('app_myaccount') }}">RÉSERVATIONS</a></li>
                     <li><a href="{{ path('app_account') }}">COMPTE</a></li>
-                     <li><a href="{{ path('account_password') }}">MOT DE PASSE</a></li>
+                    <li><a href="{{ path('account_password') }}">MOT DE PASSE</a></li>
                 </ul>
             </nav>
         </header>
         <main style="width: 80%; margin: 0 auto;">
+            <h1 style="margin-top:60px;">Réservation n° : {{ location.rentalNumber }}</h1>
 
-		<h1 style="margin-top:60px;">Réservation n° : {{ location.rentalNumber }}</h1>
-        <h2 style="margin-top:20px;"> {{ location.user.name }} {{ location.user.firstname }}</h2>
-        <p> {{ location.user.address }}</p>
-        <p> {{ location.user.email }} </p>
-        <p> {{ location.user.phonenumber }}</p>
+            <h3 style="
+                display: inline-block;
+                padding: 10px 20px;
+                font-size: 1.2em;
+                font-weight: bold;
+                color: #fff;
+                background-color: {% if location.paymentMethod == 'en ligne' %}#007bff{% else %}#28a745{% endif %}; 
+                border-radius: 10px;
+                box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+                margin: 20px 0;">
+                Paiement: {{ location.paymentMethod }}
+            </h3>
 
-  
+            <h2 style="margin-top:20px;">{{ location.user.name }} {{ location.user.firstname }}</h2>
+            <p>{{ location.user.address }}</p>
+            <p>{{ location.user.email }}</p>
+            <p>{{ location.user.phonenumber }}</p>
 
+            <div class="reservation-form">
+                <section class="summary">
+                    <div style="margin-top:25px; display: flex; justify-content: space-between; padding-bottom: 10px; border-bottom: 1px solid #dfdfdf;">
+                        <h3>Statut</h3>
+                        <div style="display: flex; align-items: center; gap: 10px;">
+                            {% for status in location.statuses %}
+                                {% set step = loop.index %}
+                                <div style="display: flex; flex-direction: column; align-items: center;">
+                                    <h3 style="padding:8px; border-radius: 8px; color:white; background-color: {{ status.color }};">
+                                        <div style="background-color: white; color: black; border-radius: 50%; width: 30px; height: 30px; display: flex; align-items: center; justify-content: center; font-weight: bold; margin: 5px auto;">
+                                            {{ step }}
+                                        </div>
+                                        {% if status.name == 'Pending' %}
+                                            En attente
+                                        {% elseif status.name == 'Confirmed' %}
+                                            Confirmée
+                                        {% elseif status.name == 'Cancelled' %}
+                                            Annulée
+                                        {% elseif status.name == 'Active' %}
+                                            Active
+                                        {% elseif status.name == 'Completed' %}
+                                            Terminée
+                                        {% elseif status.name == 'Overdue' %}
+                                            En retard
+                                        {% else %}
+                                            {{ status.name }}
+                                        {% endif %}
+                                    </h3>
+                                </div>
+                                {% if not loop.last %}
+                                    <span> ———————— </span>
+                                {% endif %}
+                            {% endfor %}
+                        </div>
+                    </div>
 
-		<div class="reservation-form">
-			<section class="summary">
-	
-				 <div style="margin-top:25px;display: flex; justify-content: space-between; padding-bottom: 10px; border-bottom: 1px solid #dfdfdf;">
-					<h3>Statut</h3>
-					<h3 style="background-color: #FFCC00; padding:8px; border-radius: 8px; color:white;" >{{ status }}</h3>
-				</div> 
+                    <div style="display: flex; justify-content:flex-start; align-items: center; gap: 25px;">
+                        <img style="width: 25%;" src="{{ asset('images/' ~ location.car.image) }}" alt="{{ location.car.brand }} {{ location.car.model }}">
+                        <h2>{{ location.car.brand }} {{ location.car.model }}<br></h2>
+                    </div>
 
-				<div style="display: flex; justify-content:flex-start; align-items: center; gap: 25px; ">
-                    <img style="width: 25%;" src="{{ asset('images/' ~ location.car.image) }}" alt="{{ location.car.brand }} {{ location.car.model }}">
-   
-					<h2>   {{ location.car.brand }} {{ location.car.model }}
-						<br>
-					</h2>
-
-				</div>
-
-
-			<ul style="list-style: none;padding: 0;margin-bottom: 1rem;">
-			
-					<li style="display: flex;align-items: center;justify-content: space-between;margin-bottom: 1rem;}" >
-					
-						<div class="cars__details">
-
-							<div class="cars__details1">
-								<p>
-									<i class="ri-calendar-line"></i>
-									{{ location.car.year }}</p>
-								<p>
-									<i class="ri-palette-line"></i>
-									{{ location.car.color }}</p>
-								<p>
-									<i class="ri-car-line"></i>
-									{{ location.car.registration }}</p>
-
-								<p style="display:flex; justify-content: start; align-items:center; ">
-									<img src="{{ asset('images/car.png') }}" alt="moteur" style="width: 0.9em; height: 0.9em; margin-right: 10px;">
-									{{ location.car.nbofcardoors }} portes
-								</p>
-								<p>
-									<i class="ri-user-line"></i>
-									{{ location.car.nbofpersons }} personnes</p>
-							</div>
-							<div class="cars__details1">
-								 {% if location.car.isAirconditionner %}
-									<p>
-										<i class="fa-solid fa-snowflake"></i>
-										Climatisation</p>
-								{% endif %} 
-
-
-								<p style="display:flex; justify-content: start; align-items:center; "><img src="{{ asset('images/gear.png') }}" alt="moteur" style="width: 1em; height: 1em; margin-right: 10px;
-										">
-									  {{ location.car.gearbox }}</p>
-
-								<p style="display:flex; justify-content: start; align-items:center; "><img src="{{ asset('images/engine.png') }}" alt="moteur" style="width: 1.3em; height: 1.3em; margin-right: 10px;
-										">
-									{{ location.car.horsepower }} CV</p>
-
-								<p>
-									<i class="ri-cloud-line"></i>
-									CO2:
-									{{ location.car.co2emissions }}
-									g/km</p>
-
-								{% if location.car.isElectric %}
-									<p class="isElec">
-										<i style="color:#fff;" class="ri-flashlight-line"></i>
-										Électrique</p>
-								{% endif %}
-
-							</div>
-
-						</div>
-
-					
-					</li>
-
-	
-			</ul>
-
-				<div style="margin: 25px 0; display: flex; justify-content: space-between; padding-bottom: 10px; border-bottom: 1px solid #dfdfdf;">
-					<h2>Tarif de base pour {{ location.numberOfDays }} jours</h2>
-					<h2>{{ location.totalamount }} €</h2>
-				</div>
-
-				<section style="margin: 20px 0;">
-					<div style="width:100%;  background: #f7f7f7;padding: 20px 10px; border-radius:10px 10px 0 0;border-bottom: 1px solid #dfdfdf;">
-						<p style="font-weight:bold;">Départ
-						</p>
-						<p style="font-weight:bold;font-size: 1.2rem;">{{ location.pickupLocation.name }}
-						</p>
-						<p>{{ location.startdate|date('d/m/Y') }} | {{ location.starttime|date('H:i') }}
-						</p>
-
-					</div>
-
-					<div style="width:100%;  background: #f7f7f7;padding: 20px 10px; border-radius:0 0 10px 10px;">
-						<p style="font-weight:bold;">Retour
-						</p>
-						<p style="font-weight:bold;font-size: 1.2rem;">{{ location.dropOffLocation.name }}
-						</p>
-						<p>{{ location.enddate|date('d/m/Y') }} | {{ location.endtime|date('H:i') }}
-						</p>
-
-					</div>
-
-
-				</section>
-
-				<div style=" margin: 25px 0; display: flex; justify-content: space-between; padding-bottom: 10px; border-bottom: 1px solid #dfdfdf;">
-					<h2>Protections & Options</h2>
-                    <h2>{{ location.packTotalPrice + location.optionsTotalPrice }} €</h2>
-
-				</div>
-
-				<h3 style="margin-top:20px;">{{ location.pack.name }}</h3>
-
-				<div style="display: flex; justify-content: space-between; padding-bottom: 10px;">
-					<p>Pour {{ location.numberOfDays }} jours</p>
-					<p>{{ location.packTotalPrice }} €</p>
-				</div>
-
-                {% if location.options is not empty %}
-                <h3 style="margin-top:20px;">Options</h3>
-                    <ul>
-                        {% for option in location.options %}
-                        <li style="margin:10px 0px;">{{ option.name }} | {{ option.price }} €</li>
-                        {% endfor %}
+                    <ul style="list-style: none;padding: 0;margin-bottom: 1rem;">
+                        <li style="display: flex;align-items: center;justify-content: space-between;margin-bottom: 1rem;}">
+                            <div class="cars__details">
+                                <div class="cars__details1">
+                                    <p><i class="ri-calendar-line"></i> {{ location.car.year }}</p>
+                                    <p><i class="ri-palette-line"></i> {{ location.car.color }}</p>
+                                    <p><i class="ri-car-line"></i> {{ location.car.registration }}</p>
+                                    <p style="display:flex; justify-content: start; align-items:center;">
+                                        <img src="{{ asset('images/car.png') }}" alt="moteur" style="width: 0.9em; height: 0.9em; margin-right: 10px;">
+                                        {{ location.car.nbofcardoors }} portes
+                                    </p>
+                                    <p><i class="ri-user-line"></i> {{ location.car.nbofpersons }} personnes</p>
+                                </div>
+                                <div class="cars__details1">
+                                    {% if location.car.isAirconditionner %}
+                                        <p><i class="fa-solid fa-snowflake"></i> Climatisation</p>
+                                    {% endif %}
+                                    <p style="display:flex; justify-content: start; align-items:center;">
+                                        <img src="{{ asset('images/gear.png') }}" alt="moteur" style="width: 1em; height: 1em; margin-right: 10px;">
+                                        {{ location.car.gearbox }}
+                                    </p>
+                                    <p style="display:flex; justify-content: start; align-items:center;">
+                                        <img src="{{ asset('images/engine.png') }}" alt="moteur" style="width: 1.3em; height: 1.3em; margin-right: 10px;">
+                                        {{ location.car.horsepower }} CV
+                                    </p>
+                                    <p><i class="ri-cloud-line"></i> CO2: {{ location.car.co2emissions }} g/km</p>
+                                    {% if location.car.isElectric %}
+                                        <p class="isElec"><i style="color:#fff;" class="ri-flashlight-line"></i> Électrique</p>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </li>
                     </ul>
-            
-				{# <h3 style="margin-top:20px;">Assistance Plus</h3> #}
 
-				<div style="display: flex; justify-content: space-between; padding-bottom: 10px;">
-					<p>Pour {{ location.numberOfDays }} jours</p>
-					<p>{{ location.optionsTotalPrice }} €</p>
-				</div>
+                    <div style="margin: 25px 0; display: flex; justify-content: space-between; padding-bottom: 10px; border-bottom: 1px solid #dfdfdf;">
+                        <h2>Tarif de base pour {{ location.numberOfDays }} jours</h2>
+                        <h2>{{ location.totalPerDay }} €</h2>
+                    </div>
+
+                    <section style="margin: 20px 0;">
+                        <div style="width:100%; background: #f7f7f7; padding: 20px 10px; border-radius:10px 10px 0 0; border-bottom: 1px solid #dfdfdf;">
+                            <p style="font-weight:bold;">Départ</p>
+                            <p style="font-weight:bold;font-size: 1.2rem;">{{ location.pickupLocation.name }}</p>
+                            <p>{{ location.startdate|date('d/m/Y') }} | {{ location.starttime|date('H:i') }}</p>
+                        </div>
+                        <div style="width:100%; background: #f7f7f7; padding: 20px 10px; border-radius:0 0 10px 10px;">
+                            <p style="font-weight:bold;">Retour</p>
+                            <p style="font-weight:bold;font-size: 1.2rem;">{{ location.dropOffLocation.name }}</p>
+                            <p>{{ location.enddate|date('d/m/Y') }} | {{ location.endtime|date('H:i') }}</p>
+                        </div>
+                    </section>
+
+                    <div style="margin: 25px 0; display: flex; justify-content: space-between; padding-bottom: 10px; border-bottom: 1px solid #dfdfdf;">
+                        <h2>Protections & Options</h2>
+                        <h2>{{ location.packTotalPrice + location.optionsTotalPrice }} €</h2>
+                    </div>
+
+                    <h3 style="margin-top:20px;">{{ location.pack.name }}</h3>
+
+                    <div style="display: flex; justify-content: space-between; padding-bottom: 10px;">
+                        <p>Pour {{ location.numberOfDays }} jours</p>
+                        <p>{{ location.packTotalPrice }} €</p>
+                    </div>
+
+                    {% if location.options is not empty %}
+                        <h3 style="margin-top:20px;">Options</h3>
+                        <ul>
+                            {% for option in location.options %}
+                                <li style="margin:10px 0px;">{{ option.name }} | {{ option.price }} €</li>
+                            {% endfor %}
+                        </ul>
+                        <div style="display: flex; justify-content: space-between; padding-bottom: 10px;">
+                            <p>Pour {{ location.numberOfDays }} jours</p>
+                            <p>{{ location.optionsTotalPrice }} €</p>
+                        </div>
+                    {% endif %}
+
+                    <div style="margin: 20px 0; display: flex; justify-content: space-between; padding-bottom: 10px; border-top: 1px solid #dfdfdf;">
+                        <h2 style="margin-top: 20px;">Total:</h2>
+                        <h2 style="margin-top: 20px;">{{ location.totalamount }} €</h2>
+                    </div>
+                </section>
+
+                {% if location.statuses|last.name == 'Confirmed' and not location.paid %}
+                    <h3 style="
+                        display: inline-block;
+                        padding: 10px 20px;
+                        font-size: 1.2em;
+                        font-weight: bold;
+                        color: #fff;
+                        background-color: #28a745;
+                        border-radius: 10px;
+                        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+                        margin: 20px 0;">
+                        RÉSERVATION CONFIRMÉE MAIS RÈGLEMENT EN AGENCE
+                    </h3>
+                {% elseif location.statuses|last.name == 'Confirmed' %}
+                    <h3 style="
+                        display: inline-block;
+                        padding: 10px 20px;
+                        font-size: 1.2em;
+                        font-weight: bold;
+                        color: #fff;
+                        background-color: #28a745;
+                        border-radius: 10px;
+                        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+                        margin: 20px 0;">
+                        PAYÉ
+                    </h3>
+                {% elseif location.paymentMethod == 'en agence' %}
+                    <form id="confirm-agency-form" action="{{ path('confirm_agency_payment') }}" method="POST" onsubmit="return processAgencyPayment();">
+                        <input type="hidden" name="location_id" value="{{ location.id }}">
+                        <input type="hidden" name="amount" value="{{ location.totalamount }}">
+                        <button type="submit" class="pay-btn">CONFIRMER LE PAIEMENT EN AGENCE</button>
+                    </form>
                 {% else %}
-                    
+                    <div class="payment-container">
+                        <div class="payment-header">
+                            <h2>Informations de paiement</h2>
+                            <div class="menu-icon">
+                                <div class="menu-line"></div>
+                                <div class="menu-line"></div>
+                                <div class="menu-line"></div>
+                            </div>
+                        </div>
+
+                        <div class="payment-tabs">
+                            <div class="tab active" data-tab="credit-card">
+                                <img src="https://img.icons8.com/ios-filled/50/000000/bank-card-back-side.png" alt="Credit Card" class="tab-icon">
+                                Carte bleue
+                            </div>
+                            <div class="tab" data-tab="paypal">
+                                <img src="https://img.icons8.com/color/48/000000/paypal.png" alt="PayPal" class="tab-icon">
+                                PayPal
+                            </div>
+                            <div class="tab" data-tab="cash">
+                                <img src="https://img.icons8.com/ios-filled/50/000000/money.png" alt="Cash" class="tab-icon">
+                                Espèces
+                            </div>
+                            <div class="tab" data-tab="bank-transfer">
+                                <img src="https://img.icons8.com/ios-filled/50/000000/bank-building.png" alt="Bank Transfer" class="tab-icon">
+                                Virement bancaire
+                            </div>
+                        </div>
+
+                        <form id="payment-form" action="{{ path('payment_process') }}" method="POST" onsubmit="return processPayment()">
+                            <input type="hidden" name="location_id" value="{{ location.id }}">
+                            <input type="hidden" name="amount" value="{{ location.totalamount }}">
+                            <input type="hidden" name="payment_mode" id="payment_mode" value="credit-card"> <!-- Default payment mode -->
+
+                            <!-- Credit Card Form -->
+                            <div class="payment-method" id="credit-card">
+                                <div class="card-details">
+                                    <label for="card-number">N° carte bleue</label>
+                                    <input type="text" id="card-number" maxlength="16" placeholder="1234 5678 9012 3456">
+                                    <span id="card-number-error" class="error-message"></span>
+                                </div>
+                                <div class="card-info">
+                                    <div class="info-group">
+                                        <label for="expiration-date">Date d'expiration</label>
+                                        <input type="text" id="expiration-date" maxlength="5" placeholder="MM/YY">
+                                        <span id="expiration-date-error" class="error-message"></span>
+                                    </div>
+                                    <div class="info-group">
+                                        <label for="cvv">CVV</label>
+                                        <input type="text" id="cvv" maxlength="3" placeholder="123">
+                                        <span id="cvv-error" class="error-message"></span>
+                                    </div>
+                                </div>
+                                <div class="cardholder">
+                                    <label for="cardholder-name">NOM</label>
+                                    <input type="text" id="cardholder-name" placeholder="John Doe">
+                                    <span id="cardholder-name-error" class="error-message"></span>
+                                </div>
+                            </div>
+
+                            <!-- PayPal Form -->
+                            <div class="payment-method" id="paypal" style="display: none;">
+                                <div class="card-details">
+                                    <label for="paypal-email">Email</label>
+                                    <input type="email" id="paypal-email" placeholder="example@mail.com">
+                                    <span id="paypal-email-error" class="error-message"></span>
+                                </div>
+                                <div class="cardholder">
+                                    <label for="paypal-password">Mot de passe</label>
+                                    <input type="password" id="paypal-password" placeholder="••••••••">
+                                    <span id="paypal-password-error" class="error-message"></span>
+                                </div>
+                            </div>
+
+                            <!-- Cash Content -->
+                            <div class="payment-method" id="cash" style="display: none;">
+                                <p>Vous pouvez payer en espèces au moment de la livraison ou à notre bureau. Veuillez vous assurer d'avoir le montant exact, car la monnaie pourrait ne pas être disponible.</p>
+                            </div>
+
+                            <!-- Bank Transfer Form -->
+                            <div class="payment-method" id="bank-transfer" style="display: none;">
+                                <div class="card-details">
+                                    <label for="iban">IBAN</label>
+                                    <input type="text" id="iban" maxlength="16" placeholder="DE00 1234 5678 9012 3456 78">
+                                    <span id="iban-error" class="error-message"></span>
+                                </div>
+                                <div class="cardholder">
+                                    <label for="account-holder">Nom</label>
+                                    <input type="text" id="account-holder" placeholder="John Doe">
+                                    <span id="account-holder-error" class="error-message"></span>
+                                </div>
+                                <div class="cardholder">
+                                    <label for="bank-name">Banque</label>
+                                    <input type="text" id="bank-name" placeholder="Your Bank Name">
+                                    <span id="bank-name-error" class="error-message"></span>
+                                </div>
+                            </div>
+
+                            <button type="submit" class="pay-btn">Payer maintenant ({{ location.totalamount }} €)</button>
+                        </form>
+                    </div>
                 {% endif %}
-				<div style=" margin: 20px 0; display: flex; justify-content: space-between; padding-bottom: 10px; border-top: 1px solid #dfdfdf;">
-					<h2 style="margin-top: 20px;">Total:</h2>
-					<h2 style="margin-top: 20px;">{{ location.totalamount + location.packTotalPrice + location.optionsTotalPrice }} €</h2>
-				</div>
-
-
-			</section>
-
-		</div>
-
-	</div>
-
-
-
-                
-                    
-            
-              
-          
-
+            </div>
         </main>
         {% include '_partials/footer.html.twig' %}
+    </div>
+    
+    <!-- Loading Spinner -->
+    <div id="loading-spinner" style="display:none;">
+        <div class="spinner"></div>
+        <p>Chargement...</p>
+    </div>
+
+    <!-- Success Message -->
+    <div id="success-message" style="display:none;">
+        <p>Réservation confirmée ! Redirection en cours...</p>
     </div>
 
     <style>
@@ -227,18 +348,13 @@
             margin: 0 auto;
         }
 
-        .logo {
-            height: 50px;
-        }
-
         .user-profile {
             display: flex;
             align-items: center;
         }
 
-        .user-icon {
-            height: 30px;
-            margin-right: 10px;
+        .user-profile i {
+            font-size: 1.5em;
         }
 
         nav ul {
@@ -268,32 +384,294 @@
             padding: 20px;
         }
 
-        .reservation-details {
-            text-align: start;
-        }
-
-        .reservation-details h1 {
-            font-size: 30px;
-            margin: 30px auto;
-        }
-
-        .details {
+        .summary h2, .summary h3 {
             margin-top: 20px;
-            border: 1px solid #ddd;
-            padding: 20px;
-            border-radius: 5px;
         }
 
-        .details p {
-            font-size: 16px;
-            margin: 10px 0;
-        }
-
-        ul {
+        .summary ul {
             padding-left: 20px;
-
         }
 
-   
+        .payment-container {
+            width: 100%;
+            background-color: white;
+            border-radius: 15px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+        }
+
+        .payment-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .payment-header h2 {
+            margin: 0;
+        }
+
+        .menu-icon {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            height: 15px;
+        }
+
+        .menu-line {
+            width: 20px;
+            height: 2px;
+            background-color: black;
+        }
+
+        .payment-tabs {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 20px;
+        }
+
+        .tab {
+            padding: 10px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .tab.active {
+            border-bottom: 3px solid green;
+        }
+
+        .tab-icon {
+            width: 20px;
+            height: 20px;
+        }
+
+        .payment-method {
+            margin-bottom: 20px;
+        }
+
+        .card-details, .cardholder, .info-group {
+            margin-bottom: 15px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+
+        input[type="text"], input[type="email"], input[type="password"] {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            box-sizing: border-box;
+        }
+
+        .pay-btn {
+            width: 100%;
+            background-color: #fe5b3e;
+            color: white;
+            padding: 15px 0;
+            border: none;
+            border-radius: 8px;
+            font-size: 18px;
+            cursor: pointer;
+            text-align: center;
+            margin: 50px 0 30px 0;
+        }
+
+        .pay-btn:hover {
+            background-color: #e94c30;
+        }
+
+        /* Fullscreen overlay */
+        #loading-spinner, #success-message {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.75); /* Black background with 75% opacity */
+            color: white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            text-align: center;
+            z-index: 9999;
+        }
+
+        .spinner {
+            border: 10px solid #f3f3f3; /* Light grey */
+            border-top: 10px solid #fe5b3e;
+            border-radius: 50%;
+            width: 70px;
+            height: 70px;
+            animation: spin 2s linear infinite;
+        }
+
+        @keyframes spin {
+            0% {
+                transform: rotate(0deg);
+            }
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+
+        #loading-spinner p, #success-message p {
+            font-size: 1.5em;
+            margin-top: 20px;
+        }
     </style>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const tabs = document.querySelectorAll('.tab');
+            const paymentModeInput = document.getElementById('payment_mode');
+            const paymentMethods = document.querySelectorAll('.payment-method');
+
+            // Gestion des onglets pour changer le mode de paiement
+            tabs.forEach(tab => {
+                tab.addEventListener('click', function () {
+                    tabs.forEach(t => t.classList.remove('active'));
+                    tab.classList.add('active');
+
+                    paymentMethods.forEach(method => method.style.display = 'none');
+
+                    const selectedMethod = tab.getAttribute('data-tab');
+                    document.getElementById(selectedMethod).style.display = 'block';
+
+                    paymentModeInput.value = selectedMethod;
+                });
+            });
+        });
+
+        function processPayment() {
+            // Valider le formulaire
+            if (!validateForm()) {
+                return false;
+            }
+
+            // Masquer le formulaire et afficher le spinner de chargement
+            document.getElementById('payment-form').style.display = 'none';
+            document.getElementById('loading-spinner').style.display = 'flex';
+
+            // Simuler un délai pour le processus de paiement
+            setTimeout(function () {
+                // Afficher le message de succès
+                document.getElementById('loading-spinner').style.display = 'none';
+                document.getElementById('success-message').style.display = 'flex';
+
+                // Soumettre le formulaire après avoir affiché le message de succès
+                setTimeout(function () {
+                    document.getElementById('payment-form').submit();
+                }, 2000);
+            }, 2000);
+
+            // Empêcher la soumission immédiate du formulaire
+            return false;
+        }
+
+        function validateForm() {
+            let isValid = true;
+
+            // Effacer les messages d'erreur précédents et réinitialiser les bordures
+            document.querySelectorAll('.error-message').forEach(function (element) {
+                element.textContent = '';
+            });
+            document.querySelectorAll('input').forEach(function (input) {
+                input.style.border = '';
+            });
+
+            // Validation du formulaire de carte de crédit
+            if (document.getElementById('payment_mode').value === 'credit-card') {
+                if (!document.getElementById('card-number').value) {
+                    document.getElementById('card-number-error').textContent = 'Le numéro de carte est requis';
+                    document.getElementById('card-number-error').style.color = 'red';
+                    document.getElementById('card-number').style.border = '2px solid red';
+                    isValid = false;
+                }
+                if (!document.getElementById('expiration-date').value) {
+                    document.getElementById('expiration-date-error').textContent = "La date d'expiration est requise";
+                    document.getElementById('expiration-date-error').style.color = 'red';
+                    document.getElementById('expiration-date').style.border = '2px solid red';
+                    isValid = false;
+                }
+                if (!document.getElementById('cvv').value) {
+                    document.getElementById('cvv-error').textContent = 'Le CVV est requis';
+                    document.getElementById('cvv-error').style.color = 'red';
+                    document.getElementById('cvv').style.border = '2px solid red';
+                    isValid = false;
+                }
+                if (!document.getElementById('cardholder-name').value) {
+                    document.getElementById('cardholder-name-error').textContent = 'Le nom du titulaire est requis';
+                    document.getElementById('cardholder-name-error').style.color = 'red';
+                    document.getElementById('cardholder-name').style.border = '2px solid red';
+                    isValid = false;
+                }
+            }
+
+            // Validation du formulaire PayPal
+            if (document.getElementById('payment_mode').value === 'paypal') {
+                if (!document.getElementById('paypal-email').value) {
+                    document.getElementById('paypal-email-error').textContent = 'Email PayPal est requis';
+                    document.getElementById('paypal-email-error').style.color = 'red';
+                    document.getElementById('paypal-email').style.border = '2px solid red';
+                    isValid = false;
+                }
+                if (!document.getElementById('paypal-password').value) {
+                    document.getElementById('paypal-password-error').textContent = 'Mot de passe PayPal est requis';
+                    document.getElementById('paypal-password-error').style.color = 'red';
+                    document.getElementById('paypal-password').style.border = '2px solid red';
+                    isValid = false;
+                }
+            }
+
+            // Validation du formulaire de virement bancaire
+            if (document.getElementById('payment_mode').value === 'bank-transfer') {
+                if (!document.getElementById('iban').value) {
+                    document.getElementById('iban-error').textContent = 'IBAN est requis';
+                    document.getElementById('iban-error').style.color = 'red';
+                    document.getElementById('iban').style.border = '2px solid red';
+                    isValid = false;
+                }
+                if (!document.getElementById('account-holder').value) {
+                    document.getElementById('account-holder-error').textContent = 'Le nom du titulaire du compte est requis';
+                    document.getElementById('account-holder-error').style.color = 'red';
+                    document.getElementById('account-holder').style.border = '2px solid red';
+                    isValid = false;
+                }
+                if (!document.getElementById('bank-name').value) {
+                    document.getElementById('bank-name-error').textContent = 'Le nom de la banque est requis';
+                    document.getElementById('bank-name-error').style.color = 'red';
+                    document.getElementById('bank-name').style.border = '2px solid red';
+                    isValid = false;
+                }
+            }
+
+            // Retourner false pour empêcher la soumission du formulaire si la validation échoue
+            return isValid;
+        }
+
+        function processAgencyPayment() {
+            document.getElementById('confirm-agency-form').style.display = 'none';
+            document.getElementById('loading-spinner').style.display = 'flex';
+
+            // Simuler un délai pour le processus de confirmation de paiement
+            setTimeout(function () {
+                document.getElementById('loading-spinner').style.display = 'none';
+                document.getElementById('success-message').style.display = 'flex';
+
+                // Redirection après la confirmation
+                setTimeout(function () {
+                    document.getElementById('confirm-agency-form').submit();
+                }, 2000);
+            }, 2000);
+
+            return false;
+        }
+    </script>
 {% endblock %}

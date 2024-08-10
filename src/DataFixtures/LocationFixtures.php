@@ -95,6 +95,18 @@ class LocationFixtures extends Fixture implements DependentFixtureInterface
             $totalAmount = $packTotalPrice + $optionsTotalPrice;
             $location->setTotalamount($totalAmount);
 
+            // Set the price per day
+            $totalPerDay = $totalAmount / $numberOfDays;
+            $location->setTotalPerDay($totalPerDay);
+
+            // Set isPaid status randomly
+            $isPaid = (bool)rand(0, 1);
+            $location->setPaid($isPaid);
+
+            // Set payment method randomly between 'en agence' and 'en ligne'
+            $paymentMethod = rand(0, 1) ? 'en agence' : 'en ligne';
+            $location->setPaymentMethod($paymentMethod);
+
             // Set initial status to "Pending" and add to status history
             $pendingStatus = array_filter($statuses, fn($status) => $status->getName() === 'Pending');
             if (!empty($pendingStatus)) {

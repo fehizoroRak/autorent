@@ -7,7 +7,8 @@
 {% include '_partials/header_steps.html.twig' %}
 <div class="pack_title">
     <div style="width:80%; margin: 0 auto; display:flex; justify-content: space-between; align-items: center; padding: 4px 0;">
-        <h5>Choisissez votre protection et vos options</h5>
+        <h5>Choisissez votre protection et vos options///////// {{ app.session.get('paymentMethod') }}</h5>
+
         <div style=" display:flex; justify-content: space-between;gap:20px;">
             <div>
                 <p style="font-size:1rem;">TOTAL</p>

@@ -75,27 +75,26 @@
 		</div>
 
 
-		<div class="step-2">
-			<div class="step-title" style="display: flex; gap:10px; align-items:center;">
-				<div class="step-number-2">2</div>
-				<h4 style="color:#fe5b3e;">VÉHICULE</h4>
-			</div>
-			<div class="step-details2" style="margin-top:10px;">
-				{% if car is defined %}
-					<h4>{{ car.brand }}
-						{{ car.model }}</h4>
-                {% if app.session.get('total_session') is defined and app.session.get('total_session') is not empty %}
-    <div>{{ app.session.get('total_session') }} €</div>
-{% endif %}
+<div class="step-2">
+	<div class="step-title" style="display: flex; gap:10px; align-items:center;">
+		<div class="step-number-2">2</div>
+		<h4 style="color:#fe5b3e;">VÉHICULE</h4>
+	</div>
+	<div class="step-details2" style="margin-top:10px;">
+		{% if car is defined %}
+			<h4>{{ car.brand }}
+				{{ car.model }}</h4>
+		{% if total is defined %}
+			<div>{{ total }} €</div>
 
-					
+		{% endif %}
 
-					{# <div>{{ total is defined ? total ~ ' €' : '' }}</div> #}
-				{% else %}
-					<p style="margin-top: 45px;">Veuillez choisir un véhicule</p>
-				{% endif %}
-			</div>
-		</div>
+		{% else %}
+			<p style="margin-top: 45px;">Veuillez choisir un véhicule</p>
+		{% endif %}
+	</div>
+</div>
+
 
 
 	<div class="step-3">

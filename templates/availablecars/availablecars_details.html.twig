@@ -139,11 +139,12 @@
             </span> de location
         </p>
         
-        <a href="{{ path('app_redirect', {'_target_path': path('app_pack'), id: car.id, total: TotalPerDay }) }}" class="btn-select-agency">
-            <div class="btn-select-agency">
-                Sélectionner
-            </div>
-        </a>
+
+<a href="{{ path('app_redirect', { '_target_path': path('app_pack'), id: car.id, total: TotalPerDay, paymentMethod: 'en agence' }) }}" class="btn-select-agency">
+    <div class="btn-select-agency">
+        Sélectionner
+    </div>
+</a>
     </div>
 </div>
 <div class="option online">
@@ -164,11 +165,12 @@
                 {{ app.session.get('days') }} jrs
             </span> de location
         </p>
-        <a href="{{ path('app_redirect', { '_target_path': path('app_pack'), id: car.id, total: discountedTotal | number_format(2, '.', '') }) }}" class="btn-select-online">
-            <div class="btn-select-online">
-                Sélectionner
-            </div>
-        </a>
+
+<a href="{{ path('app_redirect', { '_target_path': path('app_pack'), id: car.id, total: discountedTotal | number_format(2, '.', ''), paymentMethod: 'en ligne' }) }}" class="btn-select-online">
+    <div class="btn-select-online">
+        Sélectionner
+    </div>
+</a>
     </div>
 </div>
 </div>
