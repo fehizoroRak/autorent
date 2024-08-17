@@ -55,7 +55,9 @@
 
 
 	<div class="reservation-steps">
-		<div class="step-1">
+
+	<a class="step-1" style="color: #000;"  href="{{ path('app_home') }}">
+		<div >
 			<div class="step-title" style="display: flex; gap:10px; align-items:center;">
 				<div class="step-number-1">1</div>
 				<h4 style="color:#fe5b3e;;">AGENCE DE LOCATION</h4>
@@ -77,9 +79,11 @@
 				</div>
 			</div>
 		</div>
-
-
-		<div class="step-2">
+	</a>
+	
+	<a class="step-2" style="color: #000;" href="#">
+	
+	<div >
 			<div class="step-title" style="display: flex; gap:10px; align-items:center;">
 				<div class="step-number-2">2</div>
 				<h4 style="color:#fe5b3e;">VÉHICULE</h4>
@@ -99,6 +103,9 @@
 				{% endif %}
 			</div>
 		</div>
+	</a>
+
+		
 
 
 		<div class="step-3">
@@ -106,7 +113,7 @@
 				<div class="step-number-3">3</div>
 				<h4 class="title-3">PROTECTIONS ET OPTIONS</h4>
 			</div>
-			<div class="step-details" style="display: flex; justify-content: space-between;">
+			<div class="step-details3" style="display: flex; justify-content: space-between;">
 				{% if pack is defined or options is defined %}
 					<div id="selected-pack-details" style="width:50%; border-right: 1px solid #475569;">
 						{% if pack is defined %}
@@ -159,6 +166,61 @@
 		</div>
 	</div>
 </div>
+<style>
 
+#header {
+    transition: height 0.5s ease;
+}
 
+.step-details, .step-details2, .step-details3, .step-details4 {
+    transition: opacity 0.5s ease, height 0.5s ease;
+}
+.step-1, .step-2, .step-3, .step-4 {
+    transition: height 0.5s ease;
+    overflow: hidden;
+}
+
+</style>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const steps = document.querySelectorAll('.step-1, .step-2, .step-3, .step-4');
+        const stepDetails = document.querySelectorAll('.step-details, .step-details2, .step-details3, .step-details4');
+        const header = document.getElementById('header');
+
+        window.addEventListener('scroll', function () {
+            let scrollTop = window.scrollY;
+
+            if (scrollTop > 100) {
+                stepDetails.forEach((detail) => {
+                    detail.style.transition = 'opacity 0.5s ease, height 0.5s ease';
+                    detail.style.opacity = '0';
+                    detail.style.height = '0';
+                });
+
+                steps.forEach((step) => {
+                    step.style.transition = 'height 0.5s ease';
+                    step.style.height = '48px';
+                });
+
+                header.style.transition = 'height 0.5s ease';
+                header.style.height = 'auto'; // Ajustez si besoin la hauteur du header
+            } else {
+                stepDetails.forEach((detail) => {
+                    detail.style.transition = 'opacity 0.5s ease, height 0.5s ease';
+                    detail.style.opacity = '1';
+                    detail.style.height = 'auto'; // Remet la hauteur automatique
+                });
+
+                steps.forEach((step) => {
+                    step.style.transition = 'height 0.5s ease';
+                    step.style.height = 'auto'; // Remet la hauteur originale
+                });
+
+                header.style.transition = 'height 0.5s ease';
+                header.style.height = 'auto';
+            }
+        });
+    });
+</script>
 
