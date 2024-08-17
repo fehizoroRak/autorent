@@ -1,0 +1,68 @@
+{# templates/admin/car_show.html.twig #}
+
+{% extends '@EasyAdmin/page/content.html.twig' %}
+
+{% block head_stylesheets %}
+    {{ parent() }}
+    <style>
+        .calendar {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+        }
+        .month {
+            border: 1px solid #ccc;
+            padding: 10px;
+            text-align: center;
+        }
+        .month h3 {
+            margin: 0;
+            font-size: 1.5em;
+            background-color: #f4f4f4;
+            padding: 5px;
+        }
+        .days {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 2px;
+        }
+        .day {
+            padding: 10px;
+            text-align: center;
+            border-radius: 5px;
+        }
+        .rented-day {
+            background-color: #ff0000;
+            color: white;
+        }
+        .empty-day {
+            background-color: #f4f4f4;
+        }
+    </style>
+{% endblock %}
+
+{% block content %}
+    <h1>Détails du Véhicule</h1>
+      
+    <div class="car-details">
+        <p><strong>Marque :</strong> {{ entity.brand }}</p>
+        <p><strong>Modèle :</strong> {{ entity.model }}</p>
+        <p><strong>Couleur :</strong> {{ entity.color }}</p>
+        <p><strong>Immatriculation :</strong> {{ entity.registration }}</p>
+    </div>
+
+    <div class="calendar">
+        {% for month in months %}
+            <div class="month">
+                <h3>{{ month.name }}</h3>
+                <div class="days">
+                    {% for day in month.days %}
+                        <div class="day {{ day.date in rentedDays ? 'rented-day' : '' }}">
+                            {{ day.day }}
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+{% endblock %}

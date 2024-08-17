@@ -30,12 +30,4 @@ fixtures:
 # Cible pour tout faire
 full: drop create schema-update fixtures
 
-# Cible pour afficher les commandes disponibles
-help:
-	@echo "Usage:"
-	@echo "  make drop             - Drop the database"
-	@echo "  make create           - Create the database"
-	@echo "  make schema-update    - Update the schema"
-	@echo "  make fixtures         - Load all fixtures"
-	@echo "  make full             - Drop, create, update schema, and load all fixtures"
-	@echo "  make help             - Show this help message"
+

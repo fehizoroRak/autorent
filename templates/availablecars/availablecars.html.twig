@@ -2,7 +2,6 @@
 
 {% block title %}Voitures Disponibles{% endblock %}
 
-{% block body_class %}available-cars-page{% endblock %}
 
 {% block body %}
 
@@ -26,7 +25,7 @@
                                 </div>
                                 <div class="card-body">
                                     <div class="card-body__left">
-                                        <img src="{{ asset('images/' ~ car.image) }}" alt="{{ car.brand }} {{ car.model }}">
+                                        <img src="{{ asset('assets/images/' ~ car.image) }}" alt="{{ car.brand }} {{ car.model }}">
                                     </div>
                                     <div class="card-body__right">
                                         <p>À PARTIR DE</p>
@@ -60,7 +59,7 @@
                     {% set TotalPerDay = car.dayprice * days %}
                     <li class="cars__item">
                         <div class="cars__image">
-                            <img src="{{ asset('images/' ~ car.image) }}" alt="{{ car.brand }} {{ car.model }}">
+                            <img src="{{ asset('assets/images/' ~ car.image) }}" alt="{{ car.brand }} {{ car.model }}">
                         </div>
                         <div class="cars__details">
                             <h1 style="margin-bottom: 25px;">{{ car.brand }} {{ car.model }}</h1>
@@ -69,25 +68,25 @@
                                 <p><i class="ri-palette-line"></i> {{ car.color }}</p>
                                 <p><i class="ri-car-line"></i> {{ car.registration }}</p>
                                 <p style="display:flex; justify-content: start; align-items:center;">
-                                    <img src="{{ asset('images/car.png') }}" alt="moteur" style="width: 0.9em; height: 0.9em; margin-right: 10px;">
+                                    <img src="{{ asset('assets/images/car.png') }}" alt="moteur" style="width: 0.9em; height: 0.9em; margin-right: 10px;">
                                     {{ car.nbofcardoors }} portes
                                 </p>
                                 <p><i class="ri-user-line"></i> {{ car.nbofpersons }} personnes</p>
                             </div>
                             <div class="cars__details1">
-                                {% if car.isAirconditionner %}
+                                {% if car.airconditionnerStatus %}
                                     <p><i class="fa-solid fa-snowflake"></i> Climatisation</p>
                                 {% endif %}
                                 <p style="display:flex; justify-content: start; align-items:center;">
-                                    <img src="{{ asset('images/gear.png') }}" alt="moteur" style="width: 1em; height: 1em; margin-right: 10px;">
+                                    <img src="{{ asset('assets/images/gear.png') }}" alt="moteur" style="width: 1em; height: 1em; margin-right: 10px;">
                                     {{ car.gearbox }}
                                 </p>
                                 <p style="display:flex; justify-content: start; align-items:center;">
-                                    <img src="{{ asset('images/engine.png') }}" alt="moteur" style="width: 1.3em; height: 1.3em; margin-right: 10px;">
+                                    <img src="{{ asset('assets/images/engine.png') }}" alt="moteur" style="width: 1.3em; height: 1.3em; margin-right: 10px;">
                                     {{ car.horsepower }} CV
                                 </p>
                                 <p><i class="ri-cloud-line"></i> CO2: {{ car.co2emissions }} g/km</p>
-                                {% if car.isElectric %}
+                                {% if car.electricStatus %}
                                     <p class="isElec"><i style="color:#fff;" class="ri-flashlight-line"></i> Électrique</p>
                                 {% endif %}
                             </div>

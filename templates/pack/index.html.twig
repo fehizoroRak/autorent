@@ -2,21 +2,28 @@
 
 {% block title %}Pack | Options{% endblock %}
 
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('assets/css/pack.css') }}">
+{% endblock %}
+
 {% block body %}
+
 
 {% include '_partials/header_steps.html.twig' %}
 <div class="pack_title">
     <div style="width:80%; margin: 0 auto; display:flex; justify-content: space-between; align-items: center; padding: 4px 0;">
-        <h5>Choisissez votre protection et vos options///////// {{ app.session.get('paymentMethod') }}</h5>
+        <h5>Choisissez votre protection et vos options </h5>
 
         <div style=" display:flex; justify-content: space-between;gap:20px;">
             <div>
                 <p style="font-size:1rem;">TOTAL</p>
                 <p id="total-price-2" style="font-size:1.8rem; font-weight:bold;">{{ total }} €</p>
+                <p style="font-size:0.8rem;">Payé en :  <b>{{ app.session.get('paymentMethod') }}</b>  </p>
                 <input type="hidden" id="initial-total" value="{{ total }}">
                 <input type="hidden" id="hidden-total" value="{{ total }}">
             </div>
-            <form id="confirm-form" action="{{ path('app_reservation_confirm') }}" method="POST">
+            <form id="confirm-form" style="display: flex;justify-content: center;align-items: center;" action="{{ path('app_reservation_confirm') }}" method="POST">
                 <input type="hidden" name="total_price" id="total-price">
                 <input type="hidden" name="total" id="final-total">
                 <input type="hidden" name="pack_id" id="selected-pack-id">
@@ -29,7 +36,7 @@
                 <input type="hidden" name="user_id" value="{{ user.id }}">
                 <input type="hidden" name="selected_options_count" id="selected-options-count">
                 <input type="hidden" name="selected_options_total" id="selected-options-total">
-                <button type="submit" style="background-color:#fe5b3e; height:100%; border-radius:8px;padding: 10px; font-size: 1.3rem; text-decoration: none; color:black; font-weight:bold; display:flex; justify-content:center; align-items:center;">
+                <button type="submit" id="btn-valider">
                     Valider
                 </button>
             </form>
@@ -102,7 +109,7 @@
         <div class="option-card" data-price="{{ option.price }}" data-id="{{ option.id }}">
             <div class="added-label">Ajouté</div>
             <div class="option-image">
-                <img src="{{ asset('images/options/' ~ option.image) }}" alt="{{ option.name }}">
+                <img src="{{ asset('assets/images/options/' ~ option.image) }}" alt="{{ option.name }}">
                 <h3>{{ option.name }}</h3>
             </div>
             <div class="option-description">
@@ -116,236 +123,38 @@
 
 </div>
 
-<style>
-.ri-star-fill{
-    height: 10px;
-    width: 20px;
-    font-size: 1.1rem;
-}
-.pack_title {
-    position: fixed;
-    background:#ffffff;
-    width:100%;
-    top:32px;
-    left:0;
-    font-size: 2.2rem;
-    margin-top:150px;
-    border-bottom: 1px solid #f3f3f3;
-    z-index: 99999;
-}
-.packages {
-    display: flex;
-    justify-content: space-between;
-    flex-wrap: wrap;
-}
-.package {
-    background: white;
-    border: 1px solid #e5e5e5;
-    padding: 20px;
-    width: 32%;
-    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-    transition: transform 0.3s ease;
-    border-radius: 10px;
-    cursor: pointer;
-    position: relative;
-}
-.package.default-selected {
-    border: 2px solid #fe5b3e;
-    box-shadow: 0 4px 12px rgba(254, 91, 62, 0.5);
-}
-.package h1 {
-    color:#fe5b3e;
-    font-weight: bold; 
-}
-.package .franchise {
-    margin:10px 0 30px 0;
-}
-.package .price {
-    padding-bottom: 40px;
-    border-bottom: 1px solid #e5e5e5;
-}
-.franchise, .price {
-    color: #555;
-    font-weight: bold;
-}
-.includes {
-    list-style: none;
-    padding: 0;
-    margin-bottom:60px;
-}
-.includes li {
-    padding: 5px;
-    margin-bottom:10px;
-}
-.not-included {
-    color: #999;
-}
-button, .btn.btn-primary {
-    background-color: #fe5b3e;
-    color: white;
-    border: none;
-    padding: 15px 20px;
-    cursor: pointer;
-    width: 100%;
-    box-sizing: border-box;
-    border-radius:10px;
-    font-size: 1.2rem;
-}
-button:hover, .btn.btn-primary:hover {
-    opacity:0.9;
-}
-
-button.disabled, .btn.btn-primary.disabled {
-    background-color: #cccccc;
-    cursor: not-allowed;
-    opacity: 0.7;
-}
-
-button.disabled_retirer, .btn.btn-primary.disabled_retirer {
-    background-color: #cccccc;
-    opacity: 0.7;
-}
-
-.options-container {
-    display: flex;
-    justify-content: space-between;
-    flex-wrap: wrap;
-} 
-.option-card {
-    background: #fff;
-    border: 1px solid #e5e5e5;
-    padding: 20px;
-    width: 270px;
-    border-radius: 10px;
-    position: relative;
-}
-.option-image{
-    display: flex;
-    gap: 15px;
-}
-.option-image img {
-    width: 30%;
-    height: 30%;
-    border-radius: 5px;
-}
-.option-image p {
-    font-size: 1.4rem;
-    font-weight: bold;
-}
-.option-description  {
-    margin-top: 40px;
-}
-.option-description p {
-    font-size: 16px;
-    color: #666;
-}
-.price {
-    font-size: 1.5rem;
-    font-weight: bold;
-    margin: 15px 0;
-}
-.add-button {
-    width: 100%;
-    padding: 10px;
-    background-color: #fe5b3e;
-    border: none;
-    color: white;
-    cursor: pointer;
-    margin-top: 10px;
-    border-radius: 10px;
-    font-size: 1.2rem;
-}
-.add-button:hover {
-    background-color: #e04a2f;
-}
-
-.step-3 {
-    font-size: 0.9rem;
-    width: 25%;
-    padding: 10px;
-    border: 1px solid #fe5b3e;
-    background-color: #fff;
-    border-radius: 8px;
-}
-.step-number-3 {
-    background-color: #fe5b3e;
-    color: #fff;
-padding: 5px;
-    border-radius: 10px 0 10px 0;
-    width: 25px;
-    height: 25px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-size: 1rem;
-}
-.title-3{
-    color:#fe5b3e;
-}
-/* Responsive adjustments */
-@media (max-width: 1024px) {
-    .packages, .options-container {
-        flex-wrap: wrap;
-        justify-content: space-around;
-    }
-    .package, .option-card {
-        width: 48%;
-        margin-bottom: 20px;
-    }
-}
-@media (max-width: 768px) {
-    .packages, .options-container {
-        flex-direction: row;
-    }
-    .package, .option-card {
-        width: 48%;
-    }
-}
-@media (max-width: 672px) {
-    .packages, .options-container {
-        flex-direction: column;
-        align-items: center;
-    }
-    .package, .option-card {
-        width: 90%;
-    }
-}
-@media (min-width: 672px) and (max-width: 1024px) {
-    .packages, .options-container {
-        flex-direction: row;
-        justify-content: space-between;
-    }
-    .package, .option-card {
-        width: 48%;
-    }
-}
-.package.selected, .option-card.selected {
-    border: 2px solid #fe5b3e;
-    box-shadow: 0 4px 12px rgba(254, 91, 62, 0.5);
-}
-.selected-label, .added-label {
-    display: none;
-    position: absolute;
-    top: -10px;
-    left: 10px;
-    background-color: #fe5b3e;
-    color: white;
-    padding: 5px 10px;
-    border-radius: 5px;
-    font-size: 0.9rem;
-    font-weight: bold;
-}
-.package.selected .selected-label, .option-card.selected .added-label {
-    display: block;
-}
-</style>
+    <style>
+        .step-3 {
+            font-size: 0.9rem;
+            width: 25%;
+            padding: 10px;
+            border: 1px solid #fe5b3e;
+            background-color: #fff;
+            border-radius: 8px;
+        }
+        .step-number-3 {
+            background-color: #fe5b3e;
+            color: #fff;
+            padding: 5px;
+            border-radius: 10px 0 10px 0;
+            width: 25px;
+            height: 25px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 1rem;
+        }
+        .title-3 {
+            color: #fe5b3e;
+        }
+    </style>
 
 <script>
 document.addEventListener("DOMContentLoaded", function() {
     const packages = document.querySelectorAll('.package');
     const defaultPackage = document.querySelector('.package.default-selected');
     let selectedPackage = defaultPackage;
-    let total = parseFloat(document.getElementById('initial-total').value);
+    let total = parseFloat(document.getElementById('initial-total').value) || 0;
     const days = {{ app.session.get('days') }};
 
     if (defaultPackage) {
@@ -370,19 +179,19 @@ document.addEventListener("DOMContentLoaded", function() {
         button.disabled = true;
         selectedPackage = package;
 
-        const packagePrice = parseFloat(package.getAttribute('data-price'));
+        const packagePrice = parseFloat(package.getAttribute('data-price')) || 0;
         const totalElement1 = document.getElementById('total-price-1');
         const totalElement2 = document.getElementById('total-price-2');
         const hiddenTotalElement = document.getElementById('hidden-total');
-        const initialTotal = parseFloat(document.getElementById('initial-total').value);
+        const initialTotal = parseFloat(document.getElementById('initial-total').value) || 0;
 
         let optionsTotal = 0;
         document.querySelectorAll('.option-card.selected').forEach(option => {
-            optionsTotal += parseFloat(option.getAttribute('data-price'));
+            optionsTotal += parseFloat(option.getAttribute('data-price')) || 0;
         });
 
         total = initialTotal + (packagePrice * days) + optionsTotal;
-        hiddenTotalElement.value = total;
+        hiddenTotalElement.value = total.toFixed(2);
         if (totalElement1) {
             totalElement1.textContent = total.toFixed(2) + ' €';
         }
@@ -394,10 +203,10 @@ document.addEventListener("DOMContentLoaded", function() {
             selectedPackDetails.innerHTML = `<h4>${packName}</h4><div>${packagePrice === 0 ? 'Inclus' : (packagePrice * days).toFixed(2) + ' €'}</div>`;
         }
 
-        document.getElementById('final-total').value = total;
+        document.getElementById('final-total').value = total.toFixed(2);
         document.getElementById('selected-pack-id').value = package.getAttribute('data-id');
         document.getElementById('selected-pack-name').value = packName;
-        document.getElementById('selected-pack-price').value = packagePrice;
+        document.getElementById('selected-pack-price').value = packagePrice.toFixed(2);
 
         updateOptionsDetails();
     }
@@ -407,7 +216,7 @@ document.addEventListener("DOMContentLoaded", function() {
         const totalElement1 = document.getElementById('total-price-1');
         const totalElement2 = document.getElementById('total-price-2');
         const hiddenTotalElement = document.getElementById('hidden-total');
-        let currentTotal = parseFloat(hiddenTotalElement.value);
+        let currentTotal = parseFloat(hiddenTotalElement.value) || 0;
 
         if (optionCard.classList.contains('selected')) {
             optionCard.classList.remove('selected');
@@ -421,13 +230,13 @@ document.addEventListener("DOMContentLoaded", function() {
             currentTotal += price;
         }
 
-        hiddenTotalElement.value = currentTotal;
+        hiddenTotalElement.value = currentTotal.toFixed(2);
         if (totalElement1) {
             totalElement1.textContent = currentTotal.toFixed(2) + ' €';
         }
         totalElement2.textContent = currentTotal.toFixed(2) + ' €';
 
-        document.getElementById('final-total').value = currentTotal;
+        document.getElementById('final-total').value = currentTotal.toFixed(2);
         document.getElementById('selected-option-ids').value = Array.from(document.querySelectorAll('.option-card.selected'))
             .map(option => option.getAttribute('data-id'))
             .join(',');
@@ -442,7 +251,7 @@ document.addEventListener("DOMContentLoaded", function() {
     function updateOptionsTotal() {
         let optionsTotal = 0;
         document.querySelectorAll('.option-card.selected').forEach(option => {
-            optionsTotal += parseFloat(option.getAttribute('data-price'));
+            optionsTotal += parseFloat(option.getAttribute('data-price')) || 0;
         });
 
         document.getElementById('selected-options-total-price').value = optionsTotal.toFixed(2);
@@ -455,7 +264,7 @@ document.addEventListener("DOMContentLoaded", function() {
         const selectedOptionsDetails = document.getElementById('selected-options-details');
         let optionsTotal = 0;
         selectedOptions.forEach(option => {
-            optionsTotal += parseFloat(option.getAttribute('data-price'));
+            optionsTotal += parseFloat(option.getAttribute('data-price')) || 0;
         });
         if (selectedOptionsDetails) {
             selectedOptionsDetails.innerHTML = `<h4>${selectedOptions.length} option${selectedOptions.length > 1 ? 's' : ''}</h4><div>${optionsTotal.toFixed(2)} &euro;</div>`;
@@ -469,13 +278,15 @@ document.addEventListener("DOMContentLoaded", function() {
     });
 
     document.querySelectorAll('.option-card .add-btn').forEach(button => {
-        const price = parseFloat(button.closest('.option-card').getAttribute('data-price'));
+        const price = parseFloat(button.closest('.option-card').getAttribute('data-price')) || 0;
         button.addEventListener('click', function() {
             toggleOption(this, price);
         });
     });
 });
 </script>
+
+
 
 {% include '_partials/footer.html.twig' %}
 

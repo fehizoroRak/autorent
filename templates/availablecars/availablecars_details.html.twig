@@ -1,51 +1,14 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Cars | Details
+{% block title %} Véhicules | Details {% endblock %}
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('assets/css/availablecars_details.css') }}">
 {% endblock %}
 
 {% block body %}
 
 	{% include '_partials/header_steps.html.twig' %}
-	<style>
-
-		.content {
-			background-color: #fefefe;
-			gap: 10px;
-			width: 80%;
-			display: flex;
-			border-radius: 10px;
-			margin: 50px auto;
-		}
-		.btn-select-agency {
-			width: 100%;
-			background-color: #fff;
-			border-radius: 10px;
-			height: 45px;
-			display: flex;
-			justify-content: center;
-			align-items: center;
-			color: #474fa0;
-			border: 1px solid #474fa0;
-			font-size: 1.2rem;
-		}
-		.btn-select-online {
-			width: 100%;
-			background-color: #fe5b3e;
-			border-radius: 10px;
-			height: 45px;
-			display: flex;
-			justify-content: center;
-			align-items: center;
-			color: #fff;
-		}
-		.btn-select-online:hover {
-			background-color: #474fa0;
-		}
-		.btn-select-agency:hover {
-			border: 2px solid #474fa0;
-			font-size: 1.3rem;
-		}
-	</style>
 
 	<h1 style="margin: 200px auto 50px auto; width: 80%; ">Choisissez le tarif qui vous convient</h1>
 	<div class="content">
@@ -60,7 +23,7 @@
 					<i class="ri-information-line info-icon"></i>
 					<span class="tooltip">Selon la disponibilité dans notre agence, un autre modèle de la même catégorie pourra vous être proposé.</span>
 				</span>
-				<img src="{{ asset('images/' ~ car.image) }}" alt="{{ car.brand }} {{ car.model }}">
+				<img src="{{ asset('assets/images/' ~ car.image) }}" alt="{{ car.brand }} {{ car.model }}">
 			</div>
 
 
@@ -79,7 +42,7 @@
 							<i class="ri-car-line"></i>
 							{{ car.registration }}</p>
 						<p style="display:flex; justify-content: start; align-items:center;">
-							<img src="{{ asset('images/car.png') }}" alt="moteur" style="width: 0.9em; height: 0.9em; margin-right: 10px;">
+							<img src="{{ asset('assets/images/car.png') }}" alt="moteur" style="width: 0.9em; height: 0.9em; margin-right: 10px;">
 							{{ car.nbofcardoors }}
 							portes
 						</p>
@@ -89,17 +52,17 @@
 							personnes</p>
 					</div>
 					<div class="cars__details1" style="line-height: 35px; ">
-						{% if car.isAirconditionner %}
+						{% if car.airconditionnerStatus %}
 							<p>
 								<i class="fa-solid fa-snowflake"></i>
 								Climatisation</p>
 						{% endif %}
 						<p style="display:flex; justify-content: start; align-items:center;">
-							<img src="{{ asset('images/gear.png') }}" alt="moteur" style="width: 1em; height: 1em; margin-right: 10px;">
+							<img src="{{ asset('assets/images/gear.png') }}" alt="moteur" style="width: 1em; height: 1em; margin-right: 10px;">
 							{{ car.gearbox }}
 						</p>
 						<p style="display:flex; justify-content: start; align-items:center;">
-							<img src="{{ asset('images/engine.png') }}" alt="moteur" style="width: 1.3em; height: 1.3em; margin-right: 10px;">
+							<img src="{{ asset('assets/images/engine.png') }}" alt="moteur" style="width: 1.3em; height: 1.3em; margin-right: 10px;">
 							{{ car.horsepower }}
 							CV
 						</p>
@@ -108,7 +71,7 @@
 							CO2:
 							{{ car.co2emissions }}
 							g/km</p>
-						{% if car.isElectric %}
+						{% if car.electricStatus %}
 							<p class="isElec">
 								<i style="color:#fff;" class="ri-flashlight-line"></i>
 								Électrique</p>
@@ -120,60 +83,68 @@
 
 
 		</div>
-	<div class="options">
+		<div class="options">
 
-<div class="option">
-    <h2 style="margin-top: 43px;">Payer en agence</h2>
-    <p style="margin-top: 20px;">Vous paierez au comptoir le jour de la prise en charge.</p>
-    <p>L'annulation est gratuite 48h avant la date de prise en charge.</p>
-    <div class="cars__price">
-        <p class="small-text" style="margin-top:20px;">À PARTIR DE</p>
-        <p class="price-text" style="font-size:1.5rem;">{{ car.dayprice }} € / jour</p>
-        {% set TotalPerDay = app.session.get('days') * car.dayprice %}
-        <h4 style="color: #919191; margin: 5px 0;">TOTAL
-            <span style="color: #919191; border:none;font-size: 1.3rem;">{{ TotalPerDay }} €</span>
-        </h4>
-        <p style="color:#c3c3c3; font-size:1rem; margin:5px 0 30px 0;">
-            <span style="border:none;font-weight: bold;color: #919191;">
-                {{ app.session.get('days') }} jrs
-            </span> de location
-        </p>
-        
+			<div class="option">
+				<h2 style="margin-top: 43px;">Payer en agence</h2>
+				<p style="margin-top: 20px;">Vous paierez au comptoir le jour de la prise en charge.</p>
+				<p>L'annulation est gratuite 48h avant la date de prise en charge.</p>
+				<div class="cars__price">
+					<p class="small-text" style="margin-top:20px;">À PARTIR DE</p>
+					<p class="price-text" style="font-size:1.5rem;">{{ car.dayprice }}
+						€ / jour</p>
+					{% set TotalPerDay = app.session.get('days') * car.dayprice %}
+					<h4 style="color: #919191; margin: 5px 0;">TOTAL
+						<span style="color: #919191; border:none;font-size: 1.3rem;">{{ TotalPerDay }}
+							€</span>
+					</h4>
+					<p style="color:#c3c3c3; font-size:1rem; margin:5px 0 30px 0;">
+						<span style="border:none;font-weight: bold;color: #919191;">
+							{{ app.session.get('days') }}
+							jrs
+						</span>
+						de location
+					</p>
 
-<a href="{{ path('app_redirect', { '_target_path': path('app_pack'), id: car.id, total: TotalPerDay, paymentMethod: 'en agence' }) }}" class="btn-select-agency">
-    <div class="btn-select-agency">
-        Sélectionner
-    </div>
-</a>
-    </div>
-</div>
-<div class="option online">
-    <span>Économisez 9 %</span>
-    <h2 style="margin-top: 25px;">Payer en ligne</h2>
-    <p style="margin-top: 20px;">Votre carte de crédit sera débitée une fois la réservation terminée.</p>
-    <p>L'annulation est gratuite 48h avant la date de prise en charge.</p>
-    <div class="cars__price">
-        {% set discountedDayPrice = car.dayprice * 0.91 %}
-        {% set discountedTotal = discountedDayPrice * app.session.get('days') %}
-        <p class="small-text" style="margin-top:20px;">À PARTIR DE</p>
-        <p class="price-text" style="font-size:1.5rem;">{{ discountedDayPrice | number_format(2) }} € / jour</p>
-        <h4 style="color: #919191; margin: 5px 0;">TOTAL
-            <span style="color: #919191; border:none;font-size: 1.3rem;">{{ discountedTotal | number_format(2) }} €</span>
-        </h4>
-        <p style="color:#c3c3c3; font-size:1rem; margin:5px 0 30px 0;">
-            <span style="border:none;font-weight: bold;color: #919191;">
-                {{ app.session.get('days') }} jrs
-            </span> de location
-        </p>
 
-<a href="{{ path('app_redirect', { '_target_path': path('app_pack'), id: car.id, total: discountedTotal | number_format(2, '.', ''), paymentMethod: 'en ligne' }) }}" class="btn-select-online">
-    <div class="btn-select-online">
-        Sélectionner
-    </div>
-</a>
-    </div>
-</div>
-</div>
+					<a href="{{ path('app_redirect', { '_target_path': path('app_pack'), id: car.id, total: TotalPerDay, paymentMethod: 'en agence' }) }}" class="btn-select-agency">
+						<div class="btn-select-agency">
+							Sélectionner
+						</div>
+					</a>
+				</div>
+			</div>
+			<div class="option online">
+				<span>Économisez 9 %</span>
+				<h2 style="margin-top: 25px;">Payer en ligne</h2>
+				<p style="margin-top: 20px;">Votre carte de crédit sera débitée une fois la réservation terminée.</p>
+				<p>L'annulation est gratuite 48h avant la date de prise en charge.</p>
+				<div class="cars__price">
+					{% set discountedDayPrice = car.dayprice * 0.91 %}
+					{% set discountedTotal = discountedDayPrice * app.session.get('days') %}
+					<p class="small-text" style="margin-top:20px;">À PARTIR DE</p>
+					<p class="price-text" style="font-size:1.5rem;">{{ discountedDayPrice | number_format(2) }}
+						€ / jour</p>
+					<h4 style="color: #919191; margin: 5px 0;">TOTAL
+						<span style="color: #919191; border:none;font-size: 1.3rem;">{{ discountedTotal | number_format(2) }}
+							€</span>
+					</h4>
+					<p style="color:#c3c3c3; font-size:1rem; margin:5px 0 30px 0;">
+						<span style="border:none;font-weight: bold;color: #919191;">
+							{{ app.session.get('days') }}
+							jrs
+						</span>
+						de location
+					</p>
+
+					<a href="{{ path('app_redirect', { '_target_path': path('app_pack'), id: car.id, total: discountedTotal | number_format(2, '.', ''), paymentMethod: 'en ligne' }) }}" class="btn-select-online">
+						<div class="btn-select-online">
+							Sélectionner
+						</div>
+					</a>
+				</div>
+			</div>
+		</div>
 
 
 	</div>

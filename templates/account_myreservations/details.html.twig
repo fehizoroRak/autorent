@@ -1,0 +1,353 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Détails de la réservation{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+<link rel="stylesheet" href="{{ asset('assets/css/acc_myreservations_details.css') }}">{% endblock %}
+
+{% block body %}
+	{% include '_partials/header_connected.html.twig' %}
+
+	<div class="container">
+		<header>
+			<div class="navbar">
+				<h1>AutoRent</h1>
+				<div class="user-profile">
+					<i style="margin-right: 15px;" class="fa-solid fa-user"></i>
+					<span>{{ app.user.username }}</span>
+				</div>
+			</div>
+			<nav>
+				<ul>
+					<li> <a href="{{path('app_myaccount')}}">RÉSERVATIONS</a> </li>
+					<li> <a href="{{path('app_account')}}">COMPTE</a> </li>
+					<li> <a href="{{path('account_password')}}">MOT DE PASSE</a> </li>
+				</ul>
+			</nav>
+		</header>
+		<main style="width: 71%; margin: 0 auto;">
+			<h1 style="margin-top:60px;">Réservation n° :
+				{{ location.rentalNumber }}</h1>
+
+			<h3 style="display: inline-block;padding: 10px 20px;font-size: 1.2em;font-weight: bold;color: #fff;background-color: {% if location.paymentMethod == 'en ligne' %}#007bff{% else %}#28a745{% endif %};border-radius: 10px;box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);margin: 20px 0;">
+				Paiement
+				{{ location.paymentMethod }}
+			</h3>
+
+			<h2 style="margin-top:20px;">{{ location.user.name }}
+				{{ location.user.firstname }}</h2>
+			<p>{{ location.user.address }}</p>
+			<p>{{ location.user.email }}</p>
+			<p>{{ location.user.phonenumber }}</p>
+
+			<div class="">
+				<section class="">
+					<div style="margin-top:25px; display: flex; justify-content: space-between; padding-bottom: 10px; border-bottom: 1px solid #dfdfdf;">
+						<h3>Statut</h3>
+						<div style="display: flex; align-items: center; gap: 10px;">
+							{% for status in location.statuses %}
+								{% set step = loop.index %}
+								<div style="display: flex; flex-direction: column; align-items: center;">
+									<h3 style="padding:8px; border-radius: 8px; color:white; background-color: {{ status.color }};">
+										<div style="background-color: white; color: black; border-radius: 50%; width: 30px; height: 30px; display: flex; align-items: center; justify-content: center; font-weight: bold; margin: 5px auto;">
+											{{ step }}
+										</div>
+										{% if status.name == 'Pending' %}
+											En attente
+										{% elseif status.name == 'Confirmed' %}
+											Confirmée
+										{% elseif status.name == 'Cancelled' %}
+											Annulée
+										{% elseif status.name == 'Active' %}
+											Active
+										{% elseif status.name == 'Completed' %}
+											Terminée
+										{% elseif status.name == 'Overdue' %}
+											En retard
+										{% else %}
+											{{ status.name }}
+										{% endif %}
+									</h3>
+								</div>
+								{% if not loop.last %}
+									<span>
+										————————
+									</span>
+								{% endif %}
+							{% endfor %}
+						</div>
+					</div>
+
+					<div style="display: flex; justify-content:flex-start; align-items: center; gap: 25px;">
+						<img style="width: 25%;" src="{{ asset('assets/images/' ~ location.car.image) }}" alt="{{ location.car.brand }} {{ location.car.model }}">
+						<h2>{{ location.car.brand }}
+							{{ location.car.model }}<br></h2>
+					</div>
+
+					<ul style="list-style: none;padding: 0;margin-bottom: 1rem;">
+						<li style="display: flex;align-items: center;justify-content: space-between;margin-bottom: 1rem;}">
+							<div class="cars__details">
+								<div class="cars__details1">
+									<p>
+										<i class="ri-calendar-line"></i>
+										{{ location.car.year }}</p>
+									<p>
+										<i class="ri-palette-line"></i>
+										{{ location.car.color }}</p>
+									<p>
+										<i class="ri-car-line"></i>
+										{{ location.car.registration }}</p>
+									<p style="display:flex; justify-content: start; align-items:center;">
+										<img src="{{ asset('assets/images/car.png') }}" alt="moteur" style="width: 0.9em; height: 0.9em; margin: 10px 8px 10px 10px;">
+										{{ location.car.nbofcardoors }}
+										portes
+									</p>
+									<p>
+										<i class="ri-user-line"></i>
+										{{ location.car.nbofpersons }}
+										personnes</p>
+								</div>
+								<div class="cars__details1">
+									{% if location.car.airconditionnerStatus %}
+										<p>
+											<i class="fa-solid fa-snowflake"></i>
+											Climatisation</p>
+									{% endif %}
+									<p style="display:flex; justify-content: start; align-items:center;">
+										<img src="{{ asset('assets/images/gear.png') }}" alt="moteur" style="width: 1em; height: 1em; margin: 10px 8px 10px 10px;">
+										{{ location.car.gearbox }}
+									</p>
+									<p style="display:flex; justify-content: start; align-items:center;">
+										<img src="{{ asset('assets/images/engine.png') }}" alt="moteur" style="width: 1.3em; height: 1.3em; margin: 10px 8px 10px 10px;">
+										{{ location.car.horsepower }}
+										CV
+									</p>
+									<p>
+										<i class="ri-cloud-line"></i>
+										CO2:
+										{{ location.car.co2emissions }}
+										g/km</p>
+									{% if location.car.electricStatus %}
+										<p class="isElec">
+											<i style="color:#fff;" class="ri-flashlight-line"></i>
+											Électrique</p>
+									{% endif %}
+								</div>
+							</div>
+						</li>
+					</ul>
+
+					<div style="margin: 25px 0; display: flex; justify-content: space-between; padding-bottom: 10px; border-bottom: 1px solid #dfdfdf;">
+						<h2>Tarif de base pour
+							{{ location.numberOfDays }}
+							jours</h2>
+						<h2>{{ location.totalPerDay }}
+							€</h2>
+					</div>
+
+					<section style="margin: 20px 0;">
+						<div style="width:100%; background: #f7f7f7; padding: 20px 10px; border-radius:10px 10px 0 0; border-bottom: 1px solid #dfdfdf;">
+							<p style="font-weight:bold;">Départ</p>
+							<p style="font-weight:bold;font-size: 1.2rem;">{{ location.pickupLocation.name }}</p>
+							<p>{{ location.startdate|date('d/m/Y') }}
+								|
+								{{ location.starttime|date('H:i') }}</p>
+						</div>
+						<div style="width:100%; background: #f7f7f7; padding: 20px 10px; border-radius:0 0 10px 10px;">
+							<p style="font-weight:bold;">Retour</p>
+							<p style="font-weight:bold;font-size: 1.2rem;">{{ location.dropOffLocation.name }}</p>
+							<p>{{ location.enddate|date('d/m/Y') }}
+								|
+								{{ location.endtime|date('H:i') }}</p>
+						</div>
+					</section>
+
+					<div style="margin: 25px 0; display: flex; justify-content: space-between; padding-bottom: 10px; border-bottom: 1px solid #dfdfdf;">
+						<h2>Protections & Options</h2>
+						<h2>{{ location.packTotalPrice + location.optionsTotalPrice }}
+							€</h2>
+					</div>
+
+					<h3 style="margin-top:20px;">{{ location.pack.name }}</h3>
+
+					<div style="display: flex; justify-content: space-between; padding-bottom: 10px;">
+						<p>Pour
+							{{ location.numberOfDays }}
+							jours</p>
+						<p>{{ location.packTotalPrice }}
+							€</p>
+					</div>
+
+					{% if location.options is not empty %}
+						<h3 style="margin-top:20px;">Options</h3>
+						<ul>
+							{% for option in location.options %}
+								<li style="margin:10px 0px;">{{ option.name }}
+									|
+									{{ option.price }}
+									€</li>
+							{% endfor %}
+						</ul>
+						<div style="display: flex; justify-content: space-between; padding-bottom: 10px;">
+							<p>Pour
+								{{ location.numberOfDays }}
+								jours</p>
+							<p>{{ location.optionsTotalPrice }}
+								€</p>
+						</div>
+					{% endif %}
+
+					<div style="margin: 20px 0; display: flex; justify-content: space-between; padding-bottom: 10px; border-top: 1px solid #dfdfdf;">
+						<h2 style="margin-top: 20px;">Total:</h2>
+						<h2 style="margin-top: 20px;">{{ location.totalamount }}
+							€</h2>
+					</div>
+				</section>
+
+				{% if location.statuses|last.name == 'Confirmed' and not location.paid %}
+					<h3 style="display: inline-block;padding: 10px 20px;font-size: 1.2em;font-weight: bold;color: #fff;background-color: #28a745;border-radius: 10px;box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);margin: 20px 0;">
+						RÉSERVATION CONFIRMÉE, RÈGLEMENT EN AGENCE
+					</h3>
+				{% elseif location.statuses|last.name == 'Confirmed' %}
+					<h3 style="display: inline-block;padding: 10px 20px;font-size: 1.2em;font-weight: bold;color: #fff;background-color: #28a745;border-radius: 10px;box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);margin: 20px 0;">
+						PAYÉ
+					</h3>
+				{% elseif location.paymentMethod == 'en agence' %}
+					<form id="confirm-agency-form" action="{{ path('confirm_agency_payment') }}" method="POST" onsubmit="return processAgencyPayment();">
+						<input type="hidden" name="location_id" value="{{ location.id }}">
+						<input type="hidden" name="amount" value="{{ location.totalamount }}">
+						<button type="submit" class="pay-btn">CONFIRMER LE PAIEMENT EN AGENCE</button>
+					</form>
+				{% else %}
+
+					<form id="payment-form" action="{{ path('payment_process') }}" method="POST" onsubmit="return processPayment()">
+						<div class="payment-container">
+							<div class="payment-header">
+								<h2>Informations de paiement</h2>
+								<div class="menu-icon">
+									<div class="menu-line"></div>
+									<div class="menu-line"></div>
+									<div class="menu-line"></div>
+								</div>
+							</div>
+							<div class="payment-tabs">
+								<div class="tab active" data-tab="credit-card">
+									<img src="https://img.icons8.com/ios-filled/50/000000/bank-card-back-side.png" alt="Credit Card" class="tab-icon">
+									Carte bleue
+								</div>
+								<div class="tab" data-tab="paypal">
+									<img src="https://img.icons8.com/color/48/000000/paypal.png" alt="PayPal" class="tab-icon">
+									PayPal
+								</div>
+								<div class="tab" data-tab="cash">
+									<img src="https://img.icons8.com/ios-filled/50/000000/money.png" alt="Cash" class="tab-icon">
+									Espèces
+								</div>
+								<div class="tab" data-tab="bank-transfer">
+									<img src="https://img.icons8.com/ios-filled/50/000000/bank-building.png" alt="Bank Transfer" class="tab-icon">
+									Virement bancaire
+								</div>
+							</div>
+							<input type="hidden" name="location_id" value="{{ location.id }}">
+							<input type="hidden" name="amount" value="{{ location.totalamount }}">
+							<input type="hidden" name="payment_mode" id="payment_mode" value="credit-card">
+							<!-- Default payment mode -->
+
+							<!-- Credit Card Form -->
+								<div class="payment-method" id="credit-card"> <div class="card-details">
+									<label for="card-number">N° carte bleue</label>
+									<input class="details_input" type="text" id="card-number" maxlength="16" placeholder="1234 5678 9012 3456">
+									<span id="card-number-error" class="error-message"></span>
+								</div>
+								<div class="card-info">
+									<div class="info-group">
+										<label for="expiration-date">Date d'expiration</label>
+										<input class="details_input" type="text" id="expiration-date" maxlength="5" placeholder="MM/YY">
+										<span id="expiration-date-error" class="error-message"></span>
+									</div>
+									<div class="info-group">
+										<label for="cvv">CVV</label>
+										<input class="details_input" type="text" id="cvv" maxlength="3" placeholder="123">
+										<span id="cvv-error" class="error-message"></span>
+									</div>
+								</div>
+								<div class="cardholder">
+									<label for="cardholder-name">NOM</label>
+									<input class="details_input" type="text" id="cardholder-name" placeholder="John Doe">
+									<span id="cardholder-name-error" class="error-message"></span>
+								</div>
+							</div>
+
+							<!-- PayPal Form -->
+							<div class="payment-method" id="paypal" style="display: none;">
+								<div class="card-details">
+									<label for="paypal-email">Email</label>
+									<input class="details_input" type="email" id="paypal-email" placeholder="example@mail.com">
+									<span id="paypal-email-error" class="error-message"></span>
+								</div>
+								<div class="cardholder">
+									<label for="paypal-password">Mot de passe</label>
+									<input class="details_input" type="password" id="paypal-password" placeholder="••••••••">
+									<span id="paypal-password-error" class="error-message"></span>
+								</div>
+							</div>
+
+							<!-- Cash Content -->
+							<div class="payment-method" id="cash" style="display: none;">
+								<p>Vous pouvez payer en espèces au moment de la livraison ou à notre bureau. Veuillez vous assurer d'avoir le montant exact, car la monnaie pourrait ne pas être disponible.</p>
+							</div>
+
+							<!-- Bank Transfer Form -->
+							<div class="payment-method" id="bank-transfer" style="display: none;">
+								<div class="card-details">
+									<label for="iban">IBAN</label>
+									<input class="details_input" type="text" id="iban" maxlength="16" placeholder="DE00 1234 5678 9012 3456 78">
+									<span id="iban-error" class="error-message"></span>
+								</div>
+								<div class="cardholder">
+									<label for="account-holder">Nom</label>
+									<input class="details_input" type="text" id="account-holder" placeholder="John Doe">
+									<span id="account-holder-error" class="error-message"></span>
+								</div>
+								<div class="cardholder">
+									<label for="bank-name">Banque</label>
+									<input class="details_input" type="text" id="bank-name" placeholder="Your Bank Name">
+									<span id="bank-name-error" class="error-message"></span>
+								</div>
+							</div>
+						</div>
+						<button type="submit" class="pay-btn">Payer maintenant ({{ location.totalamount }}
+							€)</button>
+						<p style="font-size: 0.8rem;">Vos données personnelles sont traitées par AutoRent,999 rue des automobiles, 75001, Paris, France (ci-après dénommé "nous", "notre" ou "nos"), agissant en tant que responsable du traitement, pour gérer votre réservation et votre contrat de location.
+
+							<br>
+							Vos données personnelles pourraient également être traitées pour gérer les paiements en souffrance et les amendes dont vous pourriez être redevable lors de l'utilisation du véhicule de location.
+
+							<br>Vous avez le droit de vous opposer aux communications relatives à votre location en cliquant sur le lien de désinscription présent dans ces communications. Veuillez noter que ce type de communication peut inclure des offres promotionnelles pour des produits et services similaires.
+
+							<br>Vos données personnelles seront divulguées à notre personnel autorisé et pourront être transférées en dehors de l'Union européenne. Si tel est le cas, nous mettons en place des mesures de protection appropriées.
+
+							<br>Vous pouvez exercer vos droits d'accès, de rectification, d'opposition, d'obtention de la "portabilité" de vos données, d'effacement et de limitation du traitement de vos données, en contactant notre délégué à la protection des données à l'adresse suivante : dpo@autorent.com. Pour obtenir plus d'informations sur la manière dont nous traitons vos données personnelles et sur vos droits en vertu de la loi sur la protection des données, veuillez consulter notre Politique de confidentialité.</p>
+
+					</form>
+
+				{% endif %}
+			</div>
+		</main>
+		{% include '_partials/footer.html.twig' %}
+	</div>
+
+	<!-- Loading Spinner -->
+	<div id="loading-spinner" style="display:none;">
+		<div class="spinner"></div>
+		<p>Chargement...</p>
+	</div>
+
+	<!-- Success Message -->
+	<div id="success-message" style="display:none;">
+		<p>Réservation confirmée ! Redirection en cours...</p>
+	</div>
+
+{% endblock %}
+

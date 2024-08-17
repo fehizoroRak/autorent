@@ -229,12 +229,12 @@ class Car
         return $this;
     }
 
-    public function isAirconditionner(): ?bool
+    public function getAirconditionnerStatus(): ?bool
     {
         return $this->isAirconditionner;
     }
 
-    public function setAirconditionner(bool $isAirconditionner): static
+    public function setAirconditionnerStatus(bool $isAirconditionner): static
     {
         $this->isAirconditionner = $isAirconditionner;
 
@@ -277,27 +277,31 @@ class Car
         return $this;
     }
 
-    public function isElectric(): ?bool
+    public function getElectricStatus(): ?bool
     {
         return $this->isElectric;
     }
-
-    public function setElectric(bool $isElectric): static
+    
+    public function setElectricStatus(?bool $isElectric): self
     {
         $this->isElectric = $isElectric;
-
         return $this;
     }
 
-    public function isRecommended(): ?bool
+    public function getRecommendedStatus(): ?bool
     {
         return $this->isRecommended;
     }
 
-    public function setRecommended(?bool $isRecommended): static
+    public function setRecommendedStatus(?bool $isRecommended): static
     {
         $this->isRecommended = $isRecommended;
 
         return $this;
+    }
+    public function __toString(): string
+    {
+   
+        return $this->getBrand() . ' ' . $this->getModel(); 
     }
 }

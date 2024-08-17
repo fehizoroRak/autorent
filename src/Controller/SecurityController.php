@@ -90,31 +90,20 @@ class SecurityController extends AbstractController
         $session->set('new_session', true); // Indique que la session est nouvelle
     }
 
-
-  
-        if ($user) {
+    if ($user) {
             if ($targetPath === $this->generateUrl('app_pack')) {
                 $carId = $request->query->get('id');
                 $total = $request->query->get('total');
                 return $this->redirectToRoute('app_pack', ['id' => $carId, 'total' => $total]);
             }
             return $this->redirectToRoute('app_myaccount');
-        }
+    }
 
         return $this->redirectToRoute('app_login', ['_target_path' => $targetPath, 'id' => $carId, 'total' => $total, 'paymentMethod' => $paymentMethod ]);
     }
 
 
-    // #[Route('/total/session', name: 'app_toal_session_data')]
-    // public function getSessionData(SessionInterface $session): JsonResponse
-    // {
 
-    //     $data_total = [
-    //         'total_session' => $session->get('total_session'),
-    //     ];
-
-    //     return new JsonResponse($data_total);
-    // }
 
     #[Route('/register', name: 'app_register')]
     public function register(CarRepository $carRepository, Request $request, EntityManagerInterface $entityManager, UserPasswordHasherInterface $passwordHasher): Response

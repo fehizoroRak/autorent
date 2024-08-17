@@ -1,11 +1,15 @@
-{# pack/index.html.twig #}
+
+	{% block stylesheets %}
+		<link rel="stylesheet" href="{{ asset('assets/css/header_steps.css') }}">
+	{% endblock %}
+
 
 <div id="header" style="position:fixed;background-color:#f7f7f7;z-index: 99999;width:100%;top: 0;left: 0;">
 	<nav>
 		<div class="nav__header">
 			<div class="nav__logo">
 				<a href="{{ path('app_home') }}">
-					<img src="{{ asset('images/logoautorent.png') }}" style="width: 40%;" alt="logo"/>
+					<img src="{{ asset('assets/images/logoautorent.png') }}" style="width: 40%;" alt="logo"/>
 				</a>
 			</div>
 			<div class="nav__menu__btn" id="menu-btn">
@@ -24,7 +28,6 @@
 					Contacts</button>
 			</li>
 		</ul>
-
 
 		<div class="nav__btns">
 			{% if app.user %}
@@ -49,6 +52,7 @@
 			{% endif %}
 		</div>
 	</nav>
+
 
 	<div class="reservation-steps">
 		<div class="step-1">
@@ -75,66 +79,68 @@
 		</div>
 
 
-<div class="step-2">
-	<div class="step-title" style="display: flex; gap:10px; align-items:center;">
-		<div class="step-number-2">2</div>
-		<h4 style="color:#fe5b3e;">VÉHICULE</h4>
-	</div>
-	<div class="step-details2" style="margin-top:10px;">
-		{% if car is defined %}
-			<h4>{{ car.brand }}
-				{{ car.model }}</h4>
-		{% if total is defined %}
-			<div>{{ total }} €</div>
+		<div class="step-2">
+			<div class="step-title" style="display: flex; gap:10px; align-items:center;">
+				<div class="step-number-2">2</div>
+				<h4 style="color:#fe5b3e;">VÉHICULE</h4>
+			</div>
+			<div class="step-details2" style="margin-top:10px;">
+				{% if car is defined %}
+					<h4>{{ car.brand }}
+						{{ car.model }}</h4>
+					{% if total is defined %}
+						<div>{{ total }}
+							€</div>
 
-		{% endif %}
+					{% endif %}
 
-		{% else %}
-			<p style="margin-top: 45px;">Veuillez choisir un véhicule</p>
-		{% endif %}
-	</div>
-</div>
+				{% else %}
+					<p style="margin-top: 45px;">Veuillez choisir un véhicule</p>
+				{% endif %}
+			</div>
+		</div>
 
 
-
-	<div class="step-3">
-    <div class="step-title" style="display: flex; gap:10px; align-items:center;">
-        <div class="step-number-3">3</div>
-        <h4 class="title-3">PROTECTIONS ET OPTIONS</h4>
-    </div>
-    <div class="step-details" style="display: flex; justify-content: space-between;">
-        {% if pack is defined or options is defined %}
-            <div id="selected-pack-details" style="width:50%; border-right: 1px solid #475569;">
-                {% if pack is defined %}
-                    {% if pack.name == 'Basic' %}
-                        <h4>Basic</h4>
-                        <div>Inclus</div>
-                    {% else %}
-                        <h4>{{ pack.name }}</h4>
-                        <div>{{ pack.pricePerDay * days }} €</div>
-                    {% endif %}
-                {% else %}
-                    <h4>Basic</h4>
-                    <div>Inclus</div>
-                {% endif %}
-            </div>
-            <div id="selected-options-details" style="width:50%; text-align:right;">
-                {% if selected_options_count is defined and selected_options_total is defined and selected_options_count > 0 %}
-                    <h4>{{ selected_options_count }} option{{ selected_options_count > 1 ? 's' : '' }}</h4>
-                    <div>{{ selected_options_total }} &euro;</div>
-                {% else %}
-                    <h4>0 option</h4>
-                    <div>0,00 &euro;</div>
-                {% endif %}
-            </div>
-        {% else %}
-            <div style="text-align:center; width:100%;">
-                <p style=" color: #b2b2b2;">Vous pourrez choisir votre protection et vos options après avoir sélectionné votre véhicule.</p>
-            </div>
-        {% endif %}
-    </div>
-</div>
-
+		<div class="step-3">
+			<div class="step-title" style="display: flex; gap:10px; align-items:center;">
+				<div class="step-number-3">3</div>
+				<h4 class="title-3">PROTECTIONS ET OPTIONS</h4>
+			</div>
+			<div class="step-details" style="display: flex; justify-content: space-between;">
+				{% if pack is defined or options is defined %}
+					<div id="selected-pack-details" style="width:50%; border-right: 1px solid #475569;">
+						{% if pack is defined %}
+							{% if pack.name == 'Basic' %}
+								<h4>Basic</h4>
+								<div>Inclus</div>
+							{% else %}
+								<h4>{{ pack.name }}</h4>
+								<div>{{ pack.pricePerDay * days }}
+									€</div>
+							{% endif %}
+						{% else %}
+							<h4>Basic</h4>
+							<div>Inclus</div>
+						{% endif %}
+					</div>
+					<div id="selected-options-details" style="width:50%; text-align:right;">
+						{% if selected_options_count is defined and selected_options_total is defined and selected_options_count > 0 %}
+							<h4>{{ selected_options_count }}
+								option{{ selected_options_count > 1 ? 's' : '' }}</h4>
+							<div>{{ selected_options_total }}
+								&euro;</div>
+						{% else %}
+							<h4>0 option</h4>
+							<div>0,00 &euro;</div>
+						{% endif %}
+					</div>
+				{% else %}
+					<div style="text-align:center; width:100%;">
+						<p style=" color: #b2b2b2;">Vous pourrez choisir votre protection et vos options après avoir sélectionné votre véhicule.</p>
+					</div>
+				{% endif %}
+			</div>
+		</div>
 
 
 		<div class="step-4">
@@ -142,181 +148,17 @@
 				<div class="step-number-4">4</div>
 				<h4 class="title-4">RÉSUMÉ</h4>
 			</div>
-		{% if total is defined and total is not empty %}
-    <div class="step-details4" style="margin-top:10px;">
-        <h4>Prix total</h4>
-        <div id="total-price-1">{{ total }} €</div>
-    </div>
-{% endif %}
+			{% if total is defined and total is not empty %}
+				<div class="step-details4" style="margin-top:10px;">
+					<h4>Prix total</h4>
+					<div id="total-price-1">{{ total }}
+						€</div>
+				</div>
+			{% endif %}
 
 		</div>
 	</div>
 </div>
 
-<style>
-	.nav__btns i {
-		margin-right: 3px;
-		font-size: 1.3rem;
-		font-weight: bold;
-	}
 
-	.nav__btns a {
-		color: #000;
-		font-size: 1rem;
-		font-weight: bold;
-		padding-bottom: 5px;
-	}
-
-	.nav__btns a:hover {
-		font-size: 1rem;
-		font-weight: bold;
-		border-bottom: 2px solid #000;
-	}
-
-	.reservation-steps {
-		margin: 0 auto;
-		width: 80%;
-		display: flex;
-		justify-content: space-between;
-		padding: 0 0 10px;
-		gap: 10px;
-	}
-
-	.step-1 {
-		font-size: 0.9rem;
-		width: 40%;
-		padding: 10px;
-		border: 1px solid #fe5b3e;
-		background-color: #fff;
-		border-radius: 8px;
-	}
-
-	.step-2 {
-		font-size: 0.9rem;
-		width: 20%;
-		padding: 10px;
-		border: 1px solid #fe5b3e;
-		background-color: #fff;
-		border-radius: 8px;
-	}
-
-	.step-3 {
-		font-size: 0.9rem;
-		width: 25%;
-		padding: 10px;
-		border: 1px solid #ddd;
-		background-color: #fff;
-		border-radius: 8px;
-	}
-
-	.step-4 {
-		font-size: 0.9rem;
-		width: 15%;
-		padding: 10px;
-		border: 1px solid #ddd;
-		background-color: #fff;
-		border-radius: 8px;
-	}
-
-	.step:last-child {
-		border-right: none;
-	}
-	.step-number-3 {
-		background-color: #b2b2b2;
-		color: #fff;
-		padding: 5px;
-		border-radius: 10px 0 10px 0;
-		width: 25px;
-		height: 25px;
-		display: flex;
-		justify-content: center;
-		align-items: center;
-		font-size: 1rem;
-	}
-
-	.step-number-4 {
-		background-color: #b2b2b2;
-		color: #fff;
-		padding: 5px;
-		border-radius: 10px 0 10px 0;
-		width: 25px;
-		height: 25px;
-		display: flex;
-		justify-content: center;
-		align-items: center;
-		font-size: 1rem;
-	}
-
-	.step-number-1 {
-		background-color: #fe5b3e;
-		color: #fff;
-		padding: 5px;
-		border-radius: 10px 0 10px 0;
-		width: 25px;
-		height: 25px;
-		display: flex;
-		justify-content: center;
-		align-items: center;
-		font-size: 1rem;
-	}
-
-	.step-number-2 {
-		background-color: #fe5b3e;
-		color: #fff;
-		padding: 5px;
-		border-radius: 10px 0 10px 0;
-		width: 25px;
-		height: 25px;
-		display: flex;
-		justify-content: center;
-		align-items: center;
-		font-size: 1rem;
-	}
-	.title-3,
-	.title-4 {
-		color: #b2b2b2;
-	}
-
-
-	.step-details {
-		display: flex;
-		justify-content: space-between;
-		margin-top: 10px;
-	}
-
-	@media(max-width: 860px) {
-		.reservation-steps {
-			width: 96%;
-			padding: 68px 0 10px;
-			gap: 5px;
-		}
-
-		.step-details,
-		.step-details2,
-		.step-details4 {
-			display: none;
-		}
-
-		.step-1,
-		.step-2,
-		.step-3,
-		.step-4 {
-			font-size: 0.6rem;
-			width: 25%;
-		}
-
-		.step-number {
-			width: 18px;
-			height: 18px;
-			font-size: 0.6rem;
-			border-radius: 7px 0 7px 0;
-		}
-	}
-
-	@media(max-width: 460px) {
-		.step-title {
-			flex-direction: column;
-		}
-	}
-</style>
 

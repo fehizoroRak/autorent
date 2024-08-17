@@ -1,0 +1,73 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Mon compte{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+<link rel="stylesheet" href="{{ asset('assets/css/acc_myaccount.css') }}">
+{% endblock %}
+
+{% block body %}
+	{% include '_partials/header_connected.html.twig' %}
+
+	<div class="container">
+		<header>
+			<div class="navbar">
+				<h1>AutoRent</h1>
+				<div class="user-profile">
+					<i style="margin-right: 15px;" class="fa-solid fa-user"></i>
+					<span>{{ app.user.username }}</span>
+				</div>
+			</div>
+			<nav>
+				<ul>
+					<li><a href="{{ path('app_myaccount') }}">RÉSERVATIONS</a></li>
+					<li><a href="{{ path('app_account') }}">COMPTE</a></li>
+					<li><a href="{{ path('account_password') }}">MOT DE PASSE</a></li>
+				</ul>
+			</nav>
+		</header>
+		<main style="width: 71%; margin: 0 auto;">
+   			{% for message in app.flashes('success') %}
+                <div id="flash-message" class="alert alert-success">
+                    {{ message }}
+                </div>
+            {% endfor %}
+			<section class="account-info">
+				<h1>Mon Compte</h1>
+				<form method="post" action="{{ path('account_update') }}">
+
+					<div class="form-group">
+						<label for="name">Nom</label>
+						<input type="text" id="name" name="name" value="{{ user.name }}" class="form-control" required>
+					</div>
+
+					<div class="form-group">
+						<label for="firstname">Prénom</label>
+						<input type="text" id="firstname" name="firstname" value="{{ user.firstname }}" class="form-control" required>
+					</div>
+
+                    <div class="form-group">
+						<label for="email">Email</label>
+						<input type="email" id="email" name="email" value="{{ user.email }}" class="form-control" required>
+					</div>
+
+					<div class="form-group">
+						<label for="phoneNumber">N° Téléphone</label>
+						<input type="text" id="phoneNumber" name="phonenumber" value="{{ user.phonenumber }}" class="form-control" required>
+					</div>
+
+                    <div class="form-group">
+						<label for="address">Adresse</label>
+						<input type="text" id="address" name="address" value="{{ user.address }}" class="form-control" required>
+					</div>
+				
+					<button type="submit" class="btn-account">Mettre à jour</button>
+				</form>
+			</section>
+
+		</main>
+		{% include '_partials/footer.html.twig' %}
+	</div>
+{% endblock %}
+

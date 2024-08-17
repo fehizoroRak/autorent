@@ -22,7 +22,7 @@ class AccountController extends AbstractController
             throw $this->createAccessDeniedException();
         }
 
-        return $this->render('account/index.html.twig', [
+        return $this->render('account_myaccount/index.html.twig', [
             'user' => $user,
         ]);
     }
@@ -59,7 +59,7 @@ class AccountController extends AbstractController
             throw $this->createAccessDeniedException();
         }
 
-        return $this->render('account/password.html.twig', [
+        return $this->render('account_myaccount/password.html.twig', [
             'user' => $user,
         ]);
     }

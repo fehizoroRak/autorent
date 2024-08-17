@@ -1,0 +1,90 @@
+{% extends 'base.html.twig' %}
+
+{% block title %} Mes réservations {% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+<link rel="stylesheet" href="{{ asset('assets/css/acc_myreservations.css') }}">
+{% endblock %}
+
+{% block body %}
+
+	{% include '_partials/header_connected.html.twig' %}
+
+	<div class="container">
+		<header>
+			<div class="navbar">
+				<h1>AutoRent</h1>
+				<div class="user-profile">
+					<i style="margin-right: 15px;" class="fa-solid fa-user"></i>
+					<span>{{ app.user.username }}</span>
+				</div>
+			</div>
+			<nav>
+				<ul>
+					<li> <a  href="{{ path('app_myaccount') }}">RÉSERVATIONS</a> </li>
+					<li> <a  href="{{ path('app_account') }}">COMPTE</a> </li>
+					<li> <a  href="{{ path('account_password') }}">MOT DE PASSE</a> </li>
+				</ul>
+			</nav>
+		</header>
+		<main style="width: 71%; margin: 0 auto;">
+			<section class="reservations">
+				<h1>Mes réservations</h1>
+				<div class="add-reservation">
+					<div class="reservation-grid">
+						{% for location in locations %}
+							<a href="{{ path('app_myaccount_details', { id: location.id }) }}" style="text-decoration: none; color: #000;">
+								<div class="car_card">
+									<img src="{{ asset('assets/images/' ~ location.car.image) }}" alt="Car Image" class="box-icon">
+									<div class="add-reservation-text">
+										<b>N° location:
+											{{ location.rentalNumber }}</b>
+										<p>{{ location.car.brand }}
+											<span>{{ location.car.model }}</span>
+										</p>
+										<p>Status:
+											{% if location.statuses|length > 0 %}
+												{% set lastStatus = location.statuses|last %}
+												<span style="color: {{ lastStatus.color }}; font-weight: bold;">
+													{% if lastStatus.name == 'Pending' %}
+														En attente
+													{% elseif lastStatus.name == 'Confirmed' %}
+														Confirmée
+													{% elseif lastStatus.name == 'Cancelled' %}
+														Annulée
+													{% elseif lastStatus.name == 'Active' %}
+														Active
+													{% elseif lastStatus.name == 'Completed' %}
+														Terminée
+													{% elseif lastStatus.name == 'Overdue' %}
+														En retard
+													{% else %}
+														{{ lastStatus.name }}
+													{% endif %}
+												</span>
+											{% else %}
+												<span>Aucun statut</span>
+											{% endif %}
+										</p>
+
+
+									</div>
+								</div>
+							</a>
+						{% else %}
+							<p>Vous n'avez aucune réservation en cours.</p>
+						{% endfor %}
+					</div>
+				</div>
+			</section>
+			<div style="display: flex; gap: 10px; justify-content: start; align-items: baseline;">
+				<i style="font-size: 1.2rem; color:#fe5b3e;" class="ri-arrow-right-s-line"></i>
+				<a href="{{ path('app_home') }}" class="new-reservation-link">Faire une nouvelle réservation</a>
+			</div>
+		</main>
+		{% include '_partials/footer.html.twig' %}
+	</div>
+
+{% endblock %}
+

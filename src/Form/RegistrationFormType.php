@@ -19,7 +19,7 @@ class RegistrationFormType extends AbstractType
             ->add('phonenumber', TextType::class)
             ->add('address', TextType::class)
             ->add('password', PasswordType::class, [
-                'mapped' => false  // Password might need special handling
+                'mapped' => false
             ]);
        
     }
