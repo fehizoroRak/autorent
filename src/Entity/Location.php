@@ -88,6 +88,7 @@ class Location
     #[ORM\Column]
     private ?float $totalPerDay = null;
 
+
     public function __construct()
     {
         $this->payments = new ArrayCollection();
@@ -419,4 +420,5 @@ class Location
 
         return $this;
     }
+
 }

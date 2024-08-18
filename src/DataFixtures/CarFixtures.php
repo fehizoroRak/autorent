@@ -207,12 +207,12 @@ class CarFixtures extends Fixture
             $car->setImage($carData['image']); // Set image
             $car->setNbofcardoors($carData['nbofcardoors']);
             $car->setNbofpersons($carData['nbofpersons']);
-            $car->setAirconditionner($carData['isAirconditionner']);
+            $car->setAirconditionnerStatus($carData['isAirconditionner']);
             $car->setGearbox($carData['gearbox']);
             $car->setHorsepower($carData['horsepower']);
             $car->setCo2emissions($carData['co2emissions']);
-            $car->setElectric($carData['isElectric']);
-            $car->setRecommended($carData['isRecommended']);
+            $car->setElectricStatus($carData['isElectric']);
+            $car->setRecommendedStatus($carData['isRecommended']);
 
             $manager->persist($car);
         }

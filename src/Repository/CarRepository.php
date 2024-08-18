@@ -5,14 +5,6 @@ namespace App\Repository;
 use App\Entity\Car;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
-use Doctrine\ORM\QueryBuilder;
-
-/**
- * @method Car|null find($id, $lockMode = null, $lockVersion = null)
- * @method Car|null findOneBy(array $criteria, array $orderBy = null)
- * @method Car[]    findAll()
- * @method Car[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
- */
 
 class CarRepository extends ServiceEntityRepository
 {
@@ -21,21 +13,41 @@ class CarRepository extends ServiceEntityRepository
         parent::__construct($registry, Car::class);
     }
 
+    /**
+     * Trouve les voitures disponibles en dehors des périodes où elles sont louées et pour les lieux spécifiés.
+     *
+     * @param \DateTime $startDate
+     * @param \DateTime $endDate
+     * @param string $pickupLocation
+     * @param string $dropoffLocation
+     * @return Car[]
+     */
     public function findAvailableCars(\DateTime $startDate, \DateTime $endDate, string $pickupLocation, string $dropoffLocation): array
     {
         $qb = $this->createQueryBuilder('c')
             ->leftJoin('c.locations', 'l')
-            ->where('c.availability = :available')
-            ->andWhere('l.startdate IS NULL OR l.enddate < :startDate OR l.startdate > :endDate')
-            ->setParameter('available', true)
+            ->where('l.id IS NULL OR (NOT EXISTS (
+                SELECT 1 FROM App\Entity\Location loc
+                WHERE loc.car = c
+                AND loc.pickupLocation = :pickupLocation
+                AND loc.dropoffLocation = :dropoffLocation
+                AND (
+                    (:startDate BETWEEN loc.startdate AND loc.enddate)
+                    OR (:endDate BETWEEN loc.startdate AND loc.enddate)
+                    OR (loc.startdate BETWEEN :startDate AND :endDate)
+                    OR (loc.enddate BETWEEN :startDate AND :endDate)
+                )
+            ))')
             ->setParameter('startDate', $startDate)
-            ->setParameter('endDate', $endDate);
+            ->setParameter('endDate', $endDate)
+            ->setParameter('pickupLocation', $pickupLocation)
+            ->setParameter('dropoffLocation', $dropoffLocation);
 
         return $qb->getQuery()->getResult();
     }
 
-        /**
-     * Get recommended cars
+    /**
+     * Obtenir les voitures recommandées.
      *
      * @return Car[]
      */
@@ -49,4 +61,3 @@ class CarRepository extends ServiceEntityRepository
             ->getResult();
     }
 }
-
