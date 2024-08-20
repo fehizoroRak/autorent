@@ -20,10 +20,21 @@ class CarRepository extends ServiceEntityRepository
      * @param \DateTime $endDate
      * @param string $pickupLocation
      * @param string $dropoffLocation
+     * @param string|null $priceOrder
+     * @param string|null $gearbox
+     * @param int|null $doors
      * @return Car[]
      */
-    public function findAvailableCars(\DateTime $startDate, \DateTime $endDate, string $pickupLocation, string $dropoffLocation): array
-    {
+    public function findAvailableCarsWithFilters(
+        \DateTime $startDate,
+        \DateTime $endDate,
+        string $pickupLocation,
+        string $dropoffLocation,
+        ?string $priceOrder,
+        ?string $gearbox,
+        ?int $doors,
+
+    ): array {
         $qb = $this->createQueryBuilder('c')
             ->leftJoin('c.locations', 'l')
             ->where('l.id IS NULL OR (NOT EXISTS (
@@ -42,6 +53,25 @@ class CarRepository extends ServiceEntityRepository
             ->setParameter('endDate', $endDate)
             ->setParameter('pickupLocation', $pickupLocation)
             ->setParameter('dropoffLocation', $dropoffLocation);
+
+        // Filtre par transmission
+        if ($gearbox) {
+            $qb->andWhere('c.gearbox = :gearbox')
+            ->setParameter('gearbox', $gearbox);
+        }
+
+        // Filtre par nombre de portes
+        if ($doors) {
+            $qb->andWhere('c.nbofcardoors = :doors')
+                ->setParameter('doors', $doors);
+        }
+
+        // Tri par prix
+        if ($priceOrder === 'asc') {
+            $qb->orderBy('c.dayprice', 'ASC');
+        } elseif ($priceOrder === 'desc') {
+            $qb->orderBy('c.dayprice', 'DESC');
+        }
 
         return $qb->getQuery()->getResult();
     }

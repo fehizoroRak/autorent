@@ -12,11 +12,8 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\Routing\Annotation\Route;
 
-
 class AvailableCarsController extends AbstractController
 {
-
-
     #[Route('/cars/available', name: 'app_cars_available')]
     public function availableCars(
         Request $request,
@@ -26,12 +23,12 @@ class AvailableCarsController extends AbstractController
         SessionInterface $session
     ): Response {
 
-        // Récupérer les paramètres de la requête
-        $pickupLocationName = $request->query->get('pickupLocation');
-        $dropoffLocationName = $request->query->get('dropoffLocation');
-        $startDate = $request->query->get('startDate') ? new \DateTime($request->query->get('startDate')) : null;
+        // Récupérer les paramètres de la requête ou de la session
+        $pickupLocationName = $request->query->get('pickupLocation') ?? $session->get('pickupLocationName');
+        $dropoffLocationName = $request->query->get('dropoffLocation') ?? $session->get('dropoffLocationName');
+        $startDate = $request->query->get('startDate') ? new \DateTime($request->query->get('startDate')) : ($session->get('startDate') ? new \DateTime($session->get('startDate')) : null);
         $startTime = $request->query->get('startTime') ? new \DateTime($request->query->get('startTime')) : null;
-        $endDate = $request->query->get('endDate') ? new \DateTime($request->query->get('endDate')) : null;
+        $endDate = $request->query->get('endDate') ? new \DateTime($request->query->get('endDate')) : ($session->get('endDate') ? new \DateTime($session->get('endDate')) : null);
         $endTime = $request->query->get('endTime') ? new \DateTime($request->query->get('endTime')) : null;
 
         // Combiner date et heure pour startDate et endDate
@@ -43,9 +40,15 @@ class AvailableCarsController extends AbstractController
             $endDate->setTime($endTime->format('H'), $endTime->format('i'));
         }
 
-        // Récupérer le nombre de jours
-        $interval = $startDate->diff($endDate);
-        $days = $interval->days;
+        // Vérifier que les dates sont présentes avant de calculer l'intervalle
+        if ($startDate && $endDate) {
+            // Récupérer le nombre de jours
+            $interval = $startDate->diff($endDate);
+            $days = $interval->days;
+        } else {
+            // Si les dates ne sont pas présentes, gérer le cas
+            $days = 0; // Vous pouvez ajuster cela selon votre logique
+        }
 
         // Récupérer les IDs des lieux à partir des noms
         $pickupLocation = $cityPickupLocationRepository->findOneBy(['name' => $pickupLocationName]);
@@ -54,19 +57,33 @@ class AvailableCarsController extends AbstractController
         $pickupLocationId = $pickupLocation ? $pickupLocation->getId() : null;
         $dropoffLocationId = $dropoffLocation ? $dropoffLocation->getId() : null;
 
-        // Stocker les variables dans la session
+        // Stocker les variables dans la session pour réutilisation
         $session->set('days', $days);
         $session->set('pickupLocationId', $pickupLocationId);
         $session->set('pickupLocationName', $pickupLocationName);
         $session->set('dropoffLocationId', $dropoffLocationId);
         $session->set('dropoffLocationName', $dropoffLocationName);
-        $session->set('startDate', $startDate ? $startDate->format('d-m-Y') : '');
+        $session->set('startDate', $startDate ? $startDate->format('Y-m-d') : '');
         $session->set('startTime', $startTime ? $startTime->format('H:i') : '');
-        $session->set('endDate', $endDate ? $endDate->format('d-m-Y') : '');
+        $session->set('endDate', $endDate ? $endDate->format('Y-m-d') : '');
         $session->set('endTime', $endTime ? $endTime->format('H:i') : '');
 
-        // Requête pour récupérer les voitures disponibles
-        $cars = $carRepository->findAvailableCars($startDate, $endDate, $pickupLocationId, $dropoffLocationId);
+        // Gestion des filtres supplémentaires
+        $priceOrder = $request->query->get('price'); // 'asc' or 'desc'
+        $transmission = $request->query->get('gearbox'); // 'manual' or 'automatic'
+        $doors = $request->query->get('doors') ? (int) $request->query->get('doors') : null; // Conversion en entier
+        
+
+        // Requête pour récupérer les voitures disponibles avec les filtres appliqués
+        $cars = $carRepository->findAvailableCarsWithFilters(
+            $startDate,
+            $endDate,
+            $pickupLocationId,
+            $dropoffLocationId,
+            $priceOrder,
+            $transmission,
+            $doors // Paramètre de type int ou null  
+        );
 
         // Récupérer les voitures recommandées
         $recommendedCars = $carRepository->findRecommendedCars();
@@ -81,13 +98,17 @@ class AvailableCarsController extends AbstractController
             'startTime' => $startTime ? $startTime->format('H:i') : '',
             'endDate' => $endDate ? $endDate->format('d/m/Y') : '',
             'endTime' => $endTime ? $endTime->format('H:i') : '',
+            // Ajout des filtres pour une éventuelle réutilisation dans le template
+            'selectedPriceOrder' => $priceOrder,
+            'selectedTransmission' => $transmission,
+            'selectedDoors' => $doors,
+
         ]);
     }
 
     #[Route('/cars/available/{id}', name: 'app_cars_available_details')]
     public function availableCarDetails(int $id, CarRepository $carRepository): Response
     {
-   
         // Récupérer la voiture par ID
         $car = $carRepository->find($id);
 

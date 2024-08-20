@@ -2,7 +2,6 @@
 
 {% block title %}Voitures Disponibles{% endblock %}
 
-
 {% block body %}
 
     {% include '_partials/header_steps.html.twig' %}
@@ -21,7 +20,6 @@
                             <div class="card">
                                 <div class="card-header">
                                     <span>{{ car.brand }} {{ car.model }}</span>
-                                   
                                 </div>
                                 <div class="card-body">
                                     <div class="card-body__left">
@@ -45,9 +43,169 @@
             </div>
         </div>
 
-
         {# LISTE DES CARS DISPONIBLES #}
         <h1 style="margin-top:80px;">Choisissez votre véhicule</h1>
+
+<div class="filters">
+    <!-- Trier par prix -->
+    <div class="filter-dropdown" id="filter-price">
+        <button class="filter-btn">
+            <span id="filter-price-text">Trier par 	<i style="font-size:1.2rem;" class="ri-arrow-down-s-line"></i></span>
+        </button>
+        <div class="dropdown-content">
+            <div class="dropdown-item" data-filter="asc">Prix croissant</div>
+            <div class="dropdown-item" data-filter="desc">Prix décroissant</div>
+        </div>
+    </div>
+
+    <!-- Transmission -->
+    <div class="filter-dropdown" id="filter-gearbox">
+        <button class="filter-btn">
+            <span id="filter-gearbox-text">Transmission  <i style="font-size:1.2rem;" class="ri-arrow-down-s-line"></i></span>
+        </button>
+        <div class="dropdown-content">
+            <div class="dropdown-item" data-filter="Manuelle">Manuelle</div>
+            <div class="dropdown-item" data-filter="Automatique">Automatique</div>
+        </div>
+    </div>
+
+    <!-- Nombre de portes -->
+    <div class="filter-dropdown" id="filter-doors">
+        <button class="filter-btn">
+            <span id="filter-doors-text">Nombre de Portes  <i style="font-size:1.2rem;" class="ri-arrow-down-s-line"></i></span>
+        </button>
+        <div class="dropdown-content">
+            <div class="dropdown-item" data-filter="3">3 portes</div>
+            <div class="dropdown-item" data-filter="5">5 portes</div>
+        </div>
+    </div>
+
+
+</div>
+
+
+        <style>
+
+            .filters {
+                display: flex;
+                gap: 10px;
+                margin-bottom: 20px;
+            }
+
+            .filter-dropdown {
+                position: relative;
+                display: inline-block;
+            }
+
+            .filter-btn {
+                
+                background-color: #333;
+                color: white;
+                border: none;
+                cursor: pointer;
+
+                padding:10px 15px 10px 15px; 
+                border-radius:8px;
+            }
+
+            .filter-btn:hover {
+                background-color: #555;
+            }
+
+            .dropdown-content {
+                border-radius:8px;
+                padding: 6px;
+                display: none;
+                position: absolute;
+                background-color: white;
+                min-width: 200px;
+                box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+                z-index: 1;
+            }
+
+            .dropdown-content .dropdown-item {
+                background-color: #f2f2f2;
+                border-radius:8px;
+                margin:10px;
+                padding: 10px;
+                cursor: pointer;
+                color: #333;
+            }
+
+            .dropdown-content .dropdown-item:hover {
+                background-color: #ddd;
+            }
+
+            .filter-dropdown:hover .dropdown-content {
+                display: block;
+            }
+
+            .filter-dropdown.active .filter-btn {
+                background-color: #fe5c3c;
+            }
+
+            #filter-price-range input {
+                width: 70px;
+                margin: 5px 0;
+                padding: 5px;
+            }
+
+            #apply-price-range {
+                background-color: #fe5c3c;
+                color: white;
+                padding: 5px 10px;
+                cursor: pointer;
+                border: none;
+                margin-top: 5px;
+            }
+
+
+
+/* Style pour un filtre actif */
+.filter-dropdown .filter-btn.active {
+    background-color: #fe5c3c;
+    padding:10px 15px 10px 15px; 
+    color: white;
+}
+
+/* Style pour l'indicateur de notification */
+.filter-btn .filter-indicator {
+    background-color: black;
+    color: white;
+    border-radius: 50%;
+    padding: 2px 8px;
+    font-size: 0.8rem;
+    margin-left: 10px;
+    display: inline-block;
+}
+
+/* Masquer l'indicateur par défaut */
+.filter-btn .filter-indicator:empty {
+    display: none;
+}
+
+
+
+/* Style pour un élément dropdown actif (fond orange) */
+.dropdown-item.active-bg {
+    background-color: #fe5c3c;
+    color: white;
+}
+
+/* Désactiver le hover pour l'option active */
+.dropdown-item.active-bg:hover {
+    background-color: #fe5c3c;
+    cursor: default; /* Affiche le curseur par défaut, indiquant que l'élément est déjà actif */
+}
+
+/* Style hover pour les autres éléments */
+.dropdown-item:not(.active-bg):hover {
+    background-color: #ddd; /* Couleur du hover pour les éléments non actifs */
+    cursor: pointer;
+}
+        </style>
+
+        
 
         {% if cars is empty %}
             <p>Aucune voiture disponible pour les dates sélectionnées.</p>
@@ -104,6 +262,129 @@
         {% endif %}
     </div>
 
+<script>
+
+document.addEventListener("DOMContentLoaded", function () {
+    const filters = {
+        price: null,
+        gearbox: null,
+        doors: null
+    };
+
+    function attachFilterEvents() {
+        document.querySelectorAll(".filter-dropdown .dropdown-item").forEach(item => {
+            item.addEventListener("click", function () {
+                const filterType = this.closest(".filter-dropdown").id.replace("filter-", "");
+                toggleFilter(filterType, this.dataset.filter, this);
+            });
+        });
+    }
+
+    function toggleFilter(type, value, element) {
+        const button = document.querySelector(`#filter-${type} .filter-btn`);
+        const filterTextElement = document.querySelector(`#filter-${type}-text`);
+
+        if (filters[type] === value) {
+            // Désactivation du filtre si déjà sélectionné
+            filters[type] = null;
+            element.classList.remove('active-bg');
+            button.classList.remove('active');
+            resetFilterText(type);
+        } else {
+            // Activation du filtre
+            filters[type] = value;
+            document.querySelectorAll(`#filter-${type} .dropdown-item`).forEach(item => {
+                item.classList.remove('active-bg');
+            });
+            element.classList.add('active-bg');
+            button.classList.add('active');
+            updateFilterText(type, value, filterTextElement);
+        }
+
+        fetchFilteredCars(); // Actualiser les voitures filtrées
+    }
+
+    function updateFilterText(type, value, element) {
+        switch (type) {
+            case 'price':
+                element.innerText = value === 'asc' ? 'Trier par: Prix croissant' : 'Trier par: Prix décroissant';
+                break;
+            case 'gearbox':
+                element.innerText = `Transmission: ${value}`;
+                break;
+            case 'doors':
+                element.innerText = `Nombre de Portes: ${value} portes`;
+                break;
+        }
+    }
+
+    function resetFilterText(type) {
+        const element = document.querySelector(`#filter-${type}-text`);
+        switch (type) {
+            case 'price':
+                element.innerText = 'Trier par';
+                break;
+            case 'gearbox':
+                element.innerText = 'Transmission';
+                break;
+            case 'doors':
+                element.innerText = 'Nombre de Portes';
+                break;
+        }
+    }
+
+    function applyActiveStates() {
+        Object.keys(filters).forEach(type => {
+            if (filters[type]) {
+                const button = document.querySelector(`#filter-${type} .filter-btn`);
+                const filterTextElement = document.querySelector(`#filter-${type}-text`);
+
+                if (button) {
+                    button.classList.add('active');
+                }
+
+                document.querySelectorAll(`#filter-${type} .dropdown-item`).forEach(item => {
+                    if (item.dataset.filter === filters[type]) {
+                        item.classList.add('active-bg');
+                        updateFilterText(type, filters[type], filterTextElement);
+                    }
+                });
+            }
+        });
+    }
+
+    function fetchFilteredCars() {
+        const query = new URLSearchParams();
+
+        if (filters.price) query.set('price', filters.price);
+        if (filters.gearbox) query.set('gearbox', filters.gearbox);
+        if (filters.doors) query.set('doors', filters.doors);
+
+        // Inclure les informations de session (dates, heures, et lieux)
+        if ('{{ app.session.get('startDate') }}') query.set('startDate', '{{ app.session.get('startDate') }}');
+        if ('{{ app.session.get('endDate') }}') query.set('endDate', '{{ app.session.get('endDate') }}');
+        if ('{{ app.session.get('pickupLocationName') }}') query.set('pickupLocation', '{{ app.session.get('pickupLocationName') }}');
+        if ('{{ app.session.get('dropoffLocationName') }}') query.set('dropoffLocation', '{{ app.session.get('dropoffLocationName') }}');
+        if ('{{ app.session.get('startTime') }}') query.set('startTime', '{{ app.session.get('startTime') }}');
+        if ('{{ app.session.get('endTime') }}') query.set('endTime', '{{ app.session.get('endTime') }}');
+
+        fetch(`/cars/available?${query.toString()}`)
+            .then(response => response.text())
+            .then(data => {
+                document.getElementById("available-cars").innerHTML = data;
+
+                // Réattache les événements et réapplique les états actifs
+                attachFilterEvents();
+                applyActiveStates();
+            })
+            .catch(error => console.error('Erreur:', error));
+    }
+
+    attachFilterEvents();
+    applyActiveStates();
+});
+
+</script>
     {% include '_partials/footer.html.twig' %}
 
 {% endblock %}
