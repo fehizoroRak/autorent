@@ -9,3 +9,4 @@ account:
 account_update:
     path: /account/update
     controller: App\Controller\AccountController::update
+

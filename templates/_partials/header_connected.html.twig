@@ -14,9 +14,11 @@
 		<ul
 			class="nav__links" id="nav-links">
 			<li class="nav__links__btn">
-				<button class="btn">
-					<i class="ri-question-line"></i>
-					Aide</button>
+				<a href="{{ path('app_aide') }}" class="btn">
+    <i class="ri-question-line"></i>
+    Aide
+</a>
+
 			</li>
 			<li class="nav__links__btn">
 				<button class="btn">
@@ -36,7 +38,7 @@
 
 			{% endif %}
 
-			<a class="" href="">
+			<a  href="{{ path('app_help') }}">
 				<i class="ri-question-line"></i>
 				Aide
 			</a>

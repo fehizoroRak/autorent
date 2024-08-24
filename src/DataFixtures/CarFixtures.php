@@ -20,9 +20,9 @@ class CarFixtures extends Fixture
                 'registration' => 'ABC123',
                 'dayprice' => 50.0,
                 'availability' => true,
-                'image' => 'toyota_corolla.jpg',
+                'image' => 'toyota_corolla.webp',
                 'nbofcardoors' => 3,
-                'nbofpersons' => 5,
+                'nbofpersons' => 4,
                 'isAirconditionner' => true,
                 'gearbox' => 'Automatique',
                 'horsepower' => 132,
@@ -38,9 +38,9 @@ class CarFixtures extends Fixture
                 'registration' => 'DEF456',
                 'dayprice' => 45.0,
                 'availability' => true,
-                'image' => 'honda_civic.jpg',
+                'image' => 'honda_civic.webp',
                 'nbofcardoors' => 5,
-                'nbofpersons' => 5,
+                'nbofpersons' => 7,
                 'isAirconditionner' => true,
                 'gearbox' => 'Automatique',
                 'horsepower' => 158,
@@ -56,7 +56,7 @@ class CarFixtures extends Fixture
                 'registration' => 'GHI789',
                 'dayprice' => 40.0,
                 'availability' => false,
-                'image' => 'ford_focus.jpg',
+                'image' => 'ford_focus.webp',
                 'nbofcardoors' => 5,
                 'nbofpersons' => 5,
                 'isAirconditionner' => true,
@@ -74,7 +74,7 @@ class CarFixtures extends Fixture
                 'registration' => 'JKL012',
                 'dayprice' => 60.0,
                 'availability' => true,
-                'image' => 'bmw_3_series.jpg',
+                'image' => 'bmw3.webp',
                 'nbofcardoors' => 3,
                 'nbofpersons' => 5,
                 'isAirconditionner' => true,
@@ -92,9 +92,9 @@ class CarFixtures extends Fixture
                 'registration' => 'MNO345',
                 'dayprice' => 70.0,
                 'availability' => true,
-                'image' => 'mercedes_c_class.jpg',
+                'image' => 'mercedes.webp',
                 'nbofcardoors' => 3,
-                'nbofpersons' => 5,
+                'nbofpersons' => 4,
                 'isAirconditionner' => true,
                 'gearbox' => 'Automatique',
                 'horsepower' => 255,
@@ -106,13 +106,13 @@ class CarFixtures extends Fixture
                 'brand' => 'Audi',
                 'model' => 'A4',
                 'year' => 2017,
-                'color' => 'Gray',
+                'color' => 'Yellow',
                 'registration' => 'PQR678',
                 'dayprice' => 55.0,
                 'availability' => false,
-                'image' => 'audi_a4.jpg',
+                'image' => 'audiA4.webp',
                 'nbofcardoors' => 5,
-                'nbofpersons' => 5,
+                'nbofpersons' => 4,
                 'isAirconditionner' => true,
                 'gearbox' => 'Manuelle',
                 'horsepower' => 188,
@@ -124,13 +124,13 @@ class CarFixtures extends Fixture
                 'brand' => 'Volkswagen',
                 'model' => 'Golf',
                 'year' => 2016,
-                'color' => 'Green',
+                'color' => 'Orange',
                 'registration' => 'STU901',
                 'dayprice' => 35.0,
                 'availability' => true,
-                'image' => 'volkswagen_golf.jpg',
+                'image' => 'golf.webp',
                 'nbofcardoors' => 3,
-                'nbofpersons' => 5,
+                'nbofpersons' => 7,
                 'isAirconditionner' => true,
                 'gearbox' => 'Manuelle',
                 'horsepower' => 147,
@@ -146,7 +146,7 @@ class CarFixtures extends Fixture
                 'registration' => 'VWX234',
                 'dayprice' => 30.0,
                 'availability' => true,
-                'image' => 'chevrolet_malibu.jpg',
+                'image' => 'chevrolet.webp',
                 'nbofcardoors' => 3,
                 'nbofpersons' => 5,
                 'isAirconditionner' => true,
@@ -164,9 +164,9 @@ class CarFixtures extends Fixture
                 'registration' => 'YZA567',
                 'dayprice' => 25.0,
                 'availability' => false,
-                'image' => 'nissan_altima.jpg',
+                'image' => 'nissan_altima.webp',
                 'nbofcardoors' => 5,
-                'nbofpersons' => 5,
+                'nbofpersons' => 2,
                 'isAirconditionner' => true,
                 'gearbox' => 'Automatique',
                 'horsepower' => 182,
@@ -175,14 +175,14 @@ class CarFixtures extends Fixture
                 'isRecommended' => true,
             ],
             [
-                'brand' => 'Kia',
-                'model' => 'Optima',
-                'year' => 2013,
+                'brand' => 'Mitsubishi',
+                'model' => 'Asx',
+                'year' => 2022,
                 'color' => 'Purple',
                 'registration' => 'BCD890',
                 'dayprice' => 20.0,
                 'availability' => true,
-                'image' => 'kia_optima.jpg',
+                'image' => 'asx.webp',
                 'nbofcardoors' => 5,
                 'nbofpersons' => 5,
                 'isAirconditionner' => true,
@@ -192,32 +192,213 @@ class CarFixtures extends Fixture
                 'isElectric' => true,
                 'isRecommended' => true,
             ],
-        ];
 
-        // Create and persist each car
-        foreach ($carsData as $carData) {
-            $car = new Car();
-            $car->setBrand($carData['brand']);
-            $car->setModel($carData['model']);
-            $car->setYear($carData['year']);
-            $car->setColor($carData['color']);
-            $car->setRegistration($carData['registration']);
-            $car->setDayprice($carData['dayprice']);
-            $car->setAvailability($carData['availability']);
-            $car->setImage($carData['image']); // Set image
-            $car->setNbofcardoors($carData['nbofcardoors']);
-            $car->setNbofpersons($carData['nbofpersons']);
-            $car->setAirconditionnerStatus($carData['isAirconditionner']);
-            $car->setGearbox($carData['gearbox']);
-            $car->setHorsepower($carData['horsepower']);
-            $car->setCo2emissions($carData['co2emissions']);
-            $car->setElectricStatus($carData['isElectric']);
-            $car->setRecommendedStatus($carData['isRecommended']);
+        [
+            'brand' => 'Mazda',
+            'model' => 'MX-5',
+            'year' => 2019,
+            'color' => 'Red',
+            'registration' => 'EFG123',
+            'dayprice' => 55.0,
+            'availability' => true,
+            'image' => 'mazdamx5.webp',
+            'nbofcardoors' => 2,
+            'nbofpersons' => 2,
+            'isAirconditionner' => true,
+            'gearbox' => 'Manuelle',
+            'horsepower' => 181,
+            'co2emissions' => 143,
+            'isElectric' => false,
+            'isRecommended' => true,
+        ],
+        [
+            'brand' => 'Tesla',
+            'model' => 'Model X',
+            'year' => 2022,
+            'color' => 'White',
+            'registration' => 'HIJ456',
+            'dayprice' => 120.0,
+            'availability' => true,
+            'image' => 'tesla.webp',
+            'nbofcardoors' => 5,
+            'nbofpersons' => 7,
+            'isAirconditionner' => true,
+            'gearbox' => 'Automatique',
+            'horsepower' => 670,
+            'co2emissions' => 0,
+            'isElectric' => true,
+            'isRecommended' => true,
+        ],
+        [
+            'brand' => 'Fiat',
+            'model' => '500',
+            'year' => 2021,
+            'color' => 'Yellow',
+            'registration' => 'KLM789',
+            'dayprice' => 25.0,
+            'availability' => true,
+            'image' => 'fiat500.webp',
+            'nbofcardoors' => 3,
+            'nbofpersons' => 4,
+            'isAirconditionner' => false,
+            'gearbox' => 'Manuelle',
+            'horsepower' => 85,
+            'co2emissions' => 120,
+            'isElectric' => false,
+            'isRecommended' => false,
+        ],
+        [
+            'brand' => 'Renault',
+            'model' => 'Scenic',
+            'year' => 2018,
+            'color' => 'Blue',
+            'registration' => 'NOP012',
+            'dayprice' => 45.0,
+            'availability' => true,
+            'image' => 'scenic.webp',
+            'nbofcardoors' => 5,
+            'nbofpersons' => 7,
+            'isAirconditionner' => true,
+            'gearbox' => 'Automatique',
+            'horsepower' => 130,
+            'co2emissions' => 145,
+            'isElectric' => false,
+            'isRecommended' => true,
+        ],
+        [
+            'brand' => 'Peugeot',
+            'model' => '208',
+            'year' => 2020,
+            'color' => 'Gray',
+            'registration' => 'QRS345',
+            'dayprice' => 30.0,
+            'availability' => true,
+            'image' => 'peugeot208.webp',
+            'nbofcardoors' => 5,
+            'nbofpersons' => 5,
+            'isAirconditionner' => true,
+            'gearbox' => 'Manuelle',
+            'horsepower' => 100,
+            'co2emissions' => 125,
+            'isElectric' => false,
+            'isRecommended' => true,
+        ],
+        [
+            'brand' => 'Renault',
+            'model' => 'Clio',
+            'year' => 2021,
+            'color' => 'Bleu métallique',
+            'registration' => 'TUV678',
+            'dayprice' => 35.0,
+            'availability' => true,
+            'image' => 'clio.webp',
+            'nbofcardoors' => 5,
+            'nbofpersons' => 5,
+            'isAirconditionner' => true,
+            'gearbox' => 'Automatique',
+            'horsepower' => 150,
+            'co2emissions' => 140,
+            'isElectric' => false,
+            'isRecommended' => false,
+        ],
+        [
+            'brand' => 'Opel',
+            'model' => 'Zafira',
+            'year' => 2016,
+            'color' => 'Black',
+            'registration' => 'WXY901',
+            'dayprice' => 40.0,
+            'availability' => true,
+            'image' => 'zafira.webp',
+            'nbofcardoors' => 5,
+            'nbofpersons' => 7,
+            'isAirconditionner' => true,
+            'gearbox' => 'Manuelle',
+            'horsepower' => 136,
+            'co2emissions' => 140,
+            'isElectric' => false,
+            'isRecommended' => false,
+        ],
+        [
+            'brand' => 'Volkswagen',
+            'model' => 'Tiguan',
+            'year' => 2019,
+            'color' => 'Brown',
+            'registration' => 'XYZ234',
+            'dayprice' => 50.0,
+            'availability' => true,
+            'image' => 'tiguan.webp',
+            'nbofcardoors' => 5,
+            'nbofpersons' => 7,
+            'isAirconditionner' => true,
+            'gearbox' => 'Automatique',
+            'horsepower' => 190,
+            'co2emissions' => 150,
+            'isElectric' => false,
+            'isRecommended' => true,
+        ],
+        [
+            'brand' => 'Hyundai',
+            'model' => 'Santa Fe',
+            'year' => 2018,
+            'color' => 'Green',
+            'registration' => 'ABC345',
+            'dayprice' => 60.0,
+            'availability' => true,
+            'image' => 'santa_fe.webp',
+            'nbofcardoors' => 5,
+            'nbofpersons' => 9,
+            'isAirconditionner' => true,
+            'gearbox' => 'Automatique',
+            'horsepower' => 200,
+            'co2emissions' => 160,
+            'isElectric' => false,
+            'isRecommended' => false,
+        ],
+        [
+            'brand' => 'Dacia',
+            'model' => 'Duster',
+            'year' => 2022,
+            'color' => 'White',
+            'registration' => 'DEF567',
+            'dayprice' => 25.0,
+            'availability' => true,
+            'image' => 'duster.webp',
+            'nbofcardoors' => 5,
+            'nbofpersons' => 5,
+            'isAirconditionner' => true,
+            'gearbox' => 'Manuelle',
+            'horsepower' => 115,
+            'co2emissions' => 130,
+            'isElectric' => false,
+            'isRecommended' => true,
+        ],
+    ];
 
-            $manager->persist($car);
-        }
+    // Create and persist each car
+    foreach ($carsData as $carData) {
+        $car = new Car();
+        $car->setBrand($carData['brand']);
+        $car->setModel($carData['model']);
+        $car->setYear($carData['year']);
+        $car->setColor($carData['color']);
+        $car->setRegistration($carData['registration']);
+        $car->setDayprice($carData['dayprice']);
+        $car->setAvailability($carData['availability']);
+        $car->setImage($carData['image']);
+        $car->setNbofcardoors($carData['nbofcardoors']);
+        $car->setNbofpersons($carData['nbofpersons']);
+        $car->setAirconditionnerStatus($carData['isAirconditionner']);
+        $car->setGearbox($carData['gearbox']);
+        $car->setHorsepower($carData['horsepower']);
+        $car->setCo2emissions($carData['co2emissions']);
+        $car->setElectricStatus($carData['isElectric']);
+        $car->setRecommendedStatus($carData['isRecommended']);
 
-        // Flush all cars to the database
-        $manager->flush();
+        $manager->persist($car);
     }
+
+    // Flush all cars to the database
+    $manager->flush();
+}
 }

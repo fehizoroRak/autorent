@@ -116,8 +116,8 @@ class CarCrudController extends AbstractCrudController
             TextField::new('registration', 'Immatriculation'),
             TextField::new('gearbox', 'Boîte de vitesses'),
             ImageField::new('image', 'Image du Véhicule')
-                ->setBasePath('/images')
-                ->setUploadDir('public/images')
+                ->setBasePath('/assets/images')
+                ->setUploadDir('public/assets/images')
                 ->setHelp('Fournir l\'URL de l\'image du véhicule'),
             BooleanField::new('availability', 'Disponibilité'),
             BooleanField::new('electricStatus', 'Électrique'),

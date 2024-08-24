@@ -1,0 +1,139 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+    AutoRent | Help
+{% endblock %}
+
+{% block body %}
+
+    {% include '_partials/header.html.twig' %}
+
+<style>
+/* Styles pour le lien Aide */
+.aide-btn {
+    padding: 0.85rem 1.8rem;
+    border: none;
+    font-size: 1rem;
+    color: var(--white);
+    background-color: var(--primary-color);
+    border-radius: 4px;
+    transition: background-color 0.3s, transform 0.3s;
+    cursor: pointer;
+    margin-top: 1rem;
+    text-decoration: none; /* Supprimer le soulignement du lien */
+    display: inline-block; /* Assure que le padding et la mise en forme s’appliquent comme un bouton */
+}
+
+.aide-btn:hover {
+    background-color: #3c4286;
+    transform: scale(1.05);
+}
+
+/* Conteneur de section d'aide */
+.help__sections {
+    display: flex;
+    flex-direction: column;
+    gap: 4rem;
+    margin-top: 2rem;
+}
+
+.help__section-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+    justify-content: space-between;
+}
+
+.help__section {
+    flex: 1;
+    max-width: 50%;
+}
+
+.help__section img {
+    flex: 1;
+    max-width: 50%;
+    border-radius: 8px;
+    object-fit: cover;
+}
+.image{
+width: 50%;
+}
+@media (max-width: 768px) {
+    .help__section-wrapper {
+        flex-direction: column;
+        text-align: center;
+    }
+    .help__section {
+        text-align: left;
+        max-width: 100%;
+    }
+    .help__section img {
+        max-width: 100%;
+    }
+    .image{
+width: 100%;
+}
+}
+</style>
+
+<section class="section__container" id="help">
+    <h2 class="section__header">Comment notre service client peut-il vous aider ?</h2>
+    <p>Chez AutoRent, nous mettons tout en œuvre pour rendre votre expérience de location aussi fluide que possible. Sur cette page, vous trouverez différentes ressources utiles et des réponses à vos questions concernant la location de voitures et d'utilitaires. Que ce soit pour des informations sur la réservation, les assurances, les services ou le programme de fidélité, nous sommes là pour vous accompagner.</p>
+
+    <div class="help__sections">
+        <!-- Première section : Texte à gauche, image à droite -->
+        <div class="help__section-wrapper">
+            <div class="help__section">
+                <h3>FAQ</h3>
+                <p>Vous avez une question sur le processus de location avec AutoRent ? Consultez notre FAQ pour obtenir des réponses aux questions les plus fréquemment posées.</p>
+                <a href="{{ path('app_faq') }}" class="aide-btn">En savoir plus</a>
+            </div>
+            <img class="image" src="{{ asset('assets/images/help/faq-image.jpg') }}" alt="FAQ Image">
+        </div>
+
+        <!-- Deuxième section : Image à gauche, texte à droite -->
+        <div class="help__section-wrapper">
+            <img class="image" src="{{ asset('assets/images/help/contact-image.jpg') }}" alt="Contact Image">
+            <div class="help__section">
+                <h3>Contactez-nous</h3>
+                <p>Besoin de déposer votre voiture plus tard que prévu ? Vous souhaitez obtenir des informations supplémentaires sur un équipement ou un service ? Contactez notre service client pour toute demande ou question.</p>
+                <a href="{{ path('app_contact_us') }}" class="aide-btn">Je vous contacte</a>
+            </div>
+        </div>
+
+        <!-- Troisième section : Texte à gauche, image à droite -->
+        <div class="help__section-wrapper">
+            <div class="help__section">
+                <h3>Accessibilité pour les sourds ou malentendants</h3>
+                <p>AutoRent propose des conseillers en Langue des Signes Française (LSF) pour les personnes sourdes ou malentendantes. Contactez-nous en LSF, en Langue Française Parlée Complétée (LfPC) ou via la transcription écrite simultanée automatisée.</p>
+                <a href="" class="aide-btn">Je me connecte</a>
+            </div>
+            <img class="image" src="{{ asset('assets/images/help/deafi.jpg') }}" alt="Accessibility Image">
+        </div>
+
+        <!-- Quatrième section : Image à gauche, texte à droite -->
+        <div class="help__section-wrapper">
+            <img class="image" src="{{ asset('assets/images/help/terms-image.jpg') }}" alt="Terms and Conditions Image">
+            <div class="help__section">
+                <h3>Termes et conditions</h3>
+                <p>Vous trouverez ici toutes les informations essentielles sur les réservations et la protection de vos données personnelles.</p>
+                <a href="{{ path('app_mentions_legales') }}" class="aide-btn">Conditions générales de location</a>
+            </div>
+        </div>
+
+        <!-- Cinquième section : Texte à gauche, image à droite -->
+        <div class="help__section-wrapper">
+            <div class="help__section">
+                <h3>Informations utiles</h3>
+                <p>Que vous planifiiez un voyage ou que vous soyez déjà en route, nous avons rassemblé pour vous des conseils pratiques et des informations importantes pour que votre expérience se passe sans encombre.</p>
+                <a href="" class="aide-btn">En savoir plus</a>
+            </div>
+            <img class="image" src="{{ asset('assets/images/help/information-image.jpg') }}" alt="Information Image">
+        </div>
+
+    </div>
+</section>
+
+{% include '_partials/footer.html.twig' %}
+
+{% endblock %}

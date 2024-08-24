@@ -2,17 +2,19 @@
 
     <div class="section__container footer__bars">
         <img src="{{ asset('assets/images/logoautorent.png') }}" style="width: 12%;" alt="logo" />  
-        <span style="font-size:0.9rem; margin-left:15px;"><a href="">Mentions légales </a> | <a href="">Politique de cookies</a>  </span>
+        <span style="font-size:0.9rem; margin-left:15px;">
+        <a href="{{ path('app_mentions_legales') }}">Mentions légales </a> | 
+        <a href="{{ path('app_politique_cookies') }}">Politique de cookies</a>  </span>
         <p>Copyright © 2024 - Tous droits réservés.</p>
         <ul class="footer__socials">
             <li>
-                <a href="#"><i class="ri-facebook-fill"></i></a>
+                <a href="www.facebook.com"><i class="ri-facebook-fill"></i></a>
             </li>
             <li>
-                <a href="#"><i class="ri-twitter-fill"></i></a>
+                <a href="www.twitter.com"><i class="ri-twitter-fill"></i></a>
             </li>
             <li>
-                <a href="#"><i class="ri-google-fill"></i></a>
+                <a href="www.google.fr"><i class="ri-google-fill"></i></a>
             </li>
         </ul>
     </div>

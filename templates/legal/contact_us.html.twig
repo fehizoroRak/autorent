@@ -1,0 +1,139 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+    AutoRent | Contactez-nous
+{% endblock %}
+
+{% block body %}
+
+    {% include '_partials/header.html.twig' %}
+
+<style>
+/* Styles pour la section Contact */
+.contact-container {
+    width: 100%;
+    max-width: 800px;
+    margin: 0 auto 60px auto;
+    padding: 0 1rem;
+}
+
+.contact-header {
+    text-align: start;
+    margin-bottom: 2rem;
+}
+
+.contact-header h2 {
+    font-size: 2rem;
+    color: var(--primary-color);
+}
+
+.contact-info, .contact-form {
+    margin-top: 2rem;
+}
+
+.contact-info {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.contact-info-item {
+    display: flex;
+    align-items: center;
+    font-size: 1rem;
+    color: #333;
+}
+
+.contact-info-item i {
+    font-size: 1.5rem;
+    color: #fe5b3e;
+    margin-right: 1rem;
+}
+
+.contact-form input, .contact-form textarea {
+    width: 100%;
+    padding: 0.75rem;
+    margin: 0.5rem 0;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 1rem;
+}
+
+.contact-form button {
+    padding: 0.85rem 1.8rem;
+    border: none;
+    font-size: 1rem;
+    color: var(--white);
+    background-color: var(--primary-color);
+    border-radius: 4px;
+    transition: background-color 0.3s, transform 0.3s;
+    cursor: pointer;
+    margin-top: 1rem;
+}
+
+.contact-form button:hover {
+    background-color: #3c4286;
+    transform: scale(1.05);
+}
+
+@media (max-width: 768px) {
+    .contact-info {
+        text-align: center;
+    }
+
+    .contact-info-item {
+        justify-content: center;
+    }
+}
+</style>
+
+<section class="contact-container" id="contact">
+    <br><br><br><br><br>
+    <div class="contact-header">
+        <h2>Contactez-nous</h2>
+        <br>
+        <p>Nous sommes à votre disposition pour répondre à toutes vos questions et vous aider.</p>
+    </div>
+
+
+        {% for message in app.flashes('success') %}
+            <div class="alert alert-success">{{ message }}</div>
+        {% endfor %}
+
+        {% for message in app.flashes('error') %}
+            <div class="alert alert-danger">{{ message }}</div>
+        {% endfor %}
+
+
+    <!-- Section des informations de contact -->
+    <div class="contact-info">
+        <div class="contact-info-item">
+            <i class="ri-phone-line"></i>
+            <span>+33 1 23 45 67 89</span>
+        </div>
+        <div class="contact-info-item">
+            <i class="ri-mail-line"></i>
+            <span>support@autorent.com</span>
+        </div>
+        <div class="contact-info-item">
+            <i class="ri-map-pin-line"></i>
+            <span>123 Rue de l'Auto, 75001 Paris, France</span>
+        </div>
+    </div>
+
+    <!-- Section du formulaire de contact -->
+    <div class="contact-form">
+        <h3>Laissez-nous un message</h3>
+         <form method="post" action="{{ path('app_send_contact_form') }}">
+            <input type="text" name="name" placeholder="Votre nom" required>
+            <input type="email" name="email" placeholder="Votre adresse email" required>
+            <input type="text" name="subject" placeholder="Sujet" required>
+            <textarea name="message" placeholder="Votre message" rows="6" required></textarea>
+            <button type="submit">Envoyer le message</button>
+        </form>
+    </div>
+</section>
+
+{% include '_partials/footer.html.twig' %}
+
+{% endblock %}

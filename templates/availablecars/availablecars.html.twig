@@ -6,10 +6,9 @@
 
     {% include '_partials/header_steps.html.twig' %}
 
-    <div class="section__container" id="available-cars">
+    <div class="section__container" >
         {# CARS RECOMMENDED #}
         <h2 style="margin-top: 8rem;">Véhicules recommandés</h2>
-
         <div class="recommended-cars">
             <div class="carousel">
                 <button class="carousel-prev">&#10094;</button>
@@ -43,232 +42,26 @@
             </div>
         </div>
 
-        {# LISTE DES CARS DISPONIBLES #}
-        <h1 style="margin-top:80px;">Choisissez votre véhicule</h1>
-
-<div class="filters">
-    <!-- Trier par prix -->
-    <div class="filter-dropdown" id="filter-price">
-        <button class="filter-btn">
-            <span id="filter-price-text">Trier par 	<i style="font-size:1.2rem;" class="ri-arrow-down-s-line"></i></span>
-        </button>
-        <div class="dropdown-content">
-            <div class="dropdown-item" data-filter="asc">Prix croissant</div>
-            <div class="dropdown-item" data-filter="desc">Prix décroissant</div>
+     {# Section filtrée dynamiquement #}
+        <div id="filtered-cars">
+            {% include 'availablecars/_cars_list.html.twig' %}
         </div>
-    </div>
-
-    <!-- Transmission -->
-    <div class="filter-dropdown" id="filter-gearbox">
-        <button class="filter-btn">
-            <span id="filter-gearbox-text">Transmission  <i style="font-size:1.2rem;" class="ri-arrow-down-s-line"></i></span>
-        </button>
-        <div class="dropdown-content">
-            <div class="dropdown-item" data-filter="Manuelle">Manuelle</div>
-            <div class="dropdown-item" data-filter="Automatique">Automatique</div>
-        </div>
-    </div>
-
-    <!-- Nombre de portes -->
-    <div class="filter-dropdown" id="filter-doors">
-        <button class="filter-btn">
-            <span id="filter-doors-text">Nombre de Portes  <i style="font-size:1.2rem;" class="ri-arrow-down-s-line"></i></span>
-        </button>
-        <div class="dropdown-content">
-            <div class="dropdown-item" data-filter="3">3 portes</div>
-            <div class="dropdown-item" data-filter="5">5 portes</div>
-        </div>
-    </div>
-
-
-</div>
-
-
-        <style>
-
-            .filters {
-                display: flex;
-                gap: 10px;
-                margin-bottom: 20px;
-            }
-
-            .filter-dropdown {
-                position: relative;
-                display: inline-block;
-            }
-
-            .filter-btn {
-                
-                background-color: #333;
-                color: white;
-                border: none;
-                cursor: pointer;
-
-                padding:10px 15px 10px 15px; 
-                border-radius:8px;
-            }
-
-            .filter-btn:hover {
-                background-color: #555;
-            }
-
-            .dropdown-content {
-                border-radius:8px;
-                padding: 6px;
-                display: none;
-                position: absolute;
-                background-color: white;
-                min-width: 200px;
-                box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
-                z-index: 1;
-            }
-
-            .dropdown-content .dropdown-item {
-                background-color: #f2f2f2;
-                border-radius:8px;
-                margin:10px;
-                padding: 10px;
-                cursor: pointer;
-                color: #333;
-            }
-
-            .dropdown-content .dropdown-item:hover {
-                background-color: #ddd;
-            }
-
-            .filter-dropdown:hover .dropdown-content {
-                display: block;
-            }
-
-            .filter-dropdown.active .filter-btn {
-                background-color: #fe5c3c;
-            }
-
-            #filter-price-range input {
-                width: 70px;
-                margin: 5px 0;
-                padding: 5px;
-            }
-
-            #apply-price-range {
-                background-color: #fe5c3c;
-                color: white;
-                padding: 5px 10px;
-                cursor: pointer;
-                border: none;
-                margin-top: 5px;
-            }
-
-
-
-/* Style pour un filtre actif */
-.filter-dropdown .filter-btn.active {
-    background-color: #fe5c3c;
-    padding:10px 15px 10px 15px; 
-    color: white;
-}
-
-/* Style pour l'indicateur de notification */
-.filter-btn .filter-indicator {
-    background-color: black;
-    color: white;
-    border-radius: 50%;
-    padding: 2px 8px;
-    font-size: 0.8rem;
-    margin-left: 10px;
-    display: inline-block;
-}
-
-/* Masquer l'indicateur par défaut */
-.filter-btn .filter-indicator:empty {
-    display: none;
-}
-
-
-
-/* Style pour un élément dropdown actif (fond orange) */
-.dropdown-item.active-bg {
-    background-color: #fe5c3c;
-    color: white;
-}
-
-/* Désactiver le hover pour l'option active */
-.dropdown-item.active-bg:hover {
-    background-color: #fe5c3c;
-    cursor: default; /* Affiche le curseur par défaut, indiquant que l'élément est déjà actif */
-}
-
-/* Style hover pour les autres éléments */
-.dropdown-item:not(.active-bg):hover {
-    background-color: #ddd; /* Couleur du hover pour les éléments non actifs */
-    cursor: pointer;
-}
-        </style>
-
-        
-
-        {% if cars is empty %}
-            <p>Aucune voiture disponible pour les dates sélectionnées.</p>
-        {% else %}
-            <p class="availability-text">{{ cars|length }} disponible(s)</p>
-
-            <ul class="cars__list">
-                {% for car in cars %}
-                    {% set TotalPerDay = car.dayprice * days %}
-                    <li class="cars__item">
-                        <div class="cars__image">
-                            <img src="{{ asset('assets/images/' ~ car.image) }}" alt="{{ car.brand }} {{ car.model }}">
-                        </div>
-                        <div class="cars__details">
-                            <h1 style="margin-bottom: 25px;">{{ car.brand }} {{ car.model }}</h1>
-                            <div class="cars__details1">
-                                <p><i class="ri-calendar-line"></i> {{ car.year }}</p>
-                                <p><i class="ri-palette-line"></i> {{ car.color }}</p>
-                                <p><i class="ri-car-line"></i> {{ car.registration }}</p>
-                                <p style="display:flex; justify-content: start; align-items:center;">
-                                    <img src="{{ asset('assets/images/car.png') }}" alt="moteur" style="width: 0.9em; height: 0.9em; margin-right: 10px;">
-                                    {{ car.nbofcardoors }} portes
-                                </p>
-                                <p><i class="ri-user-line"></i> {{ car.nbofpersons }} personnes</p>
-                            </div>
-                            <div class="cars__details1">
-                                {% if car.airconditionnerStatus %}
-                                    <p><i class="fa-solid fa-snowflake"></i> Climatisation</p>
-                                {% endif %}
-                                <p style="display:flex; justify-content: start; align-items:center;">
-                                    <img src="{{ asset('assets/images/gear.png') }}" alt="moteur" style="width: 1em; height: 1em; margin-right: 10px;">
-                                    {{ car.gearbox }}
-                                </p>
-                                <p style="display:flex; justify-content: start; align-items:center;">
-                                    <img src="{{ asset('assets/images/engine.png') }}" alt="moteur" style="width: 1.3em; height: 1.3em; margin-right: 10px;">
-                                    {{ car.horsepower }} CV
-                                </p>
-                                <p><i class="ri-cloud-line"></i> CO2: {{ car.co2emissions }} g/km</p>
-                                {% if car.electricStatus %}
-                                    <p class="isElec"><i style="color:#fff;" class="ri-flashlight-line"></i> Électrique</p>
-                                {% endif %}
-                            </div>
-                        </div>
-                        <div class="cars__price">
-                            <p class="small-text">À PARTIR DE</p>
-                            <p class="price-text">{{ car.dayprice }} € / jour</p>
-                            <h4 style="color: #919191;">TOTAL <span style="color: #fe5c3c;">{{ TotalPerDay }} €</span></h4>
-                            <p style="color:#c3c3c3; font-size:1rem;margin-bottom: 1.5rem;"> <span style="font-weight: bold;color: #919191;"> {{ days }} jrs </span> de location</p>
-                            <a href="{{ path('app_cars_available_details', { id: car.id }) }}" class="select-btn">Sélectionner</a>
-                        </div>
-                    </li>
-                {% endfor %}
-            </ul>
-        {% endif %}
     </div>
 
 <script>
-
 document.addEventListener("DOMContentLoaded", function () {
     const filters = {
         price: null,
         gearbox: null,
-        doors: null
+        doors: null,
+        passengers: null,
+        electric: null,
+        startDate: '{{ app.session.get("startDate") }}',
+        endDate: '{{ app.session.get("endDate") }}',
+        startTime: '{{ app.session.get("startTime") }}',
+        endTime: '{{ app.session.get("endTime") }}',
+        pickupLocation: '{{ app.session.get("pickupLocationName") }}',
+        dropoffLocation: '{{ app.session.get("dropoffLocationName") }}'
     };
 
     function attachFilterEvents() {
@@ -285,13 +78,11 @@ document.addEventListener("DOMContentLoaded", function () {
         const filterTextElement = document.querySelector(`#filter-${type}-text`);
 
         if (filters[type] === value) {
-            // Désactivation du filtre si déjà sélectionné
             filters[type] = null;
             element.classList.remove('active-bg');
             button.classList.remove('active');
             resetFilterText(type);
         } else {
-            // Activation du filtre
             filters[type] = value;
             document.querySelectorAll(`#filter-${type} .dropdown-item`).forEach(item => {
                 item.classList.remove('active-bg');
@@ -301,19 +92,25 @@ document.addEventListener("DOMContentLoaded", function () {
             updateFilterText(type, value, filterTextElement);
         }
 
-        fetchFilteredCars(); // Actualiser les voitures filtrées
+        fetchFilteredCars();
     }
 
     function updateFilterText(type, value, element) {
         switch (type) {
             case 'price':
-                element.innerText = value === 'asc' ? 'Trier par: Prix croissant' : 'Trier par: Prix décroissant';
+                element.innerHTML = value === 'asc' ? 'Trier par: Prix croissant <i style="font-size:1.2rem;" class="ri-arrow-down-s-line"></i>' : 'Trier par: Prix décroissant <i style="font-size:1.2rem;" class="ri-arrow-down-s-line"></i>';
                 break;
             case 'gearbox':
-                element.innerText = `Transmission: ${value}`;
+                element.innerHTML = `Transmission: ${value} <i style="font-size:1.2rem;" class="ri-arrow-down-s-line"></i>`;
                 break;
             case 'doors':
-                element.innerText = `Nombre de Portes: ${value} portes`;
+                element.innerHTML = `Nombre de Portes: ${value} portes <i style="font-size:1.2rem;" class="ri-arrow-down-s-line"></i>`;
+                break;
+            case 'passengers':
+                element.innerHTML = `Passagers: ${value}+ <i style="font-size:1.2rem;" class="ri-arrow-down-s-line"></i>`;
+                break;
+            case 'electric':
+                element.innerHTML = value === 'electric' ? 'Type de Véhicule: Électrique <i style="font-size:1.2rem;" class="ri-arrow-down-s-line"></i>' : 'Type de Véhicule: Pas électrique <i style="font-size:1.2rem;" class="ri-arrow-down-s-line"></i>';
                 break;
         }
     }
@@ -322,13 +119,19 @@ document.addEventListener("DOMContentLoaded", function () {
         const element = document.querySelector(`#filter-${type}-text`);
         switch (type) {
             case 'price':
-                element.innerText = 'Trier par';
+                element.innerHTML = 'Trier par <i style="font-size:1.2rem;" class="ri-arrow-down-s-line"></i>';
                 break;
             case 'gearbox':
-                element.innerText = 'Transmission';
+                element.innerHTML = 'Transmission <i style="font-size:1.2rem;" class="ri-arrow-down-s-line"></i>';
                 break;
             case 'doors':
-                element.innerText = 'Nombre de Portes';
+                element.innerHTML = 'Nombre de Portes <i style="font-size:1.2rem;" class="ri-arrow-down-s-line"></i>';
+                break;
+            case 'passengers':
+                element.innerHTML = 'Passagers <i style="font-size:1.2rem;" class="ri-arrow-down-s-line"></i>';
+                break;
+            case 'electric':
+                element.innerHTML = 'Type de Véhicule <i style="font-size:1.2rem;" class="ri-arrow-down-s-line"></i>';
                 break;
         }
     }
@@ -354,37 +157,125 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
     function fetchFilteredCars() {
-        const query = new URLSearchParams();
+    const query = new URLSearchParams();
 
-        if (filters.price) query.set('price', filters.price);
-        if (filters.gearbox) query.set('gearbox', filters.gearbox);
-        if (filters.doors) query.set('doors', filters.doors);
+    // Ajout des filtres
+    if (filters.price) query.set('price', filters.price);
+    if (filters.gearbox) query.set('gearbox', filters.gearbox);
+    if (filters.doors) query.set('doors', filters.doors);
+    if (filters.passengers) query.set('passengers', filters.passengers);
+    if (filters.electric) query.set('electric', filters.electric);
 
-        // Inclure les informations de session (dates, heures, et lieux)
-        if ('{{ app.session.get('startDate') }}') query.set('startDate', '{{ app.session.get('startDate') }}');
-        if ('{{ app.session.get('endDate') }}') query.set('endDate', '{{ app.session.get('endDate') }}');
-        if ('{{ app.session.get('pickupLocationName') }}') query.set('pickupLocation', '{{ app.session.get('pickupLocationName') }}');
-        if ('{{ app.session.get('dropoffLocationName') }}') query.set('dropoffLocation', '{{ app.session.get('dropoffLocationName') }}');
-        if ('{{ app.session.get('startTime') }}') query.set('startTime', '{{ app.session.get('startTime') }}');
-        if ('{{ app.session.get('endTime') }}') query.set('endTime', '{{ app.session.get('endTime') }}');
+    query.set('startDate', filters.startDate);
+    query.set('endDate', filters.endDate);
+    query.set('startTime', filters.startTime);
+    query.set('endTime', filters.endTime);
+    query.set('pickupLocation', filters.pickupLocation);
+    query.set('dropoffLocation', filters.dropoffLocation);
 
-        fetch(`/cars/available?${query.toString()}`)
-            .then(response => response.text())
-            .then(data => {
-                document.getElementById("available-cars").innerHTML = data;
+    fetch(`/cars/available?${query.toString()}`, {
+        headers: {
+            'X-Requested-With': 'XMLHttpRequest' // Indiquer que c'est une requête AJAX
+        }
+    })
+    .then(response => response.text())
+    .then(data => {
+        document.getElementById("filtered-cars").innerHTML = data;
 
-                // Réattache les événements et réapplique les états actifs
+     
+         // Réattache les événements et réinitialise les scripts
                 attachFilterEvents();
                 applyActiveStates();
-            })
-            .catch(error => console.error('Erreur:', error));
+                initializeCarousel();  // Réinitialise le carousel
+                initializeHeaderScripts();  // Réinitialise les scripts du header
+    })
+    .catch(error => console.error('Erreur:', error));
+}
+
+    function initializeCarousel() {
+        const prevButton = document.querySelector('.carousel-prev');
+        const nextButton = document.querySelector('.carousel-next');
+        const carouselContainer = document.querySelector('.carousel-container');
+        const carouselItems = document.querySelectorAll('.carousel-item');
+        let currentIndex = 0;
+        const totalItems = carouselItems.length;
+        const itemsToShow = 3;
+
+        function updateCarousel() {
+            const width = carouselItems[0].clientWidth;
+            carouselContainer.style.transform = `translateX(${-currentIndex * width}px)`;
+        }
+
+        nextButton.addEventListener('click', () => {
+            if (currentIndex < totalItems - itemsToShow) {
+                currentIndex++;
+            } else {
+                currentIndex = 0;
+            }
+            updateCarousel();
+        });
+
+        prevButton.addEventListener('click', () => {
+            if (currentIndex > 0) {
+                currentIndex--;
+            } else {
+                currentIndex = totalItems - itemsToShow;
+            }
+            updateCarousel();
+        });
+
+        window.addEventListener('resize', updateCarousel);
+        updateCarousel(); // Initial update on page load
+    }
+
+    function initializeHeaderScripts() {
+        const steps = document.querySelectorAll('.step-1, .step-2, .step-3, .step-4');
+        const stepDetails = document.querySelectorAll('.step-details, .step-details2, .step-details3, .step-details4');
+        const header = document.getElementById('header');
+
+        window.addEventListener('scroll', function () {
+            let scrollTop = window.scrollY;
+
+            if (scrollTop > 100) {
+                stepDetails.forEach((detail) => {
+                    detail.style.transition = 'opacity 0.5s ease, height 0.5s ease';
+                    detail.style.opacity = '0';
+                    detail.style.height = '0';
+                });
+
+                steps.forEach((step) => {
+                    step.style.transition = 'height 0.5s ease';
+                    step.style.height = '48px';
+                });
+
+                header.style.transition = 'height 0.5s ease';
+                header.style.height = 'auto';
+            } else {
+                stepDetails.forEach((detail) => {
+                    detail.style.transition = 'opacity 0.5s ease, height 0.5s ease';
+                    detail.style.opacity = '1';
+                    detail.style.height = 'auto';
+                });
+
+                steps.forEach((step) => {
+                    step.style.transition = 'height 0.5s ease';
+                    step.style.height = 'auto';
+                });
+
+                header.style.transition = 'height 0.5s ease';
+                header.style.height = 'auto';
+            }
+        });
     }
 
     attachFilterEvents();
     applyActiveStates();
+    initializeCarousel(); // Initialisation du carousel au chargement de la page
+    initializeHeaderScripts(); // Initialisation des scripts du header au chargement de la page
 });
-
 </script>
-    {% include '_partials/footer.html.twig' %}
 
+
+{% include '_partials/footer.html.twig' %}
 {% endblock %}
+

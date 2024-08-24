@@ -72,7 +72,8 @@ class AvailableCarsController extends AbstractController
         $priceOrder = $request->query->get('price'); // 'asc' or 'desc'
         $transmission = $request->query->get('gearbox'); // 'manual' or 'automatic'
         $doors = $request->query->get('doors') ? (int) $request->query->get('doors') : null; // Conversion en entier
-        
+        $passengers = $request->query->get('passengers') ? (int) $request->query->get('passengers') : null; // Conversion en entier
+        $electric = $request->query->get('electric'); // 'electric' or 'not-electric'
 
         // Requête pour récupérer les voitures disponibles avec les filtres appliqués
         $cars = $carRepository->findAvailableCarsWithFilters(
@@ -82,11 +83,23 @@ class AvailableCarsController extends AbstractController
             $dropoffLocationId,
             $priceOrder,
             $transmission,
-            $doors // Paramètre de type int ou null  
+            $doors,
+            $passengers,
+            $electric,
+            $startTime,
+            $endTime
         );
 
-        // Récupérer les voitures recommandées
-        $recommendedCars = $carRepository->findRecommendedCars();
+    // Récupérer les voitures recommandées (uniquement pour les requêtes non AJAX)
+    $recommendedCars = $request->isXmlHttpRequest() ? [] : $carRepository->findRecommendedCars();
+
+    // Si la requête est AJAX, renvoyer uniquement la partie filtrée
+    if ($request->isXmlHttpRequest()) {
+        return $this->render('availablecars/_cars_list.html.twig', [
+            'cars' => $cars,
+            'days' => $days,
+        ]);
+    }
 
         return $this->render('availablecars/availablecars.html.twig', [
             'cars' => $cars,
@@ -102,7 +115,8 @@ class AvailableCarsController extends AbstractController
             'selectedPriceOrder' => $priceOrder,
             'selectedTransmission' => $transmission,
             'selectedDoors' => $doors,
-
+            'selectedPassengers' => $passengers,
+            'selectedElectric' => $electric,
         ]);
     }
 

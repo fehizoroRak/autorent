@@ -39,9 +39,11 @@
 					</a>
 				</li>
 				<li class="nav__links__btn">
-					<button class="btn">
-						<i class="ri-question-line"></i>
-						Aide</button>
+				<a href="{{ path('app_help') }}" class="btn">
+    <i class="ri-question-line"></i>
+    Aide
+</a>
+
 				</li>
 			</ul>
 			<div class="nav__btns">
@@ -57,7 +59,7 @@
 					<i class="ri-calendar-check-line"></i>
 					Mes réservations
 				</a>
-				<a class="" href="">
+				<a  href="{{ path('app_help') }}">
 					<i class="ri-question-line"></i>
 					Aide
 				</a>

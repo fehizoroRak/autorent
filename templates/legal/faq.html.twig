@@ -1,0 +1,202 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+    AutoRent | FAQ
+{% endblock %}
+
+{% block body %}
+
+    {% include '_partials/header.html.twig' %}
+
+<style>
+/* Styles pour la section FAQ */
+.faq-container {
+    width: 100%;
+    max-width: 800px;
+    margin: 0 auto 60px auto;
+    padding: 0 1rem;
+}
+
+.faq-item {
+    border-bottom: 1px solid #ddd;
+    padding: 1rem 0;
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+.faq-item:hover {
+    background-color: #f5f5f5;
+}
+
+.faq-item .question {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    justify-content: space-between;
+}
+
+.faq-item .question-icon {
+    margin-right: 1rem;
+    color: #fe5b3e;
+    font-size: 1.5rem;
+}
+
+.faq-item .question-text {
+    flex: 1;
+    font-size: 1rem;
+    font-weight: 500;
+}
+
+.faq-item .arrow-icon {
+    color: #fe5b3e;
+    font-size: 1.2rem;
+    transition: transform 0.3s;
+}
+
+.faq-item.open .arrow-icon {
+    transform: rotate(90deg);
+}
+
+.faq-answer {
+    display: none;
+    padding: 0.5rem 2.5rem;
+    font-size: 0.95rem;
+    line-height: 1.6;
+    color: #333;
+}
+
+.faq-item.open .faq-answer {
+    display: block;
+}
+</style>
+
+<section class="faq-container" id="faq">
+<br><br><br><br><br>
+    <h2>Questions Fréquemment Posées</h2>
+    <br><br>
+
+    <div class="faq-item">
+        <div class="question">
+            <i class="ri-question-line question-icon"></i>
+            <span class="question-text">Puis-je modifier ma réservation?</span>
+            <i class="ri-arrow-right-s-line arrow-icon"></i>
+        </div>
+        <div class="faq-answer">
+            Oui, vous pouvez modifier votre réservation en ligne ou en contactant notre service client jusqu'à 24 heures avant l'heure prévue de prise en charge.
+        </div>
+    </div>
+
+    <div class="faq-item">
+        <div class="question">
+            <i class="ri-question-line question-icon"></i>
+            <span class="question-text">Puis-je annuler ma réservation ?</span>
+            <i class="ri-arrow-right-s-line arrow-icon"></i>
+        </div>
+        <div class="faq-answer">
+            Vous pouvez annuler votre réservation sans frais jusqu'à 48 heures avant la prise en charge. Passé ce délai, des frais d'annulation s'appliquent.
+        </div>
+    </div>
+
+    <div class="faq-item">
+        <div class="question">
+            <i class="ri-question-line question-icon"></i>
+            <span class="question-text">Est-ce qu’il y a des restrictions d’âge pour louer un véhicule avec AutoRent ?</span>
+            <i class="ri-arrow-right-s-line arrow-icon"></i>
+        </div>
+        <div class="faq-answer">
+            Oui, pour louer un véhicule avec AutoRent, vous devez être âgé de 21 ans ou plus, avec un permis de conduire valide depuis au moins un an.
+        </div>
+    </div>
+
+    <div class="faq-item">
+        <div class="question">
+            <i class="ri-question-line question-icon"></i>
+            <span class="question-text">Puis-je conduire dans un autre pays?</span>
+            <i class="ri-arrow-right-s-line arrow-icon"></i>
+        </div>
+        <div class="faq-answer">
+            Oui, vous pouvez conduire nos véhicules dans d'autres pays européens, mais vous devez en informer AutoRent lors de votre réservation.
+        </div>
+    </div>
+
+    <div class="faq-item">
+        <div class="question">
+            <i class="ri-question-line question-icon"></i>
+            <span class="question-text">Puis-je utiliser ma carte bancaire ?</span>
+            <i class="ri-arrow-right-s-line arrow-icon"></i>
+        </div>
+        <div class="faq-answer">
+            Nous acceptons les cartes de crédit et de débit pour les paiements. Veuillez vous assurer que votre carte est valide et dispose d'un solde suffisant.
+        </div>
+    </div>
+
+    <div class="faq-item">
+        <div class="question">
+            <i class="ri-question-line question-icon"></i>
+            <span class="question-text">Que dois-je faire lors de la restitution du véhicule ?</span>
+            <i class="ri-arrow-right-s-line arrow-icon"></i>
+        </div>
+        <div class="faq-answer">
+            Assurez-vous de restituer le véhicule avec le plein d’essence et dans l'état où vous l'avez pris. Si vous êtes en retard, veuillez informer notre service client.
+        </div>
+    </div>
+
+    <div class="faq-item">
+        <div class="question">
+            <i class="ri-question-line question-icon"></i>
+            <span class="question-text">Puis-je louer un véhicule pour une journée seulement ?</span>
+            <i class="ri-arrow-right-s-line arrow-icon"></i>
+        </div>
+        <div class="faq-answer">
+            Oui, AutoRent propose des locations pour une journée avec des tarifs compétitifs adaptés à vos besoins.
+        </div>
+    </div>
+
+    <div class="faq-item">
+        <div class="question">
+            <i class="ri-question-line question-icon"></i>
+            <span class="question-text">Quelles assurances sont incluses dans la location ?</span>
+            <i class="ri-arrow-right-s-line arrow-icon"></i>
+        </div>
+        <div class="faq-answer">
+            Toutes nos locations incluent une assurance de base. Vous pouvez ajouter des options d’assurance supplémentaires pour une couverture complète.
+        </div>
+    </div>
+
+    <div class="faq-item">
+        <div class="question">
+            <i class="ri-question-line question-icon"></i>
+            <span class="question-text">Que faire en cas de panne ou d’accident ?</span>
+            <i class="ri-arrow-right-s-line arrow-icon"></i>
+        </div>
+        <div class="faq-answer">
+            En cas de panne ou d’accident, contactez notre assistance routière 24/7 au numéro indiqué dans votre contrat de location.
+        </div>
+    </div>
+
+    <div class="faq-item">
+        <div class="question">
+            <i class="ri-question-line question-icon"></i>
+            <span class="question-text">Quels sont les documents nécessaires pour louer un véhicule ?</span>
+            <i class="ri-arrow-right-s-line arrow-icon"></i>
+        </div>
+        <div class="faq-answer">
+            Vous devez présenter une pièce d'identité valide, un permis de conduire en cours de validité, ainsi qu’une carte de crédit ou de débit.
+        </div>
+    </div>
+
+</section>
+
+<script>
+document.querySelectorAll('.faq-item').forEach(item => {
+    item.addEventListener('click', () => {
+        item.classList.toggle('open');
+    });
+});
+</script>
+
+{% include '_partials/footer.html.twig' %}
+
+{% endblock %}

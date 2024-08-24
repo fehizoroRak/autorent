@@ -25,8 +25,8 @@ class OptionCrudController extends AbstractCrudController
             TextField::new('name', 'Name'),
             NumberField::new('price', 'Price'),
             ImageField::new('image', 'Option Image')
-                ->setBasePath('/images/options')
-                ->setUploadDir('public/images/options')
+                ->setBasePath('/assets/images/options')
+                ->setUploadDir('public/assets/images/options')
                 ->setHelp('Upload an image for the option.'),
             TextareaField::new('content', 'Content')->hideOnIndex(),
         ];

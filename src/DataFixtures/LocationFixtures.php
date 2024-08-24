@@ -100,7 +100,7 @@ class LocationFixtures extends Fixture implements DependentFixtureInterface
             $location->setTotalPerDay($totalPerDay);
 
             // Set isPaid status randomly
-            $isPaid = (bool)rand(0, 1);
+            $isPaid = false;
             $location->setPaid($isPaid);
 
             // Set payment method randomly between 'en agence' and 'en ligne'

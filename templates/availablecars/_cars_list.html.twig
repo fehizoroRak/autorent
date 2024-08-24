@@ -1,0 +1,119 @@
+
+            {# LISTE DES CARS DISPONIBLES #}
+        <h1 style="margin-top:80px;">Choisissez votre véhicule</h1>
+
+<div class="filters">
+    <!-- Trier par prix -->
+    <div class="filter-dropdown" id="filter-price">
+        <button class="filter-btn">
+            <span id="filter-price-text">Trier par <i style="font-size:1.2rem;" class="ri-arrow-down-s-line"></i></span>
+        </button>
+        <div class="dropdown-content">
+            <div class="dropdown-item" data-filter="asc">Prix croissant</div>
+            <div class="dropdown-item" data-filter="desc">Prix décroissant</div>
+        </div>
+    </div>
+
+    <!-- Transmission -->
+    <div class="filter-dropdown" id="filter-gearbox">
+        <button class="filter-btn">
+            <span id="filter-gearbox-text">Transmission <i style="font-size:1.2rem;" class="ri-arrow-down-s-line"></i></span>
+        </button>
+        <div class="dropdown-content">
+            <div class="dropdown-item" data-filter="Manuelle">Manuelle</div>
+            <div class="dropdown-item" data-filter="Automatique">Automatique</div>
+        </div>
+    </div>
+
+    <!-- Nombre de portes -->
+    <div class="filter-dropdown" id="filter-doors">
+        <button class="filter-btn">
+            <span id="filter-doors-text">Nombre de Portes <i style="font-size:1.2rem;" class="ri-arrow-down-s-line"></i></span>
+        </button>
+        <div class="dropdown-content">
+            <div class="dropdown-item" data-filter="3">3 portes</div>
+            <div class="dropdown-item" data-filter="5">5 portes</div>
+        </div>
+    </div>
+
+    <!-- Nombre de passagers -->
+    <div class="filter-dropdown" id="filter-passengers">
+        <button class="filter-btn">
+            <span id="filter-passengers-text">Passagers <i style="font-size:1.2rem;" class="ri-arrow-down-s-line"></i></span>
+        </button>
+        <div class="dropdown-content">
+            <div class="dropdown-item" data-filter="2">2+</div>
+            <div class="dropdown-item" data-filter="4">4+</div>
+            <div class="dropdown-item" data-filter="5">5+</div>
+            <div class="dropdown-item" data-filter="7">7+</div>
+        </div>
+    </div>
+
+    <!-- Électrique -->
+    <div class="filter-dropdown" id="filter-electric">
+        <button class="filter-btn">
+            <span id="filter-electric-text">Type de Véhicule <i style="font-size:1.2rem;" class="ri-arrow-down-s-line"></i></span>
+        </button>
+        <div class="dropdown-content">
+            <div class="dropdown-item" data-filter="electric">Électrique</div>
+            <div class="dropdown-item" data-filter="not-electric">Pas électrique</div>
+        </div>
+    </div>
+</div>
+
+
+
+{% if cars is empty %}
+    <p>Aucune voiture disponible pour les dates sélectionnées.</p>
+{% else %}
+    <p class="availability-text">{{ cars|length }} disponible(s)</p>
+
+        <ul class="cars__list">
+        {% for car in cars %}
+            {% set TotalPerDay = car.dayprice * days %}
+            <li class="cars__item">
+                <div class="cars__image">
+                    <img src="{{ asset('assets/images/' ~ car.image) }}" alt="{{ car.brand }} {{ car.model }}">
+                </div>
+                <div class="cars__details">
+                    <h1 style="margin-bottom: 25px;">{{ car.brand }} {{ car.model }}</h1>
+                    <div class="cars__details1">
+                        <p><i class="ri-calendar-line"></i> {{ car.year }}</p>
+                        <p><i class="ri-palette-line"></i> {{ car.color }}</p>
+                        <p><i class="ri-car-line"></i> {{ car.registration }}</p>
+                        <p style="display:flex; justify-content: start; align-items:center;">
+                            <img src="{{ asset('assets/images/car.png') }}" alt="moteur" style="width: 0.9em; height: 0.9em; margin-right: 10px;">
+                            {{ car.nbofcardoors }} portes
+                        </p>
+                        <p><i class="ri-user-line"></i> {{ car.nbofpersons }} personnes</p>
+                    </div>
+                    <div class="cars__details1">
+                        {% if car.airconditionnerStatus %}
+                            <p><i class="fa-solid fa-snowflake"></i> Climatisation</p>
+                        {% endif %}
+                        <p style="display:flex; justify-content: start; align-items:center;">
+                            <img src="{{ asset('assets/images/gear.png') }}" alt="moteur" style="width: 1em; height: 1em; margin-right: 10px;">
+                            {{ car.gearbox }}
+                        </p>
+                        <p style="display:flex; justify-content: start; align-items:center;">
+                            <img src="{{ asset('assets/images/engine.png') }}" alt="moteur" style="width: 1.3em; height: 1.3em; margin-right: 10px;">
+                            {{ car.horsepower }} CV
+                        </p>
+                        <p><i class="ri-cloud-line"></i> CO2: {{ car.co2emissions }} g/km</p>
+                        {% if car.electricStatus %}
+                            <p class="isElec"><i style="color:#fff;" class="ri-flashlight-line"></i> Électrique</p>
+                        {% endif %}
+                    </div>
+                </div>
+                <div class="cars__price">
+                    <p class="small-text">À PARTIR DE</p>
+                    <p class="price-text">{{ car.dayprice }} € / jour</p>
+                    <h4 style="color: #919191;">TOTAL <span style="color: #fe5c3c;">{{ TotalPerDay }} €</span></h4>
+                    <p style="color:#c3c3c3; font-size:1rem;margin-bottom: 1.5rem;"> <span style="font-weight: bold;color: #919191;"> {{ days }} jrs </span> de location</p>
+                    <a href="{{ path('app_cars_available_details', { id: car.id }) }}" class="select-btn">Sélectionner</a>
+                </div>
+            </li>
+        {% endfor %}
+    </ul>
+
+{% endif %}

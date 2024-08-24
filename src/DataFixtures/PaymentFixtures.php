@@ -24,7 +24,14 @@ class PaymentFixtures extends Fixture implements DependentFixtureInterface
         $paymentModes = ['Credit Card', 'Cash', 'Bank Transfer', 'PayPal'];
 
         // Create 10 payments with random data
-        for ($i = 0; $i < 10; $i++) {
+        $paymentCount = 0;
+        foreach ($locations as $location) {
+            // Skip if the location is not paid
+            if (!$location->isPaid()) {
+                continue;
+            }
+
+            // Create a payment for the paid location
             $payment = new Payment();
             $paymentDate = new \DateTime(sprintf('-%d days', rand(1, 30)));
             $amount = rand(50, 500);
@@ -33,9 +40,14 @@ class PaymentFixtures extends Fixture implements DependentFixtureInterface
             $payment->setPaymentdate($paymentDate);
             $payment->setAmount($amount);
             $payment->setPaymentmode($paymentMode);
-            $payment->setLocation($locations[array_rand($locations)]);
+            $payment->setLocation($location);
 
             $manager->persist($payment);
+
+            // Break the loop once we have 10 payments
+            if (++$paymentCount >= 10) {
+                break;
+            }
         }
 
         // Flush all payments to the database

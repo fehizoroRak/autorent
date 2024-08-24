@@ -3,11 +3,13 @@
 {% extends '@EasyAdmin/page/content.html.twig' %}
 
 {% block head_stylesheets %}
+		<link href="https://cdn.jsdelivr.net/npm/remixicon@4.3.0/fonts/remixicon.css" rel="stylesheet"/>
+		<link href="https://cdn.jsdelivr.net/npm/remixicon/fonts/remixicon.css" rel="stylesheet">
     {{ parent() }}
     <style>
         .calendar {
             display: grid;
-            grid-template-columns: repeat(3, 1fr);
+            grid-template-columns: repeat(4, 1fr);
             gap: 20px;
         }
         .month {
@@ -32,24 +34,149 @@
             border-radius: 5px;
         }
         .rented-day {
-            background-color: #ff0000;
+            background-color: #fe5b3e;
             color: white;
         }
         .empty-day {
             background-color: #f4f4f4;
         }
+
+        /* Styles pour la liste des voitures */
+.cars__list {
+    list-style: none;
+    padding: 0;
+    margin: 2rem 0;
+}
+
+.cars__item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1rem;
+    margin-bottom: 1rem;
+    border-bottom: 0.2px solid #c7c7c7;
+}
+
+.cars__image img {
+    width: 180px;
+    border-radius: 8px;
+}
+
+.cars__details {
+    flex: 1;
+    margin-left: 1rem;
+}
+.cars__details1 {
+display:flex;
+    margin-left: 1rem;
+}
+.cars__details1 p i {
+color:#c9c9c9;
+
+}
+
+.cars__details h2 {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: var(--text-dark);
+    margin-bottom: 0.5rem;
+}
+
+.cars__details p {
+    color: var(--text-light);
+    margin-right: 20px;
+}
+
+.cars__price {
+    font-size: 1.25rem;
+    font-weight: 700;
+
+}
+
+.cars__details p.isElec {
+    background-color: #3c4286;
+    border-radius: 15px;
+    color: white;
+    padding: 0.5rem;
+    display: inline-block;
+}
+
+
+/* Media query pour ajuster la mise en page sur les écrans plus petits */
+@media (max-width: 768px) {
+    .cars__item {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .cars__details {
+        margin-left: 0;
+        margin-top: 1rem;
+    }
+
+    .cars__price {
+        margin-top: 1rem;
+    }
+
+    .cars__image img {
+        width: 250px;
+        border-radius: 8px;
+    }
+}
+
+
+
+.content-wrapper {
+        display: flex;
+        flex-direction: column;
+        
+    }
+
     </style>
 {% endblock %}
 
+   
 {% block content %}
-    <h1>Détails du Véhicule</h1>
+ <h1>Détails du Véhicule</h1>
       
-    <div class="car-details">
-        <p><strong>Marque :</strong> {{ entity.brand }}</p>
-        <p><strong>Modèle :</strong> {{ entity.model }}</p>
-        <p><strong>Couleur :</strong> {{ entity.color }}</p>
-        <p><strong>Immatriculation :</strong> {{ entity.registration }}</p>
-    </div>
+ <ul class="cars__list">
+            <li class="cars__item">
+                <div class="cars__image">
+                    <img src="{{ asset('assets/images/' ~ entity.image) }}" alt="{{ entity.brand }} {{ entity.model }}">
+                </div>
+                <div class="cars__details">
+                    <h1 style="margin-bottom: 25px;">{{ entity.brand }} {{ entity.model }}</h1>
+                    <div class="cars__details1">
+                        <p><i class="ri-calendar-line"></i> {{ entity.year }}</p>
+                        <p><i class="ri-palette-line"></i> {{ entity.color }}</p>
+                        <p><i class="ri-car-line"></i> {{ entity.registration }}</p>
+                        <p style="display:flex; justify-content: start; align-items:center;">
+                            <img src="{{ asset('assets/images/car.png') }}" alt="moteur" style="width: 0.9em; height: 0.9em; margin-right: 10px;">
+                            {{ entity.nbofcardoors }} portes
+                        </p>
+                        <p><i class="ri-user-line"></i> {{ entity.nbofpersons }} personnes</p>
+                    </div>
+                    <div class="cars__details1">
+                        {% if entity.airconditionnerStatus %}
+                            <p><i class="fa-solid fa-snowflake"></i> Climatisation</p>
+                        {% endif %}
+                        <p style="display:flex; justify-content: start;">
+                            <img src="{{ asset('assets/images/gear.png') }}" alt="moteur" style="width: 1em; height: 1em; margin-right: 10px;">
+                            {{ entity.gearbox }}
+                        </p>
+                        <p style="display:flex; justify-content: start; ">
+                            <img src="{{ asset('assets/images/engine.png') }}" alt="moteur" style="width: 1.3em; height: 1.3em; margin-right: 10px;">
+                            {{ entity.horsepower }} CV
+                        </p>
+                        <p><i class="ri-cloud-line"></i> CO2: {{ entity.co2emissions }} g/km</p>
+                        {% if entity.electricStatus %}
+                            <p class="isElec"><i style="color:#fff;" class="ri-flashlight-line"></i> Électrique</p>
+                        {% endif %}
+                    </div>
+                </div>
+            </li>
+
+    </ul>
 
     <div class="calendar">
         {% for month in months %}

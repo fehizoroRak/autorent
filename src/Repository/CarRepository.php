@@ -14,7 +14,7 @@ class CarRepository extends ServiceEntityRepository
     }
 
     /**
-     * Trouve les voitures disponibles en dehors des périodes où elles sont louées et pour les lieux spécifiés.
+     * Trouve les voitures disponibles en dehors des périodes où elles sont louées, incluant les heures spécifiques.
      *
      * @param \DateTime $startDate
      * @param \DateTime $endDate
@@ -23,6 +23,10 @@ class CarRepository extends ServiceEntityRepository
      * @param string|null $priceOrder
      * @param string|null $gearbox
      * @param int|null $doors
+     * @param int|null $passengers
+     * @param string|null $electric
+     * @param \DateTime|null $startTime
+     * @param \DateTime|null $endTime
      * @return Car[]
      */
     public function findAvailableCarsWithFilters(
@@ -33,7 +37,10 @@ class CarRepository extends ServiceEntityRepository
         ?string $priceOrder,
         ?string $gearbox,
         ?int $doors,
-
+        ?int $passengers,
+        ?string $electric,
+        ?\DateTime $startTime,
+        ?\DateTime $endTime
     ): array {
         $qb = $this->createQueryBuilder('c')
             ->leftJoin('c.locations', 'l')
@@ -48,22 +55,41 @@ class CarRepository extends ServiceEntityRepository
                     OR (loc.startdate BETWEEN :startDate AND :endDate)
                     OR (loc.enddate BETWEEN :startDate AND :endDate)
                 )
+                AND (
+                    (:startTime IS NULL OR :startTime >= loc.starttime)
+                    AND (:endTime IS NULL OR :endTime <= loc.endtime)
+                )
             ))')
             ->setParameter('startDate', $startDate)
             ->setParameter('endDate', $endDate)
             ->setParameter('pickupLocation', $pickupLocation)
-            ->setParameter('dropoffLocation', $dropoffLocation);
+            ->setParameter('dropoffLocation', $dropoffLocation)
+            ->setParameter('startTime', $startTime ? $startTime->format('H:i:s') : null)
+            ->setParameter('endTime', $endTime ? $endTime->format('H:i:s') : null);
 
         // Filtre par transmission
         if ($gearbox) {
             $qb->andWhere('c.gearbox = :gearbox')
-            ->setParameter('gearbox', $gearbox);
+                ->setParameter('gearbox', $gearbox);
         }
 
         // Filtre par nombre de portes
         if ($doors) {
             $qb->andWhere('c.nbofcardoors = :doors')
                 ->setParameter('doors', $doors);
+        }
+
+        // Filtre par nombre de passagers
+        if ($passengers) {
+            $qb->andWhere('c.nbofpersons >= :passengers')
+                ->setParameter('passengers', $passengers);
+        }
+
+        // Filtre par type de véhicule (électrique ou non)
+        if ($electric === 'electric') {
+            $qb->andWhere('c.isElectric = true');
+        } elseif ($electric === 'not-electric') {
+            $qb->andWhere('c.isElectric = false');
         }
 
         // Tri par prix

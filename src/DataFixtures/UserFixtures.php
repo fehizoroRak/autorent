@@ -26,7 +26,7 @@ class UserFixtures extends Fixture
                 'phonenumber' => '1234567890',
                 'address' => '123 Main St',
                 'password' => '1234',
-                'roles' => ['ROLE_USER']
+                'roles' => ['ROLE_USER', 'ROLE_ADMIN']            
             ],
             [
                 'name' => 'Smith',

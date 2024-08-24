@@ -1,0 +1,102 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+	AutoRent | Mentions Légales
+{% endblock %}
+
+{% block body %}
+
+	{% include '_partials/header.html.twig' %}
+
+	<section class="section__container" id="legal">
+		<br>
+		<br>
+		<h2 class="section__header">Mentions Légales</h2>
+		<div class="content">
+			<br>
+			<br>
+			<p>
+				<strong>1. Présentation du site :</strong>
+			</p>
+			<br>
+			<br>
+			<p>
+				Conformément aux dispositions des articles 6-III et 19 de la Loi n°2004-575 du 21 juin 2004 pour la Confiance dans l’économie numérique, dite L.C.E.N., nous portons à la connaissance des utilisateurs et visiteurs du site AutoRent les informations suivantes :
+			</p>
+			<p>
+				Nom du site : AutoRent<br>
+				Propriétaire : Société AutoRent SARL, Capital social : 50 000 €, Immatriculée au RCS de Paris sous le numéro 123 456 789<br>
+				Siège social : 123 Rue de l'Auto, 75000 Paris<br>
+				Téléphone : 01 23 45 67 89<br>
+				Directeur de la publication : John Doe<br>
+				Hébergeur : WebHost - 456 Avenue du Serveur, 75000 Paris, Téléphone : 01 98 76 54 32<br>
+			</p>
+			<br>
+			<br>
+			<p>
+				<strong>2. Conditions générales d’utilisation du site et des services proposés :</strong>
+			</p>
+			<br>
+			<br>
+			<p>
+				L’utilisation du site AutoRent implique l’acceptation pleine et entière des conditions générales d’utilisation ci-après décrites. Ces conditions d’utilisation sont susceptibles d’être modifiées ou complétées à tout moment. Les utilisateurs du site AutoRent sont donc invités à les consulter de manière régulière.
+			</p>
+			<p>
+				Le site est accessible à tout moment aux utilisateurs. Une interruption pour raison de maintenance technique peut être toutefois décidée par AutoRent, qui s’efforcera alors de communiquer préalablement aux utilisateurs les dates et heures de l’intervention.
+			</p>
+			<br>
+			<br>
+			<p>
+				<strong>3. Description des services fournis :</strong>
+			</p>
+			<br>
+			<br>
+			<p>
+				Le site AutoRent a pour objet de fournir une information concernant l’ensemble des activités de la société. AutoRent s’efforce de fournir sur le site des informations aussi précises que possible. Toutefois, elle ne pourra être tenue responsable des omissions, des inexactitudes et des carences dans la mise à jour, qu’elles soient de son fait ou du fait des tiers partenaires qui lui fournissent ces informations.
+			</p>
+			<p>
+				Toutes les informations indiquées sur le site AutoRent sont données à titre indicatif, et sont susceptibles d’évoluer. Par ailleurs, les renseignements figurant sur le site AutoRent ne sont pas exhaustifs. Ils sont donnés sous réserve de modifications ayant été apportées depuis leur mise en ligne.
+			</p>
+			<br>
+			<br>
+			<p>
+				<strong>4. Propriété intellectuelle et contrefaçons :</strong>
+			</p>
+			<br>
+			<br>
+			<p>
+				AutoRent est propriétaire des droits de propriété intellectuelle ou détient les droits d’usage sur tous les éléments accessibles sur le site, notamment les textes, images, graphismes, logo, icônes, sons, logiciels… Toute reproduction, représentation, modification, publication, adaptation de tout ou partie des éléments du site, quel que soit le moyen ou le procédé utilisé, est interdite, sauf autorisation écrite préalable de AutoRent.
+			</p>
+			<br>
+			<br>
+			<p>
+				<strong>5. Limitations de responsabilité :</strong>
+			</p>
+			<br>
+			<br>
+			<p>
+				AutoRent ne pourra être tenu responsable des dommages directs et indirects causés au matériel de l’utilisateur, lors de l’accès au site AutoRent, et résultant soit de l’utilisation d’un matériel ne répondant pas aux spécifications indiquées au point 4, soit de l’apparition d’un bug ou d’une incompatibilité.
+			</p>
+			<br>
+			<br>
+			<p>
+				<strong>6. Gestion des données personnelles :</strong>
+			</p>
+			<br>
+			<br>
+			<p>
+				En France, les données personnelles sont notamment protégées par la loi n° 78-87 du 6 janvier 1978, la loi n° 2004-801 du 6 août 2004, l’article L. 226-13 du Code pénal et le Règlement Général sur la Protection des Données (RGPD).
+			</p>
+			<p>
+				À l’occasion de l’utilisation du site AutoRent, peuvent être recueillies : l’URL des liens par l’intermédiaire desquels l’utilisateur a accédé au site AutoRent, le fournisseur d’accès de l’utilisateur, l’adresse de protocole Internet (IP) de l’utilisateur.
+			</p>
+
+			<p>Pour plus d'informations, veuillez consulter notre
+				<a href="{{ path('app_politique_cookies') }}">Politique de cookies</a>.</p>
+		</div>
+	</section>
+
+	{% include '_partials/footer.html.twig' %}
+
+{% endblock %}
+
