@@ -1,0 +1,175 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+    AutoRent | Accessibilité
+{% endblock %}
+
+{% block body %}
+
+    {% include '_partials/header.html.twig' %}
+
+<style>
+.accessibility-container {
+    width: 100%;
+    max-width: 1100px;
+    margin: 0 auto 60px auto;
+    padding: 0 1rem;
+}
+
+.accessibility-header img {
+    width: 100%;
+    border-radius: 8px;
+}
+
+.accessibility-header h2 {
+    text-align: center;
+    margin: 20px 0;
+    font-size: 1.8rem;
+    color: #333;
+}
+
+.schedule-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 20px 0;
+}
+
+.schedule-table th, .schedule-table td {
+    border: 1px solid #ddd;
+    padding: 12px;
+    text-align: left;
+    font-size: 1rem;
+}
+
+.schedule-table th {
+    background-color: #f8f8f8;
+    color: #333;
+}
+
+.schedule-table td {
+    background-color: #fff;
+}
+
+.method-selection {
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+    margin-top: 40px;
+    gap: 20px;
+}
+
+.method-card {
+    flex: 1;
+    max-width: 300px;
+    padding: 20px;
+    text-align: center;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    transition: background-color 0.3s, transform 0.3s;
+    cursor: pointer;
+}
+
+.method-card:hover {
+    background-color: #fe5b3e;
+    color: #fff;
+    transform: scale(1.05);
+}
+
+.method-card i {
+    font-size: 3rem;
+    color: #fe5b3e;
+    margin-bottom: 20px;
+}
+
+.method-card:hover i {
+    color: #fff;
+}
+
+.method-card h4 {
+    font-size: 1.2rem;
+    margin-bottom: 10px;
+}
+
+.method-card p {
+    font-size: 0.95rem;
+    line-height: 1.6;
+    color: #333;
+}
+
+@media (max-width: 768px) {
+    .method-selection {
+        flex-direction: column;
+        align-items: center;
+    }
+}
+</style>
+
+<section class="accessibility-container" id="accessibility">
+<br><br><br><br>
+    <div class="accessibility-header">
+        <img src="{{ asset('assets/images/help/deafi_banner.png') }}" alt="Service Client Accessible">
+        <br>
+        <h2>Votre service client AutoRent accessible aux sourds et malentendants</h2>
+        <br>
+    </div>
+
+    <table class="schedule-table">
+        <tr>
+            <th>Jour</th>
+            <th>Horaires</th>
+            <th>Service</th>
+        </tr>
+        <tr>
+            <td>Lundi</td>
+            <td>9:00 - 18:00</td>
+            <td>LSF</td>
+        </tr>
+        <tr>
+            <td>Lundi</td>
+            <td>9:00 - 18:00</td>
+            <td>Transcription</td>
+        </tr>
+        <tr>
+            <td>Mardi</td>
+            <td>9:00 - 18:00</td>
+            <td>LPC</td>
+        </tr>
+        <tr>
+            <td>Mercredi</td>
+            <td>9:00 - 18:00</td>
+            <td>LSF</td>
+        </tr>
+        <tr>
+            <td>Jeudi</td>
+            <td>9:00 - 18:00</td>
+            <td>Transcription</td>
+        </tr>
+        <tr>
+            <td>Vendredi</td>
+            <td>9:00 - 18:00</td>
+            <td>LPC</td>
+        </tr>
+    </table>
+
+    <div class="method-selection">
+        <div class="method-card">
+            <i class="ri-hand-heart-line"></i>
+            <h4>LSF</h4>
+            <p>Cliquez ici pour entrer en contact avec un vidéo conseiller en Langue des Signes Française.</p>
+        </div>
+        <div class="method-card">
+            <i class="ri-mic-line"></i>
+            <h4>LPC</h4>
+            <p>Cliquez ici pour entrer en contact avec un codeur LPC et échanger via le Langage Parlé Complété.</p>
+        </div>
+        <div class="method-card">
+            <i class="ri-article-line"></i>
+            <h4>Transcription</h4>
+            <p>Cliquez ici pour entrer en contact avec un conseiller et suivre les échanges en Transcription Écrite Simultanée Automatisée.</p>
+        </div>
+    </div>
+</section>
+
+{% include '_partials/footer.html.twig' %}
+
+{% endblock %}

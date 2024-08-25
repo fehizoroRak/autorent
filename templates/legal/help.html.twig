@@ -57,6 +57,7 @@
 }
 .image{
 width: 50%;
+border-radius:8px;
 }
 @media (max-width: 768px) {
     .help__section-wrapper {
@@ -78,6 +79,7 @@ width: 100%;
 
 <section class="section__container" id="help">
     <h2 class="section__header">Comment notre service client peut-il vous aider ?</h2>
+    <br>
     <p>Chez AutoRent, nous mettons tout en œuvre pour rendre votre expérience de location aussi fluide que possible. Sur cette page, vous trouverez différentes ressources utiles et des réponses à vos questions concernant la location de voitures et d'utilitaires. Que ce soit pour des informations sur la réservation, les assurances, les services ou le programme de fidélité, nous sommes là pour vous accompagner.</p>
 
     <div class="help__sections">
@@ -106,7 +108,7 @@ width: 100%;
             <div class="help__section">
                 <h3>Accessibilité pour les sourds ou malentendants</h3>
                 <p>AutoRent propose des conseillers en Langue des Signes Française (LSF) pour les personnes sourdes ou malentendantes. Contactez-nous en LSF, en Langue Française Parlée Complétée (LfPC) ou via la transcription écrite simultanée automatisée.</p>
-                <a href="" class="aide-btn">Je me connecte</a>
+                <a href="{{ path('app_sourds') }}" class="aide-btn">Je me connecte</a>
             </div>
             <img class="image" src="{{ asset('assets/images/help/deafi.jpg') }}" alt="Accessibility Image">
         </div>
@@ -126,7 +128,7 @@ width: 100%;
             <div class="help__section">
                 <h3>Informations utiles</h3>
                 <p>Que vous planifiiez un voyage ou que vous soyez déjà en route, nous avons rassemblé pour vous des conseils pratiques et des informations importantes pour que votre expérience se passe sans encombre.</p>
-                <a href="" class="aide-btn">En savoir plus</a>
+                <a href="{{ path('app_infos') }}" class="aide-btn">En savoir plus</a>
             </div>
             <img class="image" src="{{ asset('assets/images/help/information-image.jpg') }}" alt="Information Image">
         </div>

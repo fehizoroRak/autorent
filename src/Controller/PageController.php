@@ -36,4 +36,14 @@ class PageController extends AbstractController
     {
         return $this->render('legal/contact_us.html.twig');
     }
+    #[Route('/sourds', name: 'app_sourds')]
+    public function sourds(): Response
+    {
+        return $this->render('legal/sourds.html.twig');
+    }
+    #[Route('/infos', name: 'app_infos')]
+    public function infos(): Response
+    {
+        return $this->render('legal/infos.html.twig');
+    }
 }

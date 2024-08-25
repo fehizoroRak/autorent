@@ -14,6 +14,8 @@ use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Mailer\MailerInterface;
+use Symfony\Component\Mime\Email;
 use Symfony\Component\Routing\Annotation\Route;
 
 class ReservationConfirmController extends AbstractController
@@ -123,7 +125,8 @@ class ReservationConfirmController extends AbstractController
         CityDropoffLocationRepository $cityDropoffLocationRepository,
         OptionRepository $optionRepository,
         StatusRepository $statusRepository,
-        EntityManagerInterface $entityManager
+        EntityManagerInterface $entityManager,
+        MailerInterface $mailer // Injection du MailerInterface
     ): Response {
         // Récupérer les données du formulaire
         $total = $request->request->get('total');
@@ -163,6 +166,9 @@ class ReservationConfirmController extends AbstractController
         // Récupérer les informations des lieux depuis la base de données
         $pickupLocation = $cityPickupLocationRepository->find($pickupLocationId);
         $dropoffLocation = $cityDropoffLocationRepository->find($dropoffLocationId);
+
+        // Si la valeur est vide, définir optionsTotalPrice sur 0.0 ou null
+        $optionsTotalPrice = $optionsTotalPrice === '' ? 0.0 : (float)$optionsTotalPrice;
 
         // Créer une nouvelle location
         $location = new Location();
@@ -209,6 +215,26 @@ class ReservationConfirmController extends AbstractController
             $entityManager->persist($location);
             $entityManager->flush();
         }
+
+        // Envoi de l'email de confirmation
+        $email = (new Email())
+            ->from('reservation@autorent.com')
+            ->to($user->getEmail())
+            ->subject('Confirmation de votre réservation AutoRent')
+            ->html($this->renderView('emails/reservation_confirmation.html.twig', [
+                'user' => $user,
+                'car' => $car,
+                'location' => $location,
+                'startDate' => $startDate,
+                'endDate' => $endDate,
+                'startTime' => $startTime,
+                'endTime' => $endTime,
+                'pickupLocation' => $pickupLocation,
+                'dropoffLocation' => $dropoffLocation,
+                'total' => $total,
+            ]));
+
+        $mailer->send($email); // Envoi de l'email
 
         // Rediriger ou afficher une confirmation
         return $this->render('reservationconfirm/success.html.twig', [

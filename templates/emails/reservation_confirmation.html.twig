@@ -1,0 +1,27 @@
+{# templates/emails/reservation_confirmation.html.twig #}
+
+<h2>Confirmation de votre réservation AutoRent</h2>
+
+<p>Bonjour {{ user.name }},</p>
+
+<p>Nous vous confirmons que votre réservation a été effectuée avec succès.</p>
+
+<h3>Détails de la réservation :</h3>
+
+<p><strong>Numéro de réservation :</strong> {{ location.rentalNumber }}</p>
+<div style="text-align: center; margin: 20px 0;">
+    <img src="{{ absolute_url(asset('assets/images/' ~ car.image)) }}" alt="{{ car.brand }} {{ car.model }}" style="max-width: 80%; border-radius: 8px;">
+</div>
+
+<ul>
+    <li><strong>Véhicule :</strong> {{ car.brand }} {{ car.model }}</li>
+    <li><strong>Total :</strong> {{ total }} €</li>
+    <li><strong>Date de début :</strong> {{ startDate|date('d-m-Y') }} à {{ startTime|date('H:i') }}</li>
+    <li><strong>Date de retour :</strong> {{ endDate|date('d-m-Y') }} à {{ endTime|date('H:i') }}</li>
+    <li><strong>Lieu de départ :</strong> {{ pickupLocation.name }}</li>
+    <li><strong>Lieu de retour :</strong> {{ dropoffLocation.name }}</li>
+</ul>
+
+<p>Merci d'avoir choisi AutoRent. Nous restons à votre disposition pour toute question.</p>
+
+<p>Pour voir le détail de vos réservations, <a href="{{ absolute_url(path('app_myaccount')) }}">cliquez ici</a>.</p>
