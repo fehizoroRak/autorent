@@ -23,43 +23,53 @@ class SecurityController extends AbstractController
     #[Route('/login', name: 'app_login')]
     public function login(SessionInterface $session, Security $security, Request $request, AuthenticationUtils $authenticationUtils, CarRepository $carRepository): Response
     {
-
         // Get the login error if there is one
         $error = $authenticationUtils->getLastAuthenticationError();
         // Last username entered by the user
         $lastUsername = $authenticationUtils->getLastUsername();
-
+    
         // Get the target path from the query parameter
         $targetPath = $request->query->get('_target_path', $this->generateUrl('app_myaccount'));
-
+    
         // Initialize car, total, and user_id variables
         $car = null;
         $total = null;
-
+    
         /** @var User|null $user */
         $user = $security->getUser();
         $userId = $user ? $user->getId() : null;
-
+    
         // Only process car and total if target path is app_pack
         if ($targetPath === $this->generateUrl('app_pack')) {
-
+    
             // Récupérer l'ID de la voiture et le total depuis la requête
             $carId = $request->query->get('id');
             $total = $request->query->get('total');
-
+    
             $session->set('total_session', $total);
     
             // Récupérer les informations de la voiture depuis la base de données
             if ($carId) {
                 $car = $carRepository->find($carId);
-
+    
                 // Si la voiture n'existe pas, lever une exception ou rediriger vers une autre page
                 if (!$car) {
                     throw $this->createNotFoundException('The car does not exist');
                 }
             }
         }
-
+    
+        // Handle preserving query parameters on error
+        if ($error) {
+            // Get all the query parameters from the current request
+            $queryParameters = $request->query->all();
+    
+            // Rebuild the URL with the query parameters intact
+            $redirectUrl = $this->generateUrl('app_login', $queryParameters);
+    
+            return $this->redirect($redirectUrl);
+        }
+    
         return $this->render('security/login.html.twig', [
             'last_username' => $lastUsername,
             'error' => $error,
@@ -69,11 +79,13 @@ class SecurityController extends AbstractController
             'target_path' => $targetPath, // Pass the target path to the template
         ]);
     }
+    
 
     #[Route('/redirect', name: 'app_redirect')]
     public function redirectToAppropriatePage(Security $security, Request $request, SessionInterface $session): Response
-    {
+    {  
         $user = $security->getUser();
+   
         $targetPath = $request->query->get('_target_path');
         $carId = $request->query->get('id');
         $total = $request->query->get('total');

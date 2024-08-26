@@ -20,25 +20,32 @@ class LoginSuccessHandler implements AuthenticationSuccessHandlerInterface
 
     public function onAuthenticationSuccess(Request $request, TokenInterface $token): Response
     {
-        // Récupérer l'utilisateur connecté
         $user = $token->getUser();
-     
-
-        // Récupérer la valeur de _target_path depuis la requête
         $targetPath = $request->get('_target_path');
-        //dd($targetPath);
-        // Si l'utilisateur a le rôle ROLE_ADMIN et que le _target_path est /pack
-        if (in_array('ROLE_ADMIN', $user->getRoles()) && $targetPath === $this->router->generate('app_pack')) {
-            // Rediriger vers app_pack
-            return new RedirectResponse($this->router->generate('app_pack'));
+
+        if ($targetPath === $this->router->generate('app_pack')) {
+            $carId = $request->query->get('id');
+            $total = $request->query->get('total');
+
+            if ($carId && $total) {
+                return new RedirectResponse($this->router->generate('app_pack', [
+                    'id' => $carId,
+                    'total' => $total
+                ]));
+            }
         }
 
-        // Si l'utilisateur est admin mais qu'il n'est pas censé aller vers /pack, rediriger vers app_home
-        if (in_array('ROLE_ADMIN', $user->getRoles()) && $targetPath === $this->router->generate('app_myaccount')) {
+        // Vérifier si l'utilisateur est un admin
+        if (in_array('ROLE_ADMIN', $user->getRoles())) {
+            if ($targetPath === $this->router->generate('app_pack')) {
+                return new RedirectResponse($this->router->generate('app_pack'));
+            }
+
+            // Redirection pour les admins non concernés par app_pack
             return new RedirectResponse($this->router->generate('app_home'));
         }
 
-        // Pour les autres utilisateurs, rediriger vers le target path ou la page par défaut
+        // Autres redirections selon le rôle de l'utilisateur
         if ($targetPath) {
             return new RedirectResponse($targetPath);
         }

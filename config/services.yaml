@@ -26,3 +26,12 @@ services:
             $imageDirectory: '%kernel.project_dir%/public/images'
         tags:
             - { name: doctrine.event_listener, event: preRemove }
+       # Ajout de votre gestionnaire d'échec personnalisé
+    App\Security\LoginFailureHandler:
+        arguments:
+            $router: '@router'
+
+     # Ajout de votre gestionnaire de succès personnalisé
+    App\Security\LoginSuccessHandler:
+        arguments:
+            $router: '@router'

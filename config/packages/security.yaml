@@ -23,7 +23,9 @@ security:
                 check_path: app_login
                 target_path_parameter: _target_path
                 always_use_default_target_path: false
+                use_referer: true
                 success_handler: App\Security\LoginSuccessHandler
+                failure_handler: App\Security\LoginFailureHandler
             logout:
                 path: app_logout
                 target: app_home
