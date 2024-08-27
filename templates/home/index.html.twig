@@ -5,12 +5,134 @@
 {% endblock %}
 
 {% block body %}
+	<style>
+		.burger-menu {
+		cursor: pointer;
+		font-size:1.7rem;
+		}
 
+
+		/* Styles du sidebar */
+	.nav__logo__ img{
+		margin: 30px 0;
+	}
+		.sidebar-menu {
+			position: fixed;
+			top: 0;
+			left: -350px;
+			width: 350px;
+			height: 100%;
+			background-color: #fff;
+			box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+			padding: 20px;
+			z-index: 10000 !important;
+			transition: left 0.3s ease;
+		}
+
+		.sidebar-menu.active {
+			left: 0;
+		}
+
+		.sidebar-menu .close-btn {
+			font-size: 24px;
+			cursor: pointer;
+			margin-bottom: 20px;
+			display: block;
+			text-align: right;
+		}
+
+		.sidebar-menu img {
+			width: 60%;
+			display: block;
+			margin: 30px 0;
+		}
+
+		.sidebar-menu ul {
+			list-style: none;
+			padding: 0;
+		}
+
+		.sidebar-menu ul li {
+			margin-bottom: 20px;
+		}
+
+		.sidebar-menu ul li a {
+			text-decoration: none;
+			color: #333;
+			font-size: 18px;
+		}
+		.sidebar-menu ul li a:hover {
+			color: #fe5b3e;
+			font-weight: bold;
+
+		}
+
+		/* Styles de l'overlay */
+		.overlay {
+			position: fixed;
+			top: 0;
+			left: 0;
+			width: 100%;
+			height: 100%;
+			background: rgba(0, 0, 0, 0.5);
+			z-index: 9999 !important;
+			opacity: 0;
+			visibility: hidden;
+			transition: opacity 0.3s ease, visibility 0.3s ease;
+		}
+
+		.overlay.active {
+			opacity: 1;
+			visibility: visible;
+		}
+		.nav__links{
+			display: none;
+		}
+
+		@media(max-width: 860px) {
+			.nav__links{
+			display: block;
+			}
+			.nav__links li{
+			margin: 20px 0px;
+			}
+		}
+		/* Afficher le burger menu uniquement pour les écrans plus larges que 860px */
+		@media(max-width: 860px) {
+			.burger-menu {
+				display: none;
+			}
+		}
+	</style>
+	<!-- Sidebar Menu HTML -->
+				<div class="sidebar-menu" id="sidebar-menu">
+					<span class="close-btn" id="close-sidebar">&times;</span>
+					<div class="nav__logo__">
+						<img src="{{ asset('assets/images/logoautorent.png') }}" alt="logo"/>
+					</div>
+					<ul>
+						<li><a href="#home">Accueil</a></li>
+						<li><a href="#rent">Louer</a></li>
+						<li><a href="#service">Services</a></li>
+						<li><a href="#ride">Conduite</a></li>
+						<li><a href="#testimonials">Témoignages</a></li>
+					</ul>
+				</div>
+
+				<!-- Overlay -->
+				<div class="overlay" id="overlay"></div>
 	<header>
 		<nav>
 			<div class="nav__header">
-				<div class="nav__logo">
-					<img src="{{ asset('assets/images/logoautorent.png') }}" style="width: 50%;" alt="logo"/>
+				{# <div class="burger-menu" id="menu-sidebar-btn">
+					<span></span>
+					<span></span>
+					<span></span>
+				</div> #}
+
+				<div class="nav__logo" style="display:flex;gap: 15px; justify-content: start; align-items:center;">
+					<i class="fa-solid fa-bars burger-menu" id="menu-sidebar-btn"></i>
+					<img src="{{ asset('assets/images/logoautorent.png') }}" style="width: 35%;" alt="logo"/>
 
 				</div>
 				<div class="nav__menu__btn" id="menu-btn">
@@ -32,7 +154,7 @@
 				</li>
 				<li>
 					<a href="#testimonials">Témoignages</a>
-				</li>
+				</li> 
 
 				{% if is_granted('ROLE_ADMIN') %}
 					<li class="nav__links__btn">
@@ -81,12 +203,12 @@
 
 
 				{% if is_granted('ROLE_ADMIN') %}
-					<a style="margin-right:20px; display:flex;" href="{{ path('admin') }}">
-						<i class="fa-solid fa-gear" style="margin-right: 5px;"></i>Admin</a>
+					<a style="display:flex; gap:4px;" href="{{ path('admin') }}">
+						<i class="fa-solid fa-gear" ></i>Admin</a>
 				{% endif %}
 				{% if app.user %}
 
-					<a style="margin-right:20px;display:flex;" class="" href="{{ path('app_login') }}">
+					<a style="display:flex; gap:4px;" class="" href="{{ path('app_login') }}">
 						<i class="ri-user-line"></i>
 						{{ app.user.name }}
 						{{ app.user.firstname }}
@@ -95,16 +217,16 @@
 
 				{% endif %}
 
-				<a style="display:flex;" href="{{ path('app_redirect', { '_target_path': path('app_myaccount') }) }}" style="margin-right:20px;">
+				<a style="display:flex;gap:4px;" href="{{ path('app_redirect', { '_target_path': path('app_myaccount') }) }}" style="margin-right:20px;">
 					<i class="ri-calendar-check-line"></i>
 					Mes réservations
 				</a>
-				<a style="display:flex;" href="{{ path('app_help') }}">
+				<a style="display:flex;gap:4px;" href="{{ path('app_help') }}">
 					<i class="ri-question-line"></i>
 					Aide
 				</a>
 				{% if is_granted('ROLE_USER') or is_granted('ROLE_ADMIN') %}
-					<a style="margin-left:20px;" class="" href="{{ path('app_logout') }}">
+					<a style="" class="" href="{{ path('app_logout') }}">
 						<i class="ri-logout-box-r-line"></i>
 					</a>
 				{% endif %}
@@ -330,9 +452,46 @@
 			</div>
 		</div>
 
-
 	</section>
 
+
+	 <script>
+document.addEventListener('DOMContentLoaded', function () {
+    const sidebarMenu = document.getElementById('sidebar-menu');
+    const overlay = document.getElementById('overlay');
+    const menuButton = document.getElementById('menu-sidebar-btn');
+    const closeButton = document.getElementById('close-sidebar');
+    const sidebarLinks = sidebarMenu.querySelectorAll('a'); // Sélectionner tous les liens dans le sidebar
+
+    // Ouvrir le menu
+    menuButton.addEventListener('click', function () {
+        sidebarMenu.classList.add('active');
+        overlay.classList.add('active');
+    });
+
+    // Fermer le menu en cliquant sur le bouton de fermeture
+    closeButton.addEventListener('click', function () {
+        sidebarMenu.classList.remove('active');
+        overlay.classList.remove('active');
+    });
+
+    // Fermer le menu en cliquant sur un lien du sidebar
+    sidebarLinks.forEach(function (link) {
+        link.addEventListener('click', function () {
+            sidebarMenu.classList.remove('active');
+            overlay.classList.remove('active');
+        });
+    });
+
+    // Fermer le menu en cliquant sur l'overlay
+    overlay.addEventListener('click', function () {
+        sidebarMenu.classList.remove('active');
+        overlay.classList.remove('active');
+    });
+});
+
+	
+	</script>
 	{% include '_partials/footer.html.twig' %}
 
 {% endblock %}
