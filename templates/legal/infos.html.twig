@@ -8,102 +8,103 @@
 
     {% include '_partials/header.html.twig' %}
 
-<style>
-.information-container {
-    width: 90%;
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 2rem 1rem;
-}
+    <style>
+        .information-container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem 1rem;
+        }
 
-.information-section {
-    display: flex;
-    align-items: center;
-    margin-bottom: 2rem;
-}
+        .information-section {
+            display: flex;
+            align-items: center;
+            margin-bottom: 3rem;
+        }
 
-.information-section:nth-child(even) {
-    flex-direction: row-reverse;
-}
+        .information-section:nth-child(even) {
+            flex-direction: row-reverse;
+        }
 
-.information-section img {
-    width: 50%;
-    border-radius: 8px;
-}
+        .information-section img {
+            width: 50%;
+            border-radius: 8px;
+        }
 
-.information-text {
-    width: 50%;
-    padding: 0 2rem;
-}
+        .information-text {
+            width: 50%;
+            padding: 0 2rem;
+        }
 
-.information-text h3 {
-    color: #333;
-    font-size: 1.5rem;
-    margin-bottom: 1rem;
-}
+        .information-text h3 {
+            color: #333;
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+        }
 
-.information-text p {
-    color: #666;
-    line-height: 1.6;
-}
+        .information-text p {
+            color: #666;
+            line-height: 1.6;
+        }
 
-@media (max-width: 768px) {
-    .information-section {
-        flex-direction: column;
-    }
+        @media(max-width: 768px) {
+            .information-section {
+                flex-direction: column !important; /* Force la colonne pour toutes les sections */
+            }
 
-    .information-section img,
-    .information-text {
-        width: 100%;
-        padding: 0;
-    }
+            .information-section img,
+            .information-text {
+                width: 100%;
+                padding: 0;
+            }
 
-    .information-text {
-        margin-bottom: 1rem;
-    }
-}
-</style>
+            .information-text {
+                margin-bottom: 1rem;
+            }
+        }
+    </style>
 
-<section class="information-container">
-<br><br><br><br>
-    <h3>Informations Utiles</h3>
-    <p>Découvrez des informations pratiques et des conseils pour rendre votre expérience de location encore plus agréable. Que ce soit pour trouver l'agence la plus proche ou pour rester connecté, AutoRent est là pour vous accompagner.</p>
-    <br><br>
+    <section class="information-container">
+        <br><br><br><br>
+        <h1>Informations Utiles</h1>
+        <br><br>
+        <p>Découvrez des informations pratiques et des conseils pour rendre votre expérience de location encore plus agréable. Que ce soit pour trouver l'agence la plus proche ou pour rester connecté, AutoRent est là pour vous accompagner.</p>
+        <br><br>
 
-    <div class="information-section">
-        <div class="information-text">
-            <h3>Trouver une agence de location AutoRent</h3>
-            <p>Avec notre vaste réseau d'agences, trouver un point de départ et de retour n'a jamais été aussi simple. Réservez votre location de voiture en toute simplicité où que vous soyez.</p>
+        <div class="information-section">
+            <div class="information-text">
+                <h3>Trouver une agence de location AutoRent</h3>
+                <p>Avec notre vaste réseau d'agences, trouver un point de départ et de retour n'a jamais été aussi simple. Réservez votre location de voiture en toute simplicité où que vous soyez.</p>
+            </div>
+            <img src="{{ asset('assets/images/help/agence.jpg') }}" alt="Agence de location AutoRent">
         </div>
-        <img src="{{ asset('assets/images/help/agence.jpg') }}" alt="Agence de location AutoRent">
-    </div>
 
-    <div class="information-section">
-        <div class="information-text">
-            <h3>Restez connecté avec AutoRent</h3>
-            <p>Téléchargez notre application mobile pour rechercher, réserver et suivre votre location de voiture où que vous soyez. Avec AutoRent, la réservation est à portée de main.</p>
+        <div class="information-section">
+            <div class="information-text">
+                <h3>Restez connecté avec AutoRent</h3>
+                <p>Téléchargez notre application mobile pour rechercher, réserver et suivre votre location de voiture où que vous soyez. Avec AutoRent, la réservation est à portée de main.</p>
+            </div>
+            <img src="{{ asset('assets/images/help/mobile.jpg') }}" alt="Application mobile AutoRent">
         </div>
-        <img src="{{ asset('assets/images/help/mobile.jpg') }}" alt="Application mobile AutoRent">
-    </div>
 
-    <div class="information-section">
-        <div class="information-text">
-            <h3>Adoptez une conduite plus verte</h3>
-            <p>Participez à nos initiatives pour un avenir plus vert. AutoRent soutient des projets de reforestation et d’autres initiatives environnementales pour réduire l’impact climatique.</p>
+        <div class="information-section">
+            <div class="information-text">
+                <h3>Adoptez une conduite plus verte</h3>
+                <p>Participez à nos initiatives pour un avenir plus vert. AutoRent soutient des projets de reforestation et d’autres initiatives environnementales pour réduire l’impact climatique.</p>
+            </div>
+            <img src="{{ asset('assets/images/help/green.jpg') }}" alt="Initiatives écologiques AutoRent">
         </div>
-        <img src="{{ asset('assets/images/help/green.jpg') }}" alt="Initiatives écologiques AutoRent">
-    </div>
 
-    <div class="information-section">
-        <div class="information-text">
-            <h3>Votre sécurité est notre priorité</h3>
-            <p>Nous mettons en place des mesures rigoureuses pour garantir la sécurité de nos clients, avec des options de réservation flexibles et des procédures de nettoyage renforcées.</p>
+        <div class="information-section">
+            <div class="information-text">
+                <h3>Votre sécurité est notre priorité</h3>
+                <p>Nous mettons en place des mesures rigoureuses pour garantir la sécurité de nos clients, avec des options de réservation flexibles et des procédures de nettoyage renforcées.</p>
+            </div>
+            <img src="{{ asset('assets/images/help/security.jpg') }}" alt="Mesures de sécurité AutoRent">
         </div>
-        <img src="{{ asset('assets/images/help/security.jpg') }}" alt="Mesures de sécurité AutoRent">
-    </div>
 
-</section>
+    </section>
 
-{% include '_partials/footer.html.twig' %}
+    {% include '_partials/footer.html.twig' %}
 
 {% endblock %}

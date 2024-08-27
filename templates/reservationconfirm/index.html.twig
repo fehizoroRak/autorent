@@ -1,10 +1,11 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Résumé{% endblock %}
+{% block title %}Résumé
+{% endblock %}
 
 {% block stylesheets %}
-    {{ parent() }}
-      <link rel="stylesheet" href="{{ asset('assets/css/reservationconfirm.css') }}">
+	{{ parent() }}
+	<link rel="stylesheet" href="{{ asset('assets/css/reservationconfirm.css') }}">
 {% endblock %}
 
 {% block body %}
@@ -13,33 +14,50 @@
 
 	<div class="section__container" id="available-cars">
 
-		<h1 style="margin-top:160px;">Confirmez votre réservation | Paiement {{ app.session.get('paymentMethod') }}</h1>
+		<h1 style="margin-top:160px;">Confirmez votre réservation
+		</h1>
 
 		<div class="reservation-form">
 			<section class="summary">
-				<h1 style="margin: 25px 0;">Résumé</h1>
+				<h1 style="margin: 25px 0;">Résumé
+					<span style="font-size:1rem;">(Paiement
+						{{ app.session.get('paymentMethod') }})</span>
+				</h1>
 
 				<div style="display: flex; justify-content:flex-start; align-items: center; gap: 25px;">
-				    <img style="width: 25%;" src="{{ asset('assets/images/' ~ car.image) }}" alt="{{ car.brand }} {{ car.model }}">
-					<h2>{{ car.brand }} {{ car.model }}</h2>
+					<img style="width: 25%;" src="{{ asset('assets/images/' ~ car.image) }}" alt="{{ car.brand }} {{ car.model }}">
+					<h2>{{ car.brand }}
+						{{ car.model }}</h2>
 				</div>
 
 				<ul style="list-style: none; padding: 0; margin-bottom: 1rem;">
 					<li style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 1rem;">
 						<div class="cars__details">
 							<div class="cars__details1">
-								<p><i class="ri-calendar-line"></i> {{ car.year }}</p>
-								<p><i class="ri-palette-line"></i> {{ car.color }}</p>
-								<p><i class="ri-car-line"></i> {{ car.registration }}</p>
+								<p>
+									<i class="ri-calendar-line"></i>
+									{{ car.year }}</p>
+								<p>
+									<i class="ri-palette-line"></i>
+									{{ car.color }}</p>
+								<p>
+									<i class="ri-car-line"></i>
+									{{ car.registration }}</p>
 								<p style="display:flex; justify-content: start; align-items:center; ">
 									<img src="{{ asset('assets/images/car.png') }}" alt="moteur" style="width: 0.9em; margin: 10px 8px 10px 10px;">
-									{{ car.nbofcardoors }} portes	
+									{{ car.nbofcardoors }}
+									portes
 								</p>
-								<p><i class="ri-user-line"></i> {{ car.nbofpersons }} personnes</p>
+								<p>
+									<i class="ri-user-line"></i>
+									{{ car.nbofpersons }}
+									personnes</p>
 							</div>
 							<div class="cars__details1">
 								{% if car.airconditionnerStatus %}
-									<p><i class="fa-solid fa-snowflake"></i> Climatisation</p>
+									<p>
+										<i class="fa-solid fa-snowflake"></i>
+										Climatisation</p>
 								{% endif %}
 								<p style="display:flex; justify-content: start; align-items:center;">
 									<img src="{{ asset('assets/images/gear.png') }}" alt="moteur" style="width: 1em; height: 1em; margin: 10px 8px 10px 10px;">
@@ -47,11 +65,18 @@
 								</p>
 								<p style="display:flex; justify-content: start; align-items:center;">
 									<img src="{{ asset('assets/images/engine.png') }}" alt="moteur" style="width: 1.3em; height: 1.3em; margin: 10px 8px 10px 10px;">
-									{{ car.horsepower }} CV
+									{{ car.horsepower }}
+									CV
 								</p>
-								<p><i class="ri-cloud-line"></i> CO2: {{ car.co2emissions }} g/km</p>
+								<p>
+									<i class="ri-cloud-line"></i>
+									CO2:
+									{{ car.co2emissions }}
+									g/km</p>
 								{% if car.electricStatus %}
-									<p class="isElec"><i style="color:#fff;" class="ri-flashlight-line"></i> Électrique</p>
+									<p class="isElec">
+										<i style="color:#fff;" class="ri-flashlight-line"></i>
+										Électrique</p>
 								{% endif %}
 							</div>
 						</div>
@@ -59,53 +84,70 @@
 				</ul>
 
 				<div style="margin: 25px 0; display: flex; justify-content: space-between; padding-bottom: 10px; border-bottom: 1px solid #dfdfdf;">
-					<h2>Tarif de base pour {{ days }} jours</h2>
-					
-					<h2>{{ app.session.get('total_session') }} €</h2>
+					<h2>Tarif de base pour
+						{{ days }}
+						jours</h2>
+
+					<h2>{{ app.session.get('total_session') }}
+						€</h2>
 				</div>
 
 				<section style="margin: 20px 0;">
 					<div style="width:100%; background: #f7f7f7; padding: 20px 10px; border-radius:10px 10px 0 0; border-bottom: 1px solid #dfdfdf;">
 						<p style="font-weight:bold;">Départ</p>
 						<p style="font-weight:bold; font-size: 1.2rem;">{{ pickupLocationName }}</p>
-						<p>{{ start_date|date('d-m-Y') }} - {{ start_time|date('H:i') }}</p>
+						<p>{{ start_date|date('d-m-Y') }}
+							-
+							{{ start_time|date('H:i') }}</p>
 					</div>
 					<div style="width:100%; background: #f7f7f7; padding: 20px 10px; border-radius:0 0 10px 10px;">
 						<p style="font-weight:bold;">Retour</p>
 						<p style="font-weight:bold; font-size: 1.2rem;">{{ dropoffLocationName }}</p>
-						<p>{{ end_date|date('d-m-Y') }} - {{ end_time|date('H:i') }}</p>
+						<p>{{ end_date|date('d-m-Y') }}
+							-
+							{{ end_time|date('H:i') }}</p>
 					</div>
 				</section>
 
 				<div style="margin: 25px 0; display: flex; justify-content: space-between; padding-bottom: 10px; border-bottom: 1px solid #dfdfdf;">
 					<h2>Protections & Options</h2>
-				<h2>{{ (pack.pricePerDay * days) + options_total_price|number_format(2, '.', '') }} €</h2>
+					<h2>{{ (pack.pricePerDay * days) + options_total_price|number_format(2, '.', '') }}
+						€</h2>
 				</div>
 
 				<h3 style="margin-top:20px;">{{ pack.name }}</h3>
 				<div style="display: flex; justify-content: space-between; padding-bottom: 10px;">
-					<p>Pour {{ days }} jours</p>
-					<p>{{ pack.pricePerDay * days }} €</p>
+					<p>Pour
+						{{ days }}
+						jours</p>
+					<p>{{ pack.pricePerDay * days }}
+						€</p>
 				</div>
 
 				{% if option_ids is defined and option_names is defined and option_ids|length > 0 and option_names|length > 0 %}
 					<h2>Options</h2>
 					<ul>
 						{% for i in 0..(option_ids|length - 1) %}
-							<li style="display:none;">ID: {{ option_ids[i] }}</li>
-							<li style="margin:10px 0px;"> {{ option_names[i] }}</li>
+							<li style="display:none;">ID:
+								{{ option_ids[i] }}</li>
+							<li style="margin:10px 0px;">
+								{{ option_names[i] }}</li>
 						{% endfor %}
 					</ul>
 					<div style="display: flex; justify-content: space-between; padding-bottom: 10px;">
-						<p>Pour {{ days }} jours</p>
-						<p>{{ options_total_price }} €</p>
+						<p>Pour
+							{{ days }}
+							jours</p>
+						<p>{{ options_total_price }}
+							€</p>
 					</div>
 				{% endif %}
 
 				<div style="margin: 20px 0; display: flex; justify-content: space-between; padding-bottom: 10px; border-top: 1px solid #dfdfdf;">
 					<h2 style="margin-top: 20px;">Total:</h2>
-					<h2 style="margin-top: 20px;">{{ total }} €</h2>
-					
+					<h2 style="margin-top: 20px;">{{ total }}
+						€</h2>
+
 				</div>
 
 				<div class="accordion-item">
@@ -135,11 +177,14 @@
 					</div>
 					<div class="accordion-content">
 						<p>
-							<i class="ri-arrow-right-s-fill"></i> Les modifications de votre réservation sont gratuites jusqu'au début de la journée de location (mais un nouveau prix de location peut être appliqué).
+							<i class="ri-arrow-right-s-fill"></i>
+							Les modifications de votre réservation sont gratuites jusqu'au début de la journée de location (mais un nouveau prix de location peut être appliqué).
 							<br>
-							<i class="ri-arrow-right-s-fill"></i> Si vous annulez votre réservation, des frais de 50 EUR, ou le prix total de la location si la valeur est inférieure, vous seront facturés.
+							<i class="ri-arrow-right-s-fill"></i>
+							Si vous annulez votre réservation, des frais de 50 EUR, ou le prix total de la location si la valeur est inférieure, vous seront facturés.
 							<br>
-							<i class="ri-arrow-right-s-fill"></i> Si vous ne récupérez pas le véhicule en temps voulu et que vous n'avez pas annulé, des frais de 95 EUR / GBP 102 / AUD 176 / NZD 184 / 700 DKK (selon la devise locale), ou le prix total de la location si la valeur est inférieure, vous seront facturés.
+							<i class="ri-arrow-right-s-fill"></i>
+							Si vous ne récupérez pas le véhicule en temps voulu et que vous n'avez pas annulé, des frais de 95 EUR / GBP 102 / AUD 176 / NZD 184 / 700 DKK (selon la devise locale), ou le prix total de la location si la valeur est inférieure, vous seront facturés.
 						</p>
 					</div>
 				</div>
@@ -170,85 +215,113 @@
 
 				<p style="margin:20px 0; font-size:0.8rem;">
 					Vos données personnelles sont traitées par AutoRent, situé au 00 boulevard Berthier, 75017, Paris, France ("nous"), en tant que responsable du traitement, pour gérer votre réservation et votre contrat de location. Ces données peuvent également être utilisées pour gérer les impayés et les amendes lors de l'utilisation de nos véhicules.
-					<br> Vous avez le droit de vous désinscrire des communications marketing en utilisant le lien de désinscription inclus.
-					<br> En cas de transfert des données hors de l'UE, AutoRent applique des mesures de protection conformes aux exigences légales.
-					<br> Pour exercer vos droits d'accès, de rectification, d'opposition, de portabilité, d'effacement, et de limitation, contactez dpo@autorent.com. Pour plus d'informations sur notre traitement de vos données et vos droits, consultez notre Politique de confidentialité.
+					<br>
+					Vous avez le droit de vous désinscrire des communications marketing en utilisant le lien de désinscription inclus.
+					<br>
+					En cas de transfert des données hors de l'UE, AutoRent applique des mesures de protection conformes aux exigences légales.
+					<br>
+					Pour exercer vos droits d'accès, de rectification, d'opposition, de portabilité, d'effacement, et de limitation, contactez dpo@autorent.com. Pour plus d'informations sur notre traitement de vos données et vos droits, consultez notre Politique de confidentialité.
 				</p>
 
 			</section>
 
 			<aside class="information">
 				<h2>Informations conducteur</h2>
-				<p>Prénom: {{ user.name }}</p>
-				<p>Nom: {{ user.firstname }}</p>
-				<p>Adresse: {{ user.address }}</p>
-				<p>Email: {{ user.email }}</p>
-				<p>Téléphone: {{ user.phonenumber }}</p>
-				
+				<p>Prénom:
+					{{ user.name }}</p>
+				<p>Nom:
+					{{ user.firstname }}</p>
+				<p>Adresse:
+					{{ user.address }}</p>
+				<p>Email:
+					{{ user.email }}</p>
+				<p>Téléphone:
+					{{ user.phonenumber }}</p>
+
 			</aside>
 		</div>
 
 	</div>
 
 
-<style>
+	<style>
 
 
-.step-3 {
-    font-size: 0.9rem;
-    width: 25%;
-    padding: 10px;
-    border: 1px solid #fe5b3e;
-    background-color: #fff;
-    border-radius: 8px;
-}
+		.step-3 {
+			font-size: 0.9rem;
+			width: 25%;
+			padding: 10px;
+			border: 1px solid #fe5b3e;
+			background-color: #fff;
+			border-radius: 8px;
+		}
 
-.step-number-3 {
-    background-color: #fe5b3e;
-    color: #fff;
-    padding: 5px;
-    border-radius: 10px 0 10px 0;
-    width: 25px;
-    height: 25px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-size: 1rem;
-}
+		.step-number-3 {
+			background-color: #fe5b3e;
+			color: #fff;
+			padding: 5px;
+			border-radius: 10px 0 10px 0;
+			width: 25px;
+			height: 25px;
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			font-size: 1rem;
+		}
 
-.title-3 {
-    color: #fe5b3e;
-}
+		.title-3 {
+			color: #fe5b3e;
+		}
 
-.step-4 {
-    font-size: 0.9rem;
-    width: 15%;
-    padding: 10px;
-    border: 1px solid #fe5b3e;
-    background-color: #fff;
-    border-radius: 8px;
-}
+		.step-4 {
+			font-size: 0.9rem;
+			width: 15%;
+			padding: 10px;
+			border: 1px solid #fe5b3e;
+			background-color: #fff;
+			border-radius: 8px;
+		}
 
-.step-number-4 {
-    background-color: #fe5b3e;
-    color: #fff;
-    padding: 5px;
-    border-radius: 10px 0 10px 0;
-    width: 25px;
-    height: 25px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-size: 1rem;
-}
+		.step-number-4 {
+			background-color: #fe5b3e;
+			color: #fff;
+			padding: 5px;
+			border-radius: 10px 0 10px 0;
+			width: 25px;
+			height: 25px;
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			font-size: 1rem;
+		}
 
-.title-4 {
-    color: #fe5b3e;
-}
+		.title-4 {
+			color: #fe5b3e;
+		}
+
+		@media(max-width: 860px) {
+
+			.pack-container {
+				width: 90%;
+			}
+
+			#selected-pack-details,
+			#selected-options-details {
+				display: none;
+			}
+
+			.step-3 {
+				font-size: 0.6rem;
+				width: 25%;
+			}
+			.step-4 {
+				font-size: 0.6rem;
+				width: 25%;
+			}
 
 
-
-</style>
+		}
+	</style>
 	{% include '_partials/footer.html.twig' %}
 
 {% endblock %}

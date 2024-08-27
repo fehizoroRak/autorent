@@ -19,8 +19,7 @@
 
     <div class="login-container">
         <div class="login-form">
-            <h1>Connexion compte personnel
-                {{ app.session.get('paymentMethod') }}</h1>
+            <h1>Connexion compte personnel</h1>
 
             {% if app.request.query.get('error') %}
                 <div id="error-message" class="alert">

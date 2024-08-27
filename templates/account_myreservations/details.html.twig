@@ -18,15 +18,16 @@
 					<span>{{ app.user.username }}</span>
 				</div>
 			</div>
-			<nav>
-				<ul>
-					<li> <a href="{{path('app_myaccount')}}">RÉSERVATIONS</a> </li>
-					<li> <a href="{{path('app_account')}}">COMPTE</a> </li>
-					<li> <a href="{{path('account_password')}}">MOT DE PASSE</a> </li>
-				</ul>
-			</nav>
+
 		</header>
-		<main style="width: 71%; margin: 0 auto;">
+		<main style="width: 86%; margin: 0 auto;">
+
+
+				<ul class="list-menu">
+					<li> <a  href="{{ path('app_myaccount') }}">RÉSERVATIONS</a> </li>
+					<li> <a  href="{{ path('app_account') }}">COMPTE</a> </li>
+					<li> <a  href="{{ path('account_password') }}">MOT DE PASSE</a> </li>
+				</ul>
 			<h1 style="margin-top:60px;">Réservation n° :
 				{{ location.rentalNumber }}</h1>
 
@@ -41,16 +42,16 @@
 			<p>{{ location.user.email }}</p>
 			<p>{{ location.user.phonenumber }}</p>
 
-			<div class="">
-				<section class="">
-					<div style="margin-top:25px; display: flex; justify-content: space-between; padding-bottom: 10px; border-bottom: 1px solid #dfdfdf;">
+			<div >
+				<section >
+					<div class="steps-status">
 						<h3>Statut</h3>
-						<div style="display: flex; align-items: center; gap: 10px;">
+						<div style="display: flex; align-items: center; flex-wrap:wrap; gap: 10px;">
 							{% for status in location.statuses %}
 								{% set step = loop.index %}
 								<div style="display: flex; flex-direction: column; align-items: center;">
-									<h3 style="padding:8px; border-radius: 8px; color:white; background-color: {{ status.color }};">
-										<div style="background-color: white; color: black; border-radius: 50%; width: 30px; height: 30px; display: flex; align-items: center; justify-content: center; font-weight: bold; margin: 5px auto;">
+									<h6 style="display: flex; align-items: center; justify-content: center; padding:8px; border-radius: 8px; color:white; background-color: {{ status.color }};height: 30px; ">
+										<div style="background-color: white; color: black; border-radius: 50%; width: 20px; height: 20px; display: flex; align-items: center; justify-content: center; font-weight: bold; margin: 5px auto; margin-right:5px;">
 											{{ step }}
 										</div>
 										{% if status.name == 'Pending' %}
@@ -68,11 +69,11 @@
 										{% else %}
 											{{ status.name }}
 										{% endif %}
-									</h3>
+									</h6>
 								</div>
 								{% if not loop.last %}
 									<span>
-										————————
+										—
 									</span>
 								{% endif %}
 							{% endfor %}
@@ -139,7 +140,7 @@
 					</ul>
 
 					<div style="margin: 25px 0; display: flex; justify-content: space-between; padding-bottom: 10px; border-bottom: 1px solid #dfdfdf;">
-						<h2>Tarif de base pour
+						<h2>Tarif de base <br> pour
 							{{ location.numberOfDays }}
 							jours</h2>
 						<h2>{{ location.totalPerDay }}
@@ -225,11 +226,7 @@
 						<div class="payment-container">
 							<div class="payment-header">
 								<h2>Informations de paiement</h2>
-								<div class="menu-icon">
-									<div class="menu-line"></div>
-									<div class="menu-line"></div>
-									<div class="menu-line"></div>
-								</div>
+							
 							</div>
 							<div class="payment-tabs">
 								<div class="tab active" data-tab="credit-card">

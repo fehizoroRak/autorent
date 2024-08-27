@@ -11,19 +11,30 @@
 			</div>
 		</div>
 
-		<ul
-			class="nav__links" id="nav-links">
+		<ul class="nav__links" id="nav-links">
 			<li class="nav__links__btn">
 				<a href="{{ path('app_help') }}" class="btn">
-    <i class="ri-question-line"></i>
-    Aide
-</a>
+					<i class="ri-question-line"></i>
+					Aide
+				</a>
 
 			</li>
 			<li class="nav__links__btn">
-				<button class="btn">
-					<i class="ri-contacts-line"></i>
-					Contacts</button>
+				{% if app.user %}
+					<a style="margin-right:20px;" class="" href="{{ path('app_login') }}">
+						<i class="ri-user-line"></i>
+						Bonjour,
+						{{ app.user.name }}
+						{{ app.user.firstname }}
+					</a>
+
+				{% endif %}
+
+				{% if app.user %}
+					<a style="margin-left:20px;" class="" href="{{ path('app_logout') }}">
+						<i class="ri-logout-box-r-line"></i>
+					</a>
+				{% endif %}
 			</li>
 		</ul>
 
@@ -38,7 +49,7 @@
 
 			{% endif %}
 
-			<a  href="{{ path('app_help') }}">
+			<a href="{{ path('app_help') }}">
 				<i class="ri-question-line"></i>
 				Aide
 			</a>
@@ -52,6 +63,3 @@
 
 	</nav>
 </div>
-
-
-

@@ -1,10 +1,12 @@
 <div id="header" style="position:fixed;background-color:#f7f7f7;z-index: 99999; width:100%;">
 	<nav>
 		<div class="nav__header">
-		  <div class="nav__logo">
+			<div class="nav__logo">
 
-            <a href="{{ path('app_home') }}"> <img src="{{ asset('assets/images/logoautorent.png') }}" style="width: 40%;" alt="logo" /> </a>
-            </div>
+				<a href="{{ path('app_home') }}">
+					<img src="{{ asset('assets/images/logoautorent.png') }}" style="width: 40%;" alt="logo"/>
+				</a>
+			</div>
 			<div class="nav__menu__btn" id="menu-btn">
 				<i class="ri-menu-line"></i>
 			</div>
@@ -13,17 +15,14 @@
 
 			<li class="nav__links__btn">
 				<a href="{{ path('app_help') }}" class="btn">
-    <i class="ri-question-line"></i>
-    Aide
-</a>
-			</li>
-			<li class="nav__links__btn">
-				<button class="btn"><i class="ri-contacts-line"></i> Contacts</button>
+					<i class="ri-question-line"></i>
+					Aide
+				</a>
 			</li>
 		</ul>
 		<div class="nav__btns">
 
-			<a  href="{{ path('app_help') }}">
+			<a href="{{ path('app_help') }}">
 				<i class="ri-question-line"></i>
 				Aide
 			</a>
@@ -50,4 +49,3 @@
 		border-bottom: 2px solid #000;
 	}
 </style>
-

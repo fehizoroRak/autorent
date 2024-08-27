@@ -1,6 +1,8 @@
 {% extends 'base.html.twig' %}
 
-{% block title %} Autorent | Accueil {% endblock %}
+{% block title %}
+	Autorent | Accueil
+{% endblock %}
 
 {% block body %}
 
@@ -31,7 +33,28 @@
 				<li>
 					<a href="#testimonials">Témoignages</a>
 				</li>
-				
+
+				{% if is_granted('ROLE_ADMIN') %}
+					<li class="nav__links__btn">
+
+						<a style="margin-right:20px;" href="{{ path('admin') }}">
+							<i class="fa-solid fa-gear" style="margin-right: 5px;"></i>Administration</a>
+					</li>
+				{% endif %}
+
+
+				{% if app.user %}
+					<li class="nav__links__btn">
+						<a style="margin-right:20px;" class="" href="{{ path('app_login') }}">
+							<i class="ri-user-line"></i>
+							{{ app.user.name }}
+							{{ app.user.firstname }}
+						</a>
+					</li>
+
+				{% endif %}
+
+
 				<li class="nav__links__btn">
 					<a href="{{ path('app_redirect', { '_target_path': path('app_myaccount') }) }}" class="btn">
 						<i class="ri-calendar-check-line"></i>
@@ -39,34 +62,51 @@
 					</a>
 				</li>
 				<li class="nav__links__btn">
-				<a href="{{ path('app_help') }}" class="btn">
-    <i class="ri-question-line"></i>
-    Aide
-</a>
+					<a href="{{ path('app_help') }}" class="btn">
+						<i class="ri-question-line"></i>
+						Aide
+					</a>
 
 				</li>
+
+				{% if is_granted('ROLE_USER') or is_granted('ROLE_ADMIN') %}
+					<li class="nav__links__btn">
+						<a href="{{ path('app_logout') }}">
+							<i class="ri-logout-box-r-line"></i>
+						</a>
+					</li>
+				{% endif %}
 			</ul>
 			<div class="nav__btns">
 
-  
-			{% if is_granted('ROLE_ADMIN') %}
-				<a style="margin-right:20px;" href="{{ path('admin') }}">Administration</a>
-			{% endif %}
-		
+
+				{% if is_granted('ROLE_ADMIN') %}
+					<a style="margin-right:20px; display:flex;" href="{{ path('admin') }}">
+						<i class="fa-solid fa-gear" style="margin-right: 5px;"></i>Admin</a>
+				{% endif %}
+				{% if app.user %}
+
+					<a style="margin-right:20px;display:flex;" class="" href="{{ path('app_login') }}">
+						<i class="ri-user-line"></i>
+						{{ app.user.name }}
+						{{ app.user.firstname }}
+					</a>
 
 
-				<a class="" href="{{ path('app_redirect', { '_target_path': path('app_myaccount') }) }}" style="margin-right:20px;">
+				{% endif %}
+
+				<a style="display:flex;" href="{{ path('app_redirect', { '_target_path': path('app_myaccount') }) }}" style="margin-right:20px;">
 					<i class="ri-calendar-check-line"></i>
 					Mes réservations
 				</a>
-				<a  href="{{ path('app_help') }}">
+				<a style="display:flex;" href="{{ path('app_help') }}">
 					<i class="ri-question-line"></i>
 					Aide
 				</a>
 				{% if is_granted('ROLE_USER') or is_granted('ROLE_ADMIN') %}
-				<a style="margin-left:20px;" class="" href="{{ path('app_logout') }}">
-					<i class="ri-logout-box-r-line"></i>
-				</a>
+					<a style="margin-left:20px;" class="" href="{{ path('app_logout') }}">
+						<i class="ri-logout-box-r-line"></i>
+					</a>
 				{% endif %}
 			</div>
 		</nav>
@@ -296,4 +336,3 @@
 	{% include '_partials/footer.html.twig' %}
 
 {% endblock %}
-

@@ -19,21 +19,22 @@
 					<span>{{ app.user.username }}</span>
 				</div>
 			</div>
-			<nav>
-				<ul>
-					<li><a href="{{ path('app_myaccount') }}">RÉSERVATIONS</a></li>
-					<li><a href="{{ path('app_account') }}">COMPTE</a></li>
-					<li><a href="{{ path('account_password') }}">MOT DE PASSE</a></li>
-				</ul>
-			</nav>
+
 		</header>
-		<main style="width: 71%; margin: 0 auto;">
+		<main style="width: 86%; margin: 0 auto;">
    			{% for message in app.flashes('success') %}
                 <div id="flash-message" class="alert alert-success">
                     {{ message }}
                 </div>
             {% endfor %}
 			<section class="account-info">
+
+						<ul class="list-menu">
+					<li> <a  href="{{ path('app_myaccount') }}">RÉSERVATIONS</a> </li>
+					<li> <a  href="{{ path('app_account') }}">COMPTE</a> </li>
+					<li> <a  href="{{ path('account_password') }}">MOT DE PASSE</a> </li>
+				</ul>
+				
 				<h1>Mon Compte</h1>
 				<form method="post" action="{{ path('account_update') }}">
 
