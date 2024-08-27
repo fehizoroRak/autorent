@@ -285,8 +285,31 @@ document.addEventListener("DOMContentLoaded", function() {
     });
 });
 </script>
+<script>
+
+document.addEventListener('DOMContentLoaded', function () {
+    const packTitle = document.querySelector('.pack_title'); // Select the .pack_title div
+
+    function handleScroll() {
+        let scrollTop = window.scrollY;
+
+        if (scrollTop > 100) {
+            // Adjust the .pack_title margin when the user scrolls down
+            packTitle.style.transition = 'margin-top 0.5s ease';
+            packTitle.style.marginTop = '86px'; // Adjust this value as needed when the header is collapsed
+        } else {
+            // Adjust the .pack_title margin when the user scrolls back up
+            packTitle.style.transition = 'margin-top 0.5s ease';
+            packTitle.style.marginTop = '150px'; // Restore original margin-top when header is expanded
+        }
+    }
+
+    window.addEventListener('scroll', handleScroll);
+});
 
 
+
+</script>
 
 {% include '_partials/footer.html.twig' %}
 

@@ -1,67 +1,99 @@
 {% extends 'base.html.twig' %}
 
 {% block title %}
-	Connexion
+    Connexion
 {% endblock %}
 
 {% block stylesheets %}
-	{{ parent() }}
-	<link rel="stylesheet" href="{{ asset('assets/css/login.css') }}">
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('assets/css/login.css') }}">
 {% endblock %}
 
 {% block body %}
 
-	{% if target_path == path('app_myaccount') %}
-		{% include '_partials/header.html.twig' %}
-	{% elseif target_path == path('app_pack') %}
-		{% include '_partials/header_steps.html.twig' %}
-	{% endif %}
-
-	<div class="login-container">
-		<div class="login-form">
-			<h1>Connexion compte personnel
-				{{ app.session.get('paymentMethod') }}</h1>
-
-			{% if error %}
-				<div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
-			{% endif %}
-
-			{% if target_path == path('app_pack') and car is not null %}
-				{% set discountedTotal = car.dayprice * 0.91 * app.session.get('days') %}
-				{% set TotalPerDay = app.session.get('days') * car.dayprice %}
-				{% set total = total is defined ? total : (discountedTotal != 0 ? discountedTotal : TotalPerDay) %}
-			{% endif %}
-
-			{# The form action points to the current URL with all query parameters intact #}
-		<form action="{{ app.request.uri }}" method="POST" id="login-form">
-    <label for="username">Email</label>
-    <input type="text" class="login_input" id="username" name="_username" value="{{ last_username }}" required autofocus>
-
-    <label for="password">Password</label>
-    <input type="password" class="login_input" id="password" name="_password" required>
-
-    {% if target_path == path('app_pack') and car is not null %}
-        <input type="hidden" name="_target_path" value="{{ path('app_pack', { id: car.id, total: total | number_format(2, '.', '') }) }}">
-    {% else %}
-        <input type="hidden" name="_target_path" value="{{ target_path }}">
+    {% if target_path == path('app_myaccount') %}
+        {% include '_partials/header.html.twig' %}
+    {% elseif target_path == path('app_pack') %}
+        {% include '_partials/header_steps.html.twig' %}
     {% endif %}
-    
-    <button type="submit" class="btn-login">Se connecter</button> 
-</form>
 
+    <div class="login-container">
+        <div class="login-form">
+            <h1>Connexion compte personnel
+                {{ app.session.get('paymentMethod') }}</h1>
 
+            {% if app.request.query.get('error') %}
+                <div id="error-message" class="alert">
+                    {{ app.request.query.get('error') }}
+                </div>
+            {% endif %}
 
-			{% if target_path == path('app_pack') and car is not null %}
-				<a style="color: #fe5b3e;" href="{{ path('app_register', { id: car.id, total: total | number_format(2, '.', '') }) }}">
-					<div class="create-account">
-						Créez votre compte
-					</div>
-				</a>
-			{% endif %}
+            {% if target_path == path('app_pack') and car is not null %}
+                {% set discountedTotal = car.dayprice * 0.91 * app.session.get('days') %}
+                {% set TotalPerDay = app.session.get('days') * car.dayprice %}
+                {% set total = total is defined ? total : (discountedTotal != 0 ? discountedTotal : TotalPerDay) %}
+            {% endif %}
 
-		</div>
-	</div>
+            {# The form action points to the current URL with all query parameters intact #}
+            <form action="{{ app.request.uri }}" method="POST" id="login-form">
+                <label for="username">Email</label>
+                <input type="text" class="login_input" id="username" name="_username" value="{{ last_username }}" required autofocus>
 
-	{% include '_partials/footer.html.twig' %}
+                <label for="password">Password</label>
+                <input type="password" class="login_input" id="password" name="_password" required>
 
+                {% if target_path == path('app_pack') and car is not null %}
+                    <input type="hidden" name="_target_path" value="{{ path('app_pack', { id: car.id, total: total | number_format(2, '.', '') }) }}">
+                {% else %}
+                    <input type="hidden" name="_target_path" value="{{ target_path }}">
+                {% endif %}
+
+                <button type="submit" class="btn-login">Se connecter</button>
+            </form>
+
+            {% if target_path == path('app_pack') and car is not null %}
+                <a style="color: #fe5b3e;" href="{{ path('app_register', { id: car.id, total: total | number_format(2, '.', '') }) }}">
+                    <div class="create-account">
+                        Créez votre compte
+                    </div>
+                </a>
+            {% endif %}
+
+        </div>
+    </div>
+
+    {% include '_partials/footer.html.twig' %}
+
+    <style>
+        /* Styles pour le message d'erreur */
+        .alert {
+            padding: 15px;
+            background-color: #f8d7da; /* Fond rouge clair */
+            border: 1px solid #f5c2c7;
+            color: #dc3545; /* Texte rouge */
+            font-weight: bold; /* Texte en gras */
+            border-radius: 5px;
+            margin-top: 10px;
+            text-align: center;
+            opacity: 1;
+            transition: opacity 0.5s ease;
+        }
+
+        .alert.hide {
+            opacity: 0;
+        }
+    </style>
+
+    <script>
+        // Script pour faire disparaître le message après 3 secondes
+        setTimeout(function() {
+            var errorMessage = document.getElementById('error-message');
+            if (errorMessage) {
+                errorMessage.classList.add('hide');
+                setTimeout(function() {
+                    errorMessage.style.display = 'none';
+                }, 500); // Attendre que la transition soit terminée
+            }
+        }, 3000); // 3000 millisecondes = 3 secondes
+    </script>
 {% endblock %}

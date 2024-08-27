@@ -1,7 +1,6 @@
-
-	{% block stylesheets %}
-		<link rel="stylesheet" href="{{ asset('assets/css/header_steps.css') }}">
-	{% endblock %}
+{% block stylesheets %}
+	<link rel="stylesheet" href="{{ asset('assets/css/header_steps.css') }}">
+{% endblock %}
 
 
 <div id="header" style="position:fixed;background-color:#f7f7f7;z-index: 99999;width:100%;top: 0;left: 0;">
@@ -18,15 +17,27 @@
 		</div>
 		<ul class="nav__links" id="nav-links">
 			<li class="nav__links__btn">
-		<a href="{{ path('app_help') }}" class="btn">
-    <i class="ri-question-line"></i>
-    Aide
-</a>
+				<a href="{{ path('app_help') }}" class="btn">
+					<i class="ri-question-line"></i>
+					Aide
+				</a>
 			</li>
 			<li class="nav__links__btn">
-				<button class="btn">
-					<i class="ri-contacts-line"></i>
-					Contacts</button>
+				{% if app.user %}
+				<a style="margin-right:20px;" class="" href="{{ path('app_login') }}">
+					<i class="ri-user-line"></i>
+					Bonjour,
+					{{ app.user.name }}
+					{{ app.user.firstname }}
+				</a>
+
+			{% endif %}
+
+			{% if app.user %}
+				<a style="margin-left:20px;" class="" href="{{ path('app_logout') }}">
+					<i class="ri-logout-box-r-line"></i>
+				</a>
+			{% endif %}
 			</li>
 		</ul>
 
@@ -57,57 +68,55 @@
 
 	<div class="reservation-steps">
 
-	<a class="step-1" style="color: #000;"  href="{{ path('app_home') }}">
-		<div >
-			<div class="step-title" style="display: flex; gap:10px; align-items:center;">
-				<div class="step-number-1">1</div>
-				<h4 style="color:#fe5b3e;;">AGENCE DE LOCATION</h4>
-			</div>
-			<div class="step-details">
-				<div style="width:50%;">
-					<h4>Départ</h4>
-					<h4 class="location" id="departureLocation">{{ app.session.get('pickupLocationName') }}</h4>
-					<p id="departureDateTime">{{ app.session.get('startDate') }}
-						|
-						{{ app.session.get('startTime') }}</p>
+		<a class="step-1" style="color: #000;" href="{{ path('app_home') }}">
+			<div>
+				<div class="step-title" style="display: flex; gap:10px; align-items:center;">
+					<div class="step-number-1">1</div>
+					<h4 style="color:#fe5b3e;;">AGENCE DE LOCATION</h4>
 				</div>
-				<div style="width:50%;">
-					<h4>Retour</h4>
-					<h4 class="location" id="returnLocation">{{ app.session.get('dropoffLocationName') }}</h4>
-					<p id="returnDateTime">{{ app.session.get('endDate') }}
-						|
-						{{ app.session.get('endTime') }}</p>
+				<div class="step-details">
+					<div style="width:50%;">
+						<h4>Départ</h4>
+						<h4 class="location" id="departureLocation">{{ app.session.get('pickupLocationName') }}</h4>
+						<p id="departureDateTime">{{ app.session.get('startDate') }}
+							|
+							{{ app.session.get('startTime') }}</p>
+					</div>
+					<div style="width:50%;">
+						<h4>Retour</h4>
+						<h4 class="location" id="returnLocation">{{ app.session.get('dropoffLocationName') }}</h4>
+						<p id="returnDateTime">{{ app.session.get('endDate') }}
+							|
+							{{ app.session.get('endTime') }}</p>
+					</div>
 				</div>
 			</div>
-		</div>
-	</a>
-	
-	<a class="step-2" style="color: #000;" href="#">
-	
-	<div >
-			<div class="step-title" style="display: flex; gap:10px; align-items:center;">
-				<div class="step-number-2">2</div>
-				<h4 style="color:#fe5b3e;">VÉHICULE</h4>
-			</div>
+		</a>
 
-			<div class="step-details2" style="margin-top:10px;">
-				{% if car is defined and car is not null %}
-					<h4>{{ car.brand }}
-						{{ car.model }}</h4>
-					{% if total is defined %}
-						<div>{{ total }}
-							€</div>
+		<a class="step-2" style="color: #000;" href="#">
 
+			<div>
+				<div class="step-title" style="display: flex; gap:10px; align-items:center;">
+					<div class="step-number-2">2</div>
+					<h4 style="color:#fe5b3e;">VÉHICULE</h4>
+				</div>
+
+				<div class="step-details2" style="margin-top:10px;">
+					{% if car is defined and car is not null %}
+						<h4>{{ car.brand }}
+							{{ car.model }}</h4>
+						{% if total is defined %}
+							<div>{{ total }}
+								€</div>
+
+						{% endif %}
+
+					{% else %}
+						<p style="margin-top: 45px;">Veuillez choisir un véhicule</p>
 					{% endif %}
-
-				{% else %}
-					<p style="margin-top: 45px;">Veuillez choisir un véhicule</p>
-				{% endif %}
+				</div>
 			</div>
-		</div>
-	</a>
-
-		
+		</a>
 
 
 		<div class="step-3">
@@ -144,7 +153,7 @@
 						{% endif %}
 					</div>
 				{% else %}
-					<div style="text-align:center; width:100%;">
+					<div class="step3-text" style="text-align:center; width:100%;">
 						<p style=" color: #b2b2b2;">Vous pourrez choisir votre protection et vos options après avoir sélectionné votre véhicule.</p>
 					</div>
 				{% endif %}
@@ -170,19 +179,21 @@
 </div>
 <style>
 
-#header {
-    transition: height 0.5s ease;
-}
+	#header {
+		transition: height 0.5s ease;
+	}
 
-.step-details, .step-details2, .step-details3, .step-details4 {
-    transition: opacity 0.5s ease, height 0.5s ease;
-}
-.step-1, .step-2, .step-3, .step-4 {
-    transition: height 0.5s ease;
-    overflow: hidden;
-}
-
+	.step-details,
+	.step-details2,
+	.step-details3,
+	.step-details4 {
+		transition: opacity 0.5s ease, height 0.5s ease;
+	}
+	.step-1,
+	.step-2,
+	.step-3,
+	.step-4 {
+		transition: height 0.5s ease;
+		overflow: hidden;
+	}
 </style>
-
-
-

@@ -24,6 +24,9 @@ class LoginFailureHandler implements AuthenticationFailureHandlerInterface
         // Récupère tous les paramètres GET actuels
         $queryParams = $request->query->all();
 
+        // Ajoute un paramètre d'erreur supplémentaire
+        $queryParams['error'] = 'Email ou mot de passe incorrect ! Veuillez réessayer..';
+
         // Reconstruit l'URL de connexion avec les paramètres GET
         $url = $this->router->generate('app_login', $queryParams);
 
