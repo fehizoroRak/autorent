@@ -20,7 +20,13 @@
    
             <p>Votre numéro de réservation est :  <b>{{ location.rentalNumber }}</b> </p>
             <p>Un email de confirmation a été envoyé à : {{ location.user.email }}</p>
-            <p>Statut de la réservation : {{ status.name }}</p>
+            <p>Statut de la réservation : 
+                {% if status.name == "Pending" %}
+                    En attente
+                {% else %}
+                    {{ status.name }}
+                {% endif %}
+            </p>
         </div>
         <h4>Merci pour votre réservation !</h4>
         <div style="margin-top: 20px;">

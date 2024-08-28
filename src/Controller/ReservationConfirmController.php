@@ -218,7 +218,7 @@ class ReservationConfirmController extends AbstractController
 
         // Envoi de l'email de confirmation
         $email = (new Email())
-            ->from('reservation@autorent.com')
+            ->from('autorent@autorent.fehizoro.fr')
             ->to($user->getEmail())
             ->subject('Confirmation de votre réservation AutoRent')
             ->html($this->renderView('emails/reservation_confirmation.html.twig', [

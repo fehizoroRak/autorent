@@ -1,10 +1,11 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Mon compte{% endblock %}
+{% block title %}Mon compte
+{% endblock %}
 
 {% block stylesheets %}
-    {{ parent() }}
-<link rel="stylesheet" href="{{ asset('assets/css/acc_myaccount.css') }}">
+	{{ parent() }}
+	<link rel="stylesheet" href="{{ asset('assets/css/acc_myaccount.css') }}">
 {% endblock %}
 
 {% block body %}
@@ -22,19 +23,25 @@
 
 		</header>
 		<main style="width: 86%; margin: 0 auto;">
-   			{% for message in app.flashes('success') %}
-                <div id="flash-message" class="alert alert-success">
-                    {{ message }}
-                </div>
-            {% endfor %}
+
 			<section class="account-info">
 
-						<ul class="list-menu">
-					<li> <a  href="{{ path('app_myaccount') }}">RÉSERVATIONS</a> </li>
-					<li> <a  href="{{ path('app_account') }}">COMPTE</a> </li>
-					<li> <a  href="{{ path('account_password') }}">MOT DE PASSE</a> </li>
+				<ul class="list-menu">
+					<li>
+						<a href="{{ path('app_myaccount') }}">RÉSERVATIONS</a>
+					</li>
+					<li>
+						<a href="{{ path('app_account') }}">COMPTE</a>
+					</li>
+					<li>
+						<a href="{{ path('account_password') }}">MOT DE PASSE</a>
+					</li>
 				</ul>
-				
+				{% for message in app.flashes('success') %}
+					<div id="flash-message" class="alert alert-success">
+						{{ message }}
+					</div>
+				{% endfor %}
 				<h1>Mon Compte</h1>
 				<form method="post" action="{{ path('account_update') }}">
 
@@ -48,7 +55,7 @@
 						<input type="text" id="firstname" name="firstname" value="{{ user.firstname }}" class="form-control" required>
 					</div>
 
-                    <div class="form-group">
+					<div class="form-group">
 						<label for="email">Email</label>
 						<input type="email" id="email" name="email" value="{{ user.email }}" class="form-control" required>
 					</div>
@@ -58,11 +65,11 @@
 						<input type="text" id="phoneNumber" name="phonenumber" value="{{ user.phonenumber }}" class="form-control" required>
 					</div>
 
-                    <div class="form-group">
+					<div class="form-group">
 						<label for="address">Adresse</label>
 						<input type="text" id="address" name="address" value="{{ user.address }}" class="form-control" required>
 					</div>
-				
+
 					<button type="submit" class="btn-account">Mettre à jour</button>
 				</form>
 			</section>
