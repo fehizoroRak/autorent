@@ -76,6 +76,29 @@
     transform: scale(1.05);
 }
 
+/* Styles pour les messages de succès */
+.alert-success {
+    background-color: #d4edda; /* Fond vert clair */
+    color: #155724; /* Texte vert foncé */
+    padding: 1rem;
+    border: 1px solid #c3e6cb;
+    border-radius: 4px;
+    margin-bottom: 1rem;
+    opacity: 1;
+}
+
+/* Styles pour les messages d'erreur */
+.alert-danger {
+    background-color: #f8d7da; /* Fond rouge clair */
+    color: #721c24; /* Texte rouge foncé */
+    padding: 1rem;
+    border: 1px solid #f5c6cb;
+    border-radius: 4px;
+    margin-bottom: 1rem;
+    opacity: 1;
+}
+
+
 @media (max-width: 768px) {
     .contact-info {
         text-align: center;
@@ -96,13 +119,14 @@
     </div>
 
 
-        {% for message in app.flashes('success') %}
-            <div class="alert alert-success">{{ message }}</div>
-        {% endfor %}
+  {% for message in app.flashes('success') %}
+    <div id="flash-message-success" class="alert alert-success">{{ message }}</div>
+{% endfor %}
 
-        {% for message in app.flashes('error') %}
-            <div class="alert alert-danger">{{ message }}</div>
-        {% endfor %}
+{% for message in app.flashes('error') %}
+    <div id="flash-message-error" class="alert alert-danger">{{ message }}</div>
+{% endfor %}
+
 
 
     <!-- Section des informations de contact -->
@@ -133,6 +157,28 @@
         </form>
     </div>
 </section>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const flashMessageSuccess = document.getElementById('flash-message-success');
+    if (flashMessageSuccess) {
+        setTimeout(() => {
+            flashMessageSuccess.style.transition = 'opacity 0.5s ease';
+            flashMessageSuccess.style.opacity = '0';
+            setTimeout(() => flashMessageSuccess.remove(), 500); // Remove after transition
+        }, 2000); // 3 seconds
+    }
+
+    const flashMessageError = document.getElementById('flash-message-error');
+    if (flashMessageError) {
+        setTimeout(() => {
+            flashMessageError.style.transition = 'opacity 0.5s ease';
+            flashMessageError.style.opacity = '0';
+            setTimeout(() => flashMessageError.remove(), 500); // Remove after transition
+        }, 2000); // 3 seconds
+    }
+});
+</script>
+
 
 {% include '_partials/footer.html.twig' %}
 

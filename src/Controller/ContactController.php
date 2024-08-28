@@ -57,7 +57,7 @@ class ContactController extends AbstractController
         // Création de l'email
         $emailMessage = (new Email())
             ->from($email)
-            ->to('test@test.com')
+            ->to('autorent@autorent.fehizoro.fr')
             ->subject('Nouveau message de contact: ' . $subject)
             ->text("Nom: $name\nEmail: $email\n\nMessage:\n$message")
             ->html("<p><strong>Nom:</strong> $name</p><p><strong>Email:</strong> $email</p><p><strong>Sujet:</strong> $subject</p><p><strong>Message:</strong><br>$message</p>");
