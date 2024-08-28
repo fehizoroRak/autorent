@@ -1,0 +1,16 @@
+.nav__btns i {
+    margin-right: 3px;
+    font-size: 1.3rem;
+    font-weight: bold;
+}
+.nav__btns a {
+    color: #000;
+    font-size: 1rem;
+    font-weight: bold;
+    padding-bottom: 5px;
+}
+.nav__btns a:hover {
+    font-size: 1rem;
+    font-weight: bold;
+    border-bottom: 2px solid #000;
+}

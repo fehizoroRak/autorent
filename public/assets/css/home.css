@@ -1,0 +1,120 @@
+.nav__btns a {
+    color: #000;
+    font-size: 1rem;
+    font-weight: bold;
+    padding-bottom: 5px;
+
+}
+.nav__btns a:hover {
+    font-size: 1rem;
+    font-weight: bold;
+    border-bottom: 2px solid #fe5b3e;
+}
+.suggestions {
+max-height: 150px;
+overflow-y: auto;
+position: absolute;
+background-color: #fff;
+width: 100%;
+z-index: 999;
+}
+
+.suggestions div {
+padding: 10px;
+cursor: pointer;
+}
+
+.suggestions div:hover {
+font-weight:bold;
+color: white;
+background-color: #fe5b3e;
+}
+
+
+.date-time {
+display: flex;
+
+
+overflow: hidden;
+}
+.date, .time {
+display: flex;
+align-items: center;
+}
+.input-date{
+padding: 11px 0 11px 0;
+border: 1px solid #ccc;
+border-radius: 8px 0 0 8px;
+      
+}
+.input-time{
+padding: 11px 0 11px 0;
+border: 1px solid #ccc;
+border-radius:  0 8px 8px 0;
+      
+}
+.input-date:focus{
+border:2px solid #fe5b3e;
+}
+.input-time:focus{
+border:2px solid #fe5b3e;
+}
+.date {
+width:60%;
+}
+
+.time {
+width:40%;
+}
+.icon {
+margin-right: 10px;
+}
+
+
+input[type="date"], input[type="time"] {
+
+font-size: 16px;
+font-weight: bold;
+font-family: inherit;
+width: 100%;
+text-align: center;
+-webkit-appearance: none;
+-moz-appearance: none;
+appearance: none;
+}
+
+input[type="date"]:focus, input[type="time"]:focus {
+outline: none;
+}
+
+input[type="date"]::-webkit-calendar-picker-indicator,
+input[type="time"]::-webkit-calendar-picker-indicator {
+color: green;
+cursor: pointer;
+position: absolute;
+right: 0;
+opacity: 0;
+width: 100%;
+}
+
+input[type="date"]:focus,
+input[type="time"]:focus {
+outline: none;
+}
+
+  .date, .time {
+        position: relative;
+        margin-right: 7px;
+    }
+    .input-date, .input-time {
+        padding-left: 35px; /* espace pour les icônes */
+    }
+    .date span, .time span {
+        position: absolute;
+        left: 10px;
+        top: 50%;
+        transform: translateY(-50%);
+        color: #fe5b3e;
+        pointer-events: none;
+    }
+

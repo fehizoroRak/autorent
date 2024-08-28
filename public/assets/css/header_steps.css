@@ -1,0 +1,180 @@
+.nav__btns i {
+    margin-right: 3px;
+    font-size: 1.3rem;
+    font-weight: bold;
+}
+
+.nav__btns a {
+    color: #000;
+    font-size: 1rem;
+    font-weight: bold;
+    padding-bottom: 5px;
+}
+
+.nav__btns a:hover {
+    font-size: 1rem;
+    font-weight: bold;
+    border-bottom: 2px solid #000;
+}
+
+.reservation-steps {
+    margin: 0 auto;
+    width: 80%;
+    display: flex;
+    justify-content: space-between;
+    padding: 0 0 10px;
+    gap: 10px;
+}
+
+.step-1 {
+    font-size: 0.9rem;
+    width: 40%;
+    padding: 10px;
+    border: 1px solid #fe5b3e;
+    background-color: #fff;
+    border-radius: 8px;
+}
+
+.step-2 {
+    font-size: 0.9rem;
+    width: 20%;
+    padding: 10px;
+    border: 1px solid #fe5b3e;
+    background-color: #fff;
+    border-radius: 8px;
+}
+
+.step-3 {
+    font-size: 0.9rem;
+    width: 25%;
+    padding: 10px;
+    border: 1px solid #ddd;
+    background-color: #fff;
+    border-radius: 8px;
+}
+
+.step-4 {
+    font-size: 0.9rem;
+    width: 15%;
+    padding: 10px;
+    border: 1px solid #ddd;
+    background-color: #fff;
+    border-radius: 8px;
+}
+
+.step:last-child {
+    border-right: none;
+}
+
+.step-number-3 {
+    background-color: #b2b2b2;
+    color: #fff;
+    padding: 5px;
+    border-radius: 10px 0 10px 0;
+    width: 25px;
+    height: 25px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1rem;
+}
+
+.step-number-4 {
+    background-color: #b2b2b2;
+    color: #fff;
+    padding: 5px;
+    border-radius: 10px 0 10px 0;
+    width: 25px;
+    height: 25px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1rem;
+}
+
+.step-number-1 {
+    background-color: #fe5b3e;
+    color: #fff;
+    padding: 5px;
+    border-radius: 10px 0 10px 0;
+    width: 25px;
+    height: 25px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1rem;
+}
+
+.step-number-2 {
+    background-color: #fe5b3e;
+    color: #fff;
+    padding: 5px;
+    border-radius: 10px 0 10px 0;
+    width: 25px;
+    height: 25px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1rem;
+}
+
+.title-3,
+.title-4 {
+    color: #b2b2b2;
+}
+
+
+.step-details {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 10px;
+}
+
+@media(max-width: 860px) {
+    .reservation-steps {
+
+        width: 96%;
+        padding: 68px 0 10px;
+        gap: 5px;
+    }
+
+    .step-details,
+    .step-details2,
+    .step-details3,
+    .step-details4,
+    .step3-text {
+        display: none;
+    }
+
+    .step-1,
+    .step-2,
+    .step-3,
+    .step-4 {
+        font-size: 0.6rem;
+        width: 25%;
+    }
+
+    .step-number {
+        width: 18px;
+        height: 18px;
+        font-size: 0.6rem;
+        border-radius: 7px 0 7px 0;
+    }
+}
+.step-title {
+    display: flex; 
+    gap:10px; 
+    align-items:center;
+}
+
+@media(max-width: 460px) {
+    .step-title {
+        gap:4px; 
+    }
+
+    .step-1, .step-2, .step-3, .step-4 {
+        font-size: 0.5rem;
+        padding: 10px 4px 10px 4px;
+
+    }
+}

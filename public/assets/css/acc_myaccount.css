@@ -1,0 +1,153 @@
+.container {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+header,
+main {
+    flex: 1;
+}
+
+
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+header {
+    background-color: #fff;
+}
+
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 20px;
+    width: 90%;
+    margin: 0 auto;
+}
+
+.logo {
+    height: 50px;
+}
+
+.user-profile {
+    display: flex;
+    align-items: center;
+}
+
+.user-icon {
+    height: 30px;
+    margin-right: 10px;
+}
+
+.list-menu {
+	position: fixed;
+	width: 86%;
+	top: 58px;
+    list-style: none;
+    display: flex;
+    justify-content: start;
+    padding: 18px 0;
+    border-bottom: 1px solid #ddd;
+    background-color: #fff;
+    margin: 0 auto;
+    gap: 30px;
+}
+
+.list-menu a {
+    text-decoration: none;
+    color: #000;
+    font-weight: bold;
+    padding: 18px 0;
+}
+
+.list-menu a:hover {
+    border-bottom: 3px solid #fe5b3e;
+}
+
+main {
+    padding: 20px 0px;
+}
+
+
+.box-icon {
+    border-radius: 7px;
+    height: 70px;
+    width: 70px;
+    margin-right: 20px;
+}
+
+
+.new-reservation-link {
+    display: block;
+    margin-top: 20px;
+    font-size: 16px;
+    text-decoration: none;
+    color: #fe5b3e;
+}
+.alert {
+    padding: 15px;
+    margin-bottom: 20px;
+    border: 1px solid transparent;
+    border-radius: 4px;
+}
+
+.alert-success {
+    color: #3c763d;
+    background-color: #dff0d8;
+    border-color: #d6e9c6;
+}
+
+.account-info {
+    text-align: start;
+    margin-top: 20px;
+}
+
+.account-info h1 {
+    font-size: 30px;
+    margin: 60px auto;
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-group label {
+    font-weight:bold;
+}
+
+.form-control {
+    width: 100%;
+    padding: 10px;
+    border: none;
+    border-bottom: 1px solid #ddd;
+    border-radius: 0;
+    box-sizing: border-box;
+    transition: border-color 0.3s ease;
+    margin-bottom:15px;
+}
+
+.form-control:focus {
+    outline: none;
+    border-bottom: 2px solid #fe5b3e;
+}
+
+.btn-account {
+    background-color: #fe5b3e;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    margin-bottom: 20px;
+    width: 10rem;
+}
+
+.btn-account:hover {
+    opacity:0.9;
+
+}

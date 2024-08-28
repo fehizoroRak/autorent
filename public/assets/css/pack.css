@@ -1,0 +1,227 @@
+#btn-valider{
+    background-color:#fe5b3e; 
+    height:70%; 
+    border-radius:8px;
+    padding: 10px; 
+    font-size: 1.3rem; 
+    text-decoration: none; 
+    color:#fff; 
+    font-weight:bold; 
+    display:flex; 
+    justify-content:center; 
+    align-items:center;
+    margin: 0px;
+  
+}
+#btn-valider:hover{
+    box-shadow: 0 4px 12px rgba(254, 91, 62, 0.5);
+    color:#0f172a;
+}
+
+
+.ri-star-fill{
+    height: 10px;
+    width: 20px;
+    font-size: 1.1rem;
+}
+.pack_title {
+    position: fixed;
+    background:#ffffff;
+    width:100%;
+    top:32px;
+    left:0;
+    font-size: 2.2rem;
+    margin-top:150px;
+    border-bottom: 1px solid #f3f3f3;
+    z-index: 999;
+}
+.packages {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+}
+.package {
+    background: white;
+    border: 1px solid #e5e5e5;
+    padding: 20px;
+    width: 32%;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    transition: transform 0.3s ease;
+    border-radius: 10px;
+    cursor: pointer;
+    position: relative;
+}
+.package.default-selected {
+    border: 2px solid #fe5b3e;
+    box-shadow: 0 4px 12px rgba(254, 91, 62, 0.5);
+}
+.package h1 {
+    color:#fe5b3e;
+    font-weight: bold; 
+}
+.package .franchise {
+    margin:10px 0 30px 0;
+}
+.package .price {
+    padding-bottom: 40px;
+    border-bottom: 1px solid #e5e5e5;
+}
+.franchise, .price {
+    color: #555;
+    font-weight: bold;
+}
+.includes {
+    list-style: none;
+    padding: 0;
+    margin-bottom:60px;
+}
+.includes li {
+    padding: 5px;
+    margin-bottom:10px;
+}
+.not-included {
+    color: #999;
+}
+button, .btn.btn-primary {
+    background-color: #fe5b3e;
+    color: white;
+    border: none;
+    padding: 15px 20px;
+    cursor: pointer;
+    width: 100%;
+    box-sizing: border-box;
+    border-radius:10px;
+    font-size: 1.2rem;
+}
+button:hover, .btn.btn-primary:hover {
+    opacity:0.9;
+}
+
+button.disabled, .btn.btn-primary.disabled {
+    background-color: #cccccc;
+    cursor: not-allowed;
+    opacity: 0.7;
+}
+
+button.disabled_retirer, .btn.btn-primary.disabled_retirer {
+    background-color: #cccccc;
+    opacity: 0.7;
+}
+
+.options-container {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+} 
+.option-card {
+    background: #fff;
+    border: 1px solid #e5e5e5;
+    padding: 20px;
+    width: 270px;
+    border-radius: 10px;
+    position: relative;
+}
+.option-image{
+    display: flex;
+    gap: 15px;
+}
+.option-image img {
+    width: 30%;
+    height: 30%;
+    border-radius: 5px;
+}
+.option-image p {
+    font-size: 1.4rem;
+    font-weight: bold;
+}
+.option-description  {
+    margin-top: 40px;
+}
+.option-description p {
+    font-size: 16px;
+    color: #666;
+}
+.price {
+    font-size: 1.5rem;
+    font-weight: bold;
+    margin: 15px 0;
+}
+.add-button {
+    width: 100%;
+    padding: 10px;
+    background-color: #fe5b3e;
+    border: none;
+    color: white;
+    cursor: pointer;
+    margin-top: 10px;
+    border-radius: 10px;
+    font-size: 1.2rem;
+}
+.add-button:hover {
+    background-color: #e04a2f;
+}
+
+
+/* Responsive adjustments */
+
+
+@media (max-width: 860px) {
+    .pack_title {
+        margin-top:93px;
+    }
+}
+@media (max-width: 1024px) {
+    .packages, .options-container {
+        flex-wrap: wrap;
+        justify-content: space-around;
+    }
+    .package, .option-card {
+        width: 48%;
+        margin-bottom: 20px;
+    }
+}
+@media (max-width: 768px) {
+    .packages, .options-container {
+        flex-direction: row;
+    }
+    .package, .option-card {
+        width: 48%;
+    }
+}
+@media (max-width: 672px) {
+    .packages, .options-container {
+        flex-direction: column;
+        align-items: center;
+    }
+    .package, .option-card {
+        width: 90%;
+    }
+}
+@media (min-width: 672px) and (max-width: 1024px) {
+    .packages, .options-container {
+        flex-direction: row;
+        justify-content: space-between;
+    }
+    .package, .option-card {
+        width: 48%;
+    }
+}
+.package.selected, .option-card.selected {
+    border: 2px solid #fe5b3e;
+    box-shadow: 0 4px 12px rgba(254, 91, 62, 0.5);
+}
+.selected-label, .added-label {
+    display: none;
+    position: absolute;
+    top: -10px;
+    left: 10px;
+    background-color: #fe5b3e;
+    color: white;
+    padding: 5px 10px;
+    border-radius: 5px;
+    font-size: 0.9rem;
+    font-weight: bold;
+}
+.package.selected .selected-label, .option-card.selected .added-label {
+    display: block;
+}

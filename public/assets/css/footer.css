@@ -1,0 +1,24 @@
+.footer__bars {
+    padding-block: 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-direction: row;
+    gap: 1rem;
+    flex-wrap: wrap;
+    border-top: 1px solid var(--text-light);
+  }
+  
+  .footer__bars a {
+  color: black;
+  }
+  
+  
+  
+  @media (max-width: 880px) {
+  
+  .footer__bars {
+    flex-direction: column;
+  }
+    
+  }
