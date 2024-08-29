@@ -233,6 +233,28 @@
 			</div>
 			<div class="header__content">
 				<h1>Louez en toute tranquillité !</h1>
+				
+				{% for label, messages in app.flashes %}
+					{% for message in messages %}
+						<div class="alert alert-{{ label }}" style="color: darkred; background-color: lightcoral; padding: 10px; border-radius: 5px; margin-top: 10px;" id="flash-message">
+							{{ message }}
+						</div>
+					{% endfor %}
+				{% endfor %}
+
+				<script>
+					// Disparition du message après 2 secondes (2000ms)
+					setTimeout(function() {
+						var flashMessage = document.getElementById('flash-message');
+						if (flashMessage) {
+							flashMessage.style.transition = "opacity 0.5s ease-out";
+							flashMessage.style.opacity = '0';
+							setTimeout(function() { 
+								flashMessage.remove(); 
+							}, 500); // Retirer complètement le div après la transition
+						}
+					}, 2000);
+				</script>
 
 				<!-- Form START -->
 				<form class="car-form" method="get" action="{{ path('app_cars_available') }}">
@@ -280,7 +302,6 @@
 
 					<button type="submit" class="btn-submit">Voir les véhicules</button>
 				</form>
-
 				<!-- Form END -->
 
 			</div>

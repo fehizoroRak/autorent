@@ -54,8 +54,23 @@ class AvailableCarsController extends AbstractController
         $pickupLocation = $cityPickupLocationRepository->findOneBy(['name' => $pickupLocationName]);
         $dropoffLocation = $cityDropoffLocationRepository->findOneBy(['name' => $dropoffLocationName]);
 
-        $pickupLocationId = $pickupLocation ? $pickupLocation->getId() : null;
-        $dropoffLocationId = $dropoffLocation ? $dropoffLocation->getId() : null;
+        // Gérer les cas où les villes ne sont pas trouvées
+        if (!$pickupLocation && !$dropoffLocation) {
+            // Les deux villes ne sont pas trouvées
+            $this->addFlash('error', "Nous n'avons pas d'agences dans ces villes.");
+            return $this->redirectToRoute('app_home'); 
+        } elseif (!$pickupLocation) {
+            // Seulement la ville de départ n'est pas trouvée
+            $this->addFlash('error', "Nous n'avons pas d'agences dans cette ville de départ.");
+            return $this->redirectToRoute('app_home'); 
+        } elseif (!$dropoffLocation) {
+            // Seulement la ville de retour n'est pas trouvée
+            $this->addFlash('error', "Nous n'avons pas d'agences dans cette ville de retour.");
+            return $this->redirectToRoute('app_home'); 
+        }
+
+        $pickupLocationId = $pickupLocation->getId();
+        $dropoffLocationId = $dropoffLocation->getId();
 
         // Stocker les variables dans la session pour réutilisation
         $session->set('days', $days);
@@ -90,16 +105,16 @@ class AvailableCarsController extends AbstractController
             $endTime
         );
 
-    // Récupérer les voitures recommandées (uniquement pour les requêtes non AJAX)
-    $recommendedCars = $request->isXmlHttpRequest() ? [] : $carRepository->findRecommendedCars();
+        // Récupérer les voitures recommandées (uniquement pour les requêtes non AJAX)
+        $recommendedCars = $request->isXmlHttpRequest() ? [] : $carRepository->findRecommendedCars();
 
-    // Si la requête est AJAX, renvoyer uniquement la partie filtrée
-    if ($request->isXmlHttpRequest()) {
-        return $this->render('availablecars/_cars_list.html.twig', [
-            'cars' => $cars,
-            'days' => $days,
-        ]);
-    }
+        // Si la requête est AJAX, renvoyer uniquement la partie filtrée
+        if ($request->isXmlHttpRequest()) {
+            return $this->render('availablecars/_cars_list.html.twig', [
+                'cars' => $cars,
+                'days' => $days,
+            ]);
+        }
 
         return $this->render('availablecars/availablecars.html.twig', [
             'cars' => $cars,
@@ -128,7 +143,7 @@ class AvailableCarsController extends AbstractController
 
         // Si la voiture n'existe pas, lever une exception ou rediriger vers une autre page
         if (!$car) {
-            throw $this->createNotFoundException('The car does not exist');
+            throw $this->createNotFoundException('La voiture n\'existe pas');
         }
 
         // Rediriger vers la page de détails de la voiture

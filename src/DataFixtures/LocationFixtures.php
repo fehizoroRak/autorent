@@ -36,6 +36,12 @@ class LocationFixtures extends Fixture implements DependentFixtureInterface
         $options = $manager->getRepository(Option::class)->findAll();
         $statuses = $manager->getRepository(Status::class)->findAll();
 
+        // Debugging output to check the counts
+        echo 'Users count: ' . count($users) . PHP_EOL;
+        echo 'Cars count: ' . count($cars) . PHP_EOL;
+        echo 'Pickup Locations count: ' . count($pickupLocations) . PHP_EOL;
+        echo 'Dropoff Locations count: ' . count($dropoffLocations) . PHP_EOL;
+
         // Ensure there are enough records to create 10 locations
         if (count($users) < 10 || count($cars) < 10 || count($pickupLocations) < 10 || count($dropoffLocations) < 10) {
             throw new \Exception('Not enough users, cars, pickup locations, or dropoff locations to create 10 locations.');
