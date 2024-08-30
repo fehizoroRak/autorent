@@ -37,12 +37,13 @@
 						<a href="{{ path('account_password') }}">MOT DE PASSE</a>
 					</li>
 				</ul>
+		
+				<h1>Mon Compte</h1>
 				{% for message in app.flashes('success') %}
 					<div id="flash-message" class="alert alert-success">
 						{{ message }}
 					</div>
 				{% endfor %}
-				<h1>Mon Compte</h1>
 				<form method="post" action="{{ path('account_update') }}">
 
 					<div class="form-group">

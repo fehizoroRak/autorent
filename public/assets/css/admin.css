@@ -1,0 +1,42 @@
+.text-black {
+    color: #334155 !important;
+}
+.bg-details{
+    background-color: rgb(47, 189, 224);
+    display: flex;
+    border-radius: 5px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    color: #fff;
+    justify-content: center;
+    align-items: center;
+    padding: 0px 10px;
+}
+.bg-details:hover{
+    color: #fff;
+}
+
+.actions-buttons{
+    background-color:#fe5b3e;
+}
+.actions-buttons:hover{
+    background-color:#474fa0 !important;
+}
+
+.datagrid td.actions {
+    display: flex;
+}
+
+
+.custom-icon-size {
+    font-size: 1.5em; 
+}
+
+
+.easyadmin-aside {
+    background-color: orange;
+}
+
+
+.dashboard-title img {
+    height: 50px; 
+}

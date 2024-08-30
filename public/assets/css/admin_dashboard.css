@@ -1,0 +1,24 @@
+#main-menu .menu .menu-item-contents {
+    align-items: center;
+    
+}
+
+#main-menu .menu a {
+    height: 40px;
+
+}
+
+.custom-icon-size {
+    line-height: 12px;
+    font-size: 1.5em !important; 
+}
+
+
+
+.dashboard-title img {
+    height: 30px; 
+}
+
+#main-menu .menu .menu-item.active:not(.expanded) .menu-icon, #main-menu .menu .menu-item.active:not(.expanded) a {
+    color: #fe5b3e;
+}
